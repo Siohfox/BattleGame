@@ -14,7 +14,10 @@ namespace BG.Turns
         private TurnType turn;
         private bool enemyTurnDone;
 
+       
+
         [SerializeField] private TMP_Text roundTextValue;
+        
 
         // Start is called before the first frame update
         void Start()
@@ -23,7 +26,9 @@ namespace BG.Turns
             roundNumber = 0;
             turn = TurnType.Player;
             enemyTurnDone = false;
-            roundTextValue.text = roundNumber.ToString();
+
+            UpdateTurnText();
+            
         }
 
         // Update is called once per frame
@@ -91,5 +96,7 @@ namespace BG.Turns
         {
             roundTextValue.text = roundNumber.ToString();
         }
+
+        
     }
 }
