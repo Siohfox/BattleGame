@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using BG.Entity;
+using BG.Battle;
 
 public class Enemy : Entity
 {
@@ -27,15 +28,6 @@ public class Enemy : Entity
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            UpdateHealth(-1, 0);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            UpdateHealth(0, 1);
-        }
-
         if (entityCurrentHealth <= 0)
         {
             OnDeath();
@@ -43,7 +35,7 @@ public class Enemy : Entity
     }
 
     // Update both player HP and health bar to match
-    void UpdateHealth(int currentHPChangeValue, int maxHPChangeValue)
+    public void UpdateHealth(int currentHPChangeValue, int maxHPChangeValue)
     {
         // Update player hp:
         if (entityCurrentHealth < entityMaxHealth)
@@ -60,8 +52,9 @@ public class Enemy : Entity
 
     void OnDeath()
     {
-        // Show Death Sprite
-        GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/DeadCircle");
-        // GameState.gameover
+        // remove self from 
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().enemyObjects.Remove(gameObject);
+
+        Destroy(gameObject);
     }
 }
