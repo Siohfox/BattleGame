@@ -326,7 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerObject: {fileID: 457819852}
   enemyObjects: []
-  enemyPrefab: {fileID: 8883159280908826369, guid: 17f9de1fd32223a4da5161ad918973f3, type: 3}
+  enemyPrefab: {fileID: 8883159280908826370, guid: 17f9de1fd32223a4da5161ad918973f3, type: 3}
   playerEnergyTextValue: {fileID: 1219747469}
 --- !u!4 &426695569
 Transform:
