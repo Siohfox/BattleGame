@@ -17,6 +17,7 @@ namespace BG.Turns
        
 
         [SerializeField] private TMP_Text roundTextValue;
+        [SerializeField] private GameObject atkOptions;
         
 
         // Start is called before the first frame update
@@ -26,8 +27,11 @@ namespace BG.Turns
             roundNumber = 0;
             turn = TurnType.Player;
             enemyTurnDone = false;
+            atkOptions.SetActive(true);
 
             UpdateTurnText();
+
+            StartNewRound();
             
         }
 
@@ -57,11 +61,13 @@ namespace BG.Turns
         private void PlayerTurn()
         {
             Debug.Log("Player's Turn!");
+            atkOptions.SetActive(true);
         }
 
         private void EnemyTurn()
         {
             Debug.Log("Enemies' Turn!");
+            atkOptions.SetActive(false);
 
             // Do enemy actions
             if (Input.GetKeyDown(KeyCode.P))
@@ -96,7 +102,5 @@ namespace BG.Turns
         {
             roundTextValue.text = roundNumber.ToString();
         }
-
-        
     }
 }

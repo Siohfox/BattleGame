@@ -23,25 +23,34 @@ namespace BG.Battle
         // Start is called before the first frame update
         void Start()
         {
-            for (int i = 0; i < 2; i++)
+            // Make a bunch of enemies
+            int amountOfEnemiesToMake = 5;
+            for (int i = 0; i < amountOfEnemiesToMake; i++)
             {
                 GameObject newEnemy = Instantiate(enemyPrefab.gameObject);
                 enemyObjects.Add(newEnemy);
             }
 
-            enemyObjects[0].transform.position += new Vector3(-5, 0, 0);
-            enemyObjects[1].transform.position += new Vector3(0, 0, 0);
+            for (int i = 0; i < enemyObjects.Count; i++)
+            {
+                int enemyPixelWidth = 1;
+                int totalAreaOccupied = enemyPixelWidth * enemyObjects.Count;
+                int spaceAvailable = 16 / 2;
+                int totalAreaFromWidth = spaceAvailable - totalAreaOccupied;
+
+                int spacialPos = totalAreaFromWidth / enemyObjects.Count;
+
+
+                enemyObjects[i].transform.position = new Vector3(1 + spacialPos * i, 0, 0);
+            }
+
+            
 
             UpdateEnergy(5, 5);
         }
 
         // Update is called once per frame
         void Update()
-        {
-
-        }
-
-        public void RemoveSelfLol()
         {
 
         }
@@ -70,7 +79,7 @@ namespace BG.Battle
 
                 case Action.Scratch:
                     // scratch
-                    if (playerCurrentEnergy > 0)
+                    if (playerCurrentEnergy > 1)
                     {
                         UpdateEnergy(-2, 0);
                         enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-10, 0);
@@ -81,8 +90,12 @@ namespace BG.Battle
 
                 case Action.Defend:
                     // defend
-                    Debug.Log("Defending");
-                    UpdateEnergy(-1, 0);
+                    if (playerCurrentEnergy > 1)
+                    {
+                        Debug.Log("Defending");
+                        UpdateEnergy(-1, 0);
+                    }
+                    
                     break;
 
 
