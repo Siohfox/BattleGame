@@ -26,7 +26,7 @@ public class Enemy : Entity
         player = GameObject.Find("Player");
 
         entityMaxHealth = 70;
-        entityCurrentHealth = 5;
+        entityCurrentHealth = 50;
 
         enemyAtkDamage = Random.Range(10, 20);
 

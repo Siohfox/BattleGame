@@ -9,15 +9,13 @@ namespace BG.Battle
     {
         public enum Action { Bite, Scratch, Defend, Hide, Howl };
 
-        private int playerMaxEnergy = 0;
-        private int playerCurrentEnergy = 0;
-
-        [SerializeField] private GameObject playerObject;
         [SerializeField] public List<GameObject> enemyObjects;
 
         [SerializeField] private Enemy enemyPrefab;
 
         [SerializeField] private TMP_Text playerEnergyTextValue;
+
+        [SerializeField] private Player player;
 
         // Start is called before the first frame update
         void Start()
@@ -42,7 +40,6 @@ namespace BG.Battle
 
                 enemyObjects[i].transform.position = new Vector3(1 + spacialPos * i, 0, 0);
             }
-            UpdateEnergy(5, 5);
         }
 
         // Update is called once per frame
@@ -51,38 +48,30 @@ namespace BG.Battle
 
         }
 
-        public void UpdateEnergy(int currentEnergy, int maxEnergy)
-        {
-            playerCurrentEnergy += currentEnergy;
-            playerMaxEnergy += maxEnergy;
-
-            playerEnergyTextValue.text = playerCurrentEnergy.ToString() + "/" + playerMaxEnergy.ToString();
-        }
-
         public void UseEnergy(int action)
         {
             switch ((Action)action)
             {
                 case Action.Bite:
-                    if (playerCurrentEnergy > 0)
+                    if (player.playerCurrentEnergy > 0)
                     {           
                         if(enemyObjects.Count > 0)
                         {
                             Debug.Log("Biting");
-                            UpdateEnergy(-1, 0);
+                            player.UpdateEnergy(-1, 0);
                             enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-5, 0);
                         }
                     }
                     break;
 
                 case Action.Scratch:
-                    if (playerCurrentEnergy > 1)
+                    if (player.playerCurrentEnergy > 1)
                     {
                         
                         if (enemyObjects.Count > 0)
                         {
                             Debug.Log("Scratching");
-                            UpdateEnergy(-2, 0);
+                            player.UpdateEnergy(-2, 0);
                             enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-10, 0);
                         }     
                     }
@@ -90,19 +79,19 @@ namespace BG.Battle
                     break;
 
                 case Action.Defend:
-                    if (playerCurrentEnergy > 1)
+                    if (player.playerCurrentEnergy > 1)
                     {
                         Debug.Log("Defending");
-                        UpdateEnergy(-1, 0);
+                        player.UpdateEnergy(-1, 0);
                     }
 
                     break;
 
                 case Action.Howl:
                     // lower enemy attack
-                    if(playerCurrentEnergy > 1)
+                    if(player.playerCurrentEnergy > 1)
                     {
-
+                        player.UpdateEnergy(-1, 0);
                     }
 
                     break;

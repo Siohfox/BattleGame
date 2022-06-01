@@ -324,10 +324,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672d64df0e23a994ebf13dcfb09d1fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObject: {fileID: 457819852}
   enemyObjects: []
   enemyPrefab: {fileID: 8883159280908826370, guid: 17f9de1fd32223a4da5161ad918973f3, type: 3}
   playerEnergyTextValue: {fileID: 1219747469}
+  player: {fileID: 457819855}
 --- !u!4 &426695569
 Transform:
   m_ObjectHideFlags: 0
@@ -581,7 +581,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1471034329}
-  healthTextValue: {fileID: 0}
+  healthTextValue: {fileID: 1372146689}
+  playerEnergyTextValue: {fileID: 1219747469}
+  playerMaxEnergy: 0
+  playerCurrentEnergy: 0
 --- !u!4 &457819856
 Transform:
   m_ObjectHideFlags: 0
@@ -1669,6 +1672,7 @@ MonoBehaviour:
   roundTextValue: {fileID: 890933218}
   atkOptions: {fileID: 1229351753}
   battleManager: {fileID: 426695568}
+  player: {fileID: 457819855}
 --- !u!4 &1133839542
 Transform:
   m_ObjectHideFlags: 0

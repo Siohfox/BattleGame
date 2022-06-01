@@ -9,6 +9,10 @@ public class Player : Entity
 {
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthTextValue;
+    [SerializeField] private TMP_Text playerEnergyTextValue;
+
+    public int playerMaxEnergy;
+    public int playerCurrentEnergy;
 
     // Start is called before the first frame update
     void Start()
@@ -17,25 +21,20 @@ public class Player : Entity
         healthTextValue = healthBar.GetComponentInChildren<TMP_Text>();
 
         entityMaxHealth = 100;
-        entityCurrentHealth = 2;
+        entityCurrentHealth = 50;
 
         healthTextValue.text = entityCurrentHealth.ToString() + "/" + entityMaxHealth.ToString();
         healthBar.maxValue = entityMaxHealth;
         healthBar.value = entityCurrentHealth;
+
+
+        UpdateEnergy(5, 5);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            UpdateHealth(-1, 0);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            UpdateHealth(0, 1);
-        }
-
         if (entityCurrentHealth <= 0)
         {
             OnDeath();
@@ -63,5 +62,13 @@ public class Player : Entity
         // Show Death Sprite
         GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/DeadCircle");
         // GameState.gameover
+    }
+
+    public void UpdateEnergy(int currentEnergy, int maxEnergy)
+    {
+        playerCurrentEnergy += currentEnergy;
+        playerMaxEnergy += maxEnergy;
+
+        playerEnergyTextValue.text = playerCurrentEnergy.ToString() + "/" + playerMaxEnergy.ToString();
     }
 }

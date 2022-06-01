@@ -19,6 +19,7 @@ namespace BG.Turns
         [SerializeField] private TMP_Text roundTextValue;
         [SerializeField] private GameObject atkOptions;
         [SerializeField] private BattleManager battleManager;
+        [SerializeField] private Player player;
         
 
         // Start is called before the first frame update
@@ -107,6 +108,8 @@ namespace BG.Turns
             else if (turn == TurnType.Enemy)
             {
                 turn = TurnType.Player;
+
+                player.UpdateEnergy(5, 0);
             }
         }
 
