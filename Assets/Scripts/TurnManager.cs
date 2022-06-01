@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using BG.Battle;
 
 namespace BG.Turns
 {
@@ -13,11 +14,11 @@ namespace BG.Turns
         private int roundNumber;
         private TurnType turn;
         private bool enemyTurnDone;
-
-       
+        private bool enemyActionDone;
 
         [SerializeField] private TMP_Text roundTextValue;
         [SerializeField] private GameObject atkOptions;
+        [SerializeField] private BattleManager battleManager;
         
 
         // Start is called before the first frame update
@@ -68,8 +69,19 @@ namespace BG.Turns
         {
             Debug.Log("Enemies' Turn!");
             atkOptions.SetActive(false);
+            enemyActionDone = false;
 
             // Do enemy actions
+            if (!enemyActionDone)
+            {
+                if(battleManager.enemyObjects.Count > 0)
+                {
+                    battleManager.enemyObjects[0].GetComponent<Enemy>().Attack();
+                    enemyTurnDone = true;
+                }
+            }
+            
+
             if (Input.GetKeyDown(KeyCode.P))
             {
                 enemyTurnDone = true;

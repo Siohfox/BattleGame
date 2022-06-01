@@ -43,7 +43,7 @@ public class Player : Entity
     }
 
     // Update both player HP and health bar to match
-    void UpdateHealth(int currentHPChangeValue, int maxHPChangeValue)
+    public void UpdateHealth(int currentHPChangeValue, int maxHPChangeValue)
     {
         // Update player hp:
         if(entityCurrentHealth < entityMaxHealth)

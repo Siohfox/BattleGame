@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using BG.Turns;
 
 namespace BG.Battle 
 {
@@ -24,7 +23,7 @@ namespace BG.Battle
         void Start()
         {
             // Make a bunch of enemies
-            int amountOfEnemiesToMake = 5;
+            int amountOfEnemiesToMake = 1;
             for (int i = 0; i < amountOfEnemiesToMake; i++)
             {
                 GameObject newEnemy = Instantiate(enemyPrefab.gameObject);
@@ -43,9 +42,6 @@ namespace BG.Battle
 
                 enemyObjects[i].transform.position = new Vector3(1 + spacialPos * i, 0, 0);
             }
-
-            
-
             UpdateEnergy(5, 5);
         }
 
@@ -68,36 +64,48 @@ namespace BG.Battle
             switch ((Action)action)
             {
                 case Action.Bite:
-                    // bite
                     if (playerCurrentEnergy > 0)
-                    {
-                        Debug.Log("Biting");
-                        UpdateEnergy(-1, 0);
-                        enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-5, 0);
+                    {           
+                        if(enemyObjects.Count > 0)
+                        {
+                            Debug.Log("Biting");
+                            UpdateEnergy(-1, 0);
+                            enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-5, 0);
+                        }
                     }
                     break;
 
                 case Action.Scratch:
-                    // scratch
                     if (playerCurrentEnergy > 1)
                     {
-                        UpdateEnergy(-2, 0);
-                        enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-10, 0);
-                        Debug.Log("Scratching");
+                        
+                        if (enemyObjects.Count > 0)
+                        {
+                            Debug.Log("Scratching");
+                            UpdateEnergy(-2, 0);
+                            enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-10, 0);
+                        }     
                     }
 
                     break;
 
                 case Action.Defend:
-                    // defend
                     if (playerCurrentEnergy > 1)
                     {
                         Debug.Log("Defending");
                         UpdateEnergy(-1, 0);
                     }
-                    
+
                     break;
 
+                case Action.Howl:
+                    // lower enemy attack
+                    if(playerCurrentEnergy > 1)
+                    {
+
+                    }
+
+                    break;
 
                 default:
                     Debug.LogError("Failed to use proper action when using energy");

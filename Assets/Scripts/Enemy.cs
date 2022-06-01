@@ -11,14 +11,24 @@ public class Enemy : Entity
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthTextValue;
 
+    [SerializeField] private GameObject player;
+
+    private Animator enemyAnimator;
+
+    public int enemyAtkDamage;
+
     // Start is called before the first frame update
     void Start()
     {
         healthBar = GetComponentInChildren<Slider>();
         healthTextValue = healthBar.GetComponentInChildren<TMP_Text>();
+        enemyAnimator = GetComponent<Animator>();
+        player = GameObject.Find("Player");
 
         entityMaxHealth = 70;
         entityCurrentHealth = 5;
+
+        enemyAtkDamage = Random.Range(10, 20);
 
         healthTextValue.text = entityCurrentHealth.ToString() + "/" + entityMaxHealth.ToString();
         healthBar.maxValue = entityMaxHealth;
@@ -48,6 +58,24 @@ public class Enemy : Entity
         healthBar.maxValue = entityMaxHealth;
         healthBar.value = entityCurrentHealth;
         healthTextValue.text = entityCurrentHealth.ToString() + "/" + entityMaxHealth.ToString();
+    }
+
+    public void Attack()
+    {
+
+        enemyAnimator.SetBool("EnemyAttacking", true);
+
+        player.GetComponent<Player>().UpdateHealth(-enemyAtkDamage, 0);
+
+        StartCoroutine(enemyAnim());
+    }
+
+    IEnumerator enemyAnim()
+    {
+        //WaitUntil(() => enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("EnemyBasicAtk"));
+        yield return new WaitForSeconds(2);
+
+        enemyAnimator.SetBool("EnemyAttacking", false);
     }
 
     void OnDeath()

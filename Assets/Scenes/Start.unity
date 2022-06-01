@@ -1668,6 +1668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roundTextValue: {fileID: 890933218}
   atkOptions: {fileID: 1229351753}
+  battleManager: {fileID: 426695568}
 --- !u!4 &1133839542
 Transform:
   m_ObjectHideFlags: 0
