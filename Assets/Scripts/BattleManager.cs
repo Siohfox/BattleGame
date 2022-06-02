@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 namespace BG.Battle 
 {
+    public enum Action { Bite, Scratch, Defend, Hide, Howl };
+
     public class BattleManager : MonoBehaviour
     {
-        public enum Action { Bite, Scratch, Defend, Hide, Howl };
+        
 
         [SerializeField] public List<GameObject> enemyObjects;
 
         [SerializeField] private Enemy enemyPrefab;
+        [SerializeField] private Button actionButtonPrefab;
 
         [SerializeField] private TMP_Text playerEnergyTextValue;
 
@@ -28,6 +32,7 @@ namespace BG.Battle
                 enemyObjects.Add(newEnemy);
             }
 
+            // try to space them out equally i guess (doesn't really work)
             for (int i = 0; i < enemyObjects.Count; i++)
             {
                 int enemyPixelWidth = 1;
@@ -40,6 +45,8 @@ namespace BG.Battle
 
                 enemyObjects[i].transform.position = new Vector3(1 + spacialPos * i, 0, 0);
             }
+
+            CreateBattleButtons();
         }
 
         // Update is called once per frame
@@ -48,9 +55,40 @@ namespace BG.Battle
 
         }
 
-        public void UseEnergy(int action)
+        public void CreateBattleButtons()
         {
-            switch ((Action)action)
+            // Select a random action from entire action enum
+            Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
+
+            // Init last action to be an unreachable number so it doesn't just skip the first select
+            Action lastAction = (Action)1000;
+
+            // Create buttons
+            for (int i = 0; i < 4; i++)
+            {
+                // Instantiate button under parent transform buttonpos + space them out
+                Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 200,0,0), Quaternion.identity, GameObject.Find("ButtonPos").transform);
+
+                // While the action is the same as last, reroll until a new one is found ---- NOTE: MAKE THIS A LIST TO REMOVE FROM LATER
+                while (randomAction == lastAction)
+                {
+                    //Debug.Log("Random action is: " + randomAction.ToString() + "Rerolling...");
+                    randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
+                }
+
+                // Last action becomes random action
+                lastAction = randomAction;
+
+                // Update button to listen to it's new action + update button text to action name ---- NOTE: SEEMS BUGGED (Always uses last action?)
+                button.onClick.AddListener(delegate { UseAction(randomAction); });
+                Debug.Log((int)randomAction);
+                button.GetComponentInChildren<TMP_Text>().text = randomAction.ToString();
+            }
+        }
+
+        public void UseAction(Action action)
+        {
+            switch (action)
             {
                 case Action.Bite:
                     if (player.playerCurrentEnergy > 0)
