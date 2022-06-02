@@ -11,6 +11,7 @@ public class Player : Entity
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthTextValue;
     [SerializeField] private TMP_Text playerEnergyTextValue;
+    [SerializeField] private GameObject shieldPrefab;
 
     [SerializeField] public Animator playerAnimator;
 
@@ -80,13 +81,18 @@ public class Player : Entity
     {
         playerAnimator.SetBool("Attacking", true);
 
-        StartCoroutine(PlayerAnim());
+        StartCoroutine(AtkAnim());
     }
 
-    IEnumerator PlayerAnim()
+    IEnumerator AtkAnim()
     {
         yield return new WaitUntil(() => playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("PlayerBasicAtk"));
 
         playerAnimator.SetBool("Attacking", false);
+    }
+
+    public void Shield()
+    {
+        Instantiate(shieldPrefab, transform);
     }
 }

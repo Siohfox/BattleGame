@@ -584,6 +584,8 @@ MonoBehaviour:
   healthBar: {fileID: 1471034329}
   healthTextValue: {fileID: 1372146689}
   playerEnergyTextValue: {fileID: 1219747469}
+  shieldPrefab: {fileID: 2756302140019096065, guid: b3832028b4bb13a4f94268551bc1031b, type: 3}
+  playerAnimator: {fileID: 0}
   playerMaxEnergy: 0
   playerCurrentEnergy: 0
 --- !u!4 &457819856

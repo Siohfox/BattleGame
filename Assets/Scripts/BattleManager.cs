@@ -86,7 +86,7 @@ namespace BG.Battle
                     if (player.playerCurrentEnergy > 0)
                     {
                         Debug.Log("Defending");
-                        player.Attack();
+                        player.Shield();
                         player.UpdateEnergy(-1, 0);
                     } 
                     else { Debug.Log("Player energy is less than 0"); }
