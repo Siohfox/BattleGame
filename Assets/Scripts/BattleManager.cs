@@ -64,10 +64,10 @@ namespace BG.Battle
             Action lastAction = (Action)1000;
 
             // Create buttons
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
                 // Instantiate button under parent transform buttonpos + space them out
-                Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 200,0,0), Quaternion.identity, GameObject.Find("ButtonPos").transform);
+                Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 250,0,0), Quaternion.identity, GameObject.Find("ButtonPos").transform);
 
                 // While the action is the same as last, reroll until a new one is found ---- NOTE: MAKE THIS A LIST TO REMOVE FROM LATER
                 while (randomAction == lastAction)
