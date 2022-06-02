@@ -4,12 +4,15 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using BG.Entity;
+using System;
 
 public class Player : Entity 
 {
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthTextValue;
     [SerializeField] private TMP_Text playerEnergyTextValue;
+
+    [SerializeField] public Animator playerAnimator;
 
     public int playerMaxEnergy;
     public int playerCurrentEnergy;
@@ -19,6 +22,7 @@ public class Player : Entity
     {
         healthBar = GetComponentInChildren<Slider>();
         healthTextValue = healthBar.GetComponentInChildren<TMP_Text>();
+        playerAnimator = GetComponent<Animator>();
 
         entityMaxHealth = 100;
         entityCurrentHealth = 50;
@@ -70,5 +74,19 @@ public class Player : Entity
         playerMaxEnergy += maxEnergy;
 
         playerEnergyTextValue.text = playerCurrentEnergy.ToString() + "/" + playerMaxEnergy.ToString();
+    }
+
+    public void Attack()
+    {
+        playerAnimator.SetBool("Attacking", true);
+
+        StartCoroutine(PlayerAnim());
+    }
+
+    IEnumerator PlayerAnim()
+    {
+        yield return new WaitUntil(() => playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("PlayerBasicAtk"));
+
+        playerAnimator.SetBool("Attacking", false);
     }
 }

@@ -73,7 +73,7 @@ public class Enemy : Entity
     IEnumerator enemyAnim()
     {
         //WaitUntil(() => enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("EnemyBasicAtk"));
-        yield return new WaitForSeconds(2);
+        yield return new WaitUntil(() => enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("EnemyBasicAtk"));
 
         enemyAnimator.SetBool("EnemyAttacking", false);
     }

@@ -59,9 +59,11 @@ namespace BG.Battle
                         {
                             Debug.Log("Biting");
                             player.UpdateEnergy(-1, 0);
+                            player.Attack();
                             enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-5, 0);
                         }
                     }
+                    else { Debug.Log("Player energy is less than 0"); }
                     break;
 
                 case Action.Scratch:
@@ -72,18 +74,22 @@ namespace BG.Battle
                         {
                             Debug.Log("Scratching");
                             player.UpdateEnergy(-2, 0);
+                            player.Attack();
                             enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-10, 0);
                         }     
-                    }
+                    } 
+                    else { Debug.Log("Player energy is less than 0"); }
 
                     break;
 
                 case Action.Defend:
-                    if (player.playerCurrentEnergy > 1)
+                    if (player.playerCurrentEnergy > 0)
                     {
                         Debug.Log("Defending");
+                        player.Attack();
                         player.UpdateEnergy(-1, 0);
-                    }
+                    } 
+                    else { Debug.Log("Player energy is less than 0"); }
 
                     break;
 
@@ -93,6 +99,7 @@ namespace BG.Battle
                     {
                         player.UpdateEnergy(-1, 0);
                     }
+                    else { Debug.Log("Player energy is less than 0"); }
 
                     break;
 
