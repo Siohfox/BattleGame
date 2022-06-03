@@ -54,12 +54,10 @@ namespace BG.Turns
 
             if (roundStarted && turn == TurnType.Enemy)
             {
-                
                 if(!enemyActionDone)
                 {
                     StartCoroutine(EnemyTurn());
                     enemyActionDone = true;
-                    Debug.Log("AAAAAAAAAAA");
                 }
             }
         }

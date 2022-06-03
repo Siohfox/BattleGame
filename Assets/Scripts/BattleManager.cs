@@ -58,11 +58,10 @@ namespace BG.Battle
             
         }
 
-
-        // >>> PERHAPS ISSUE IS SOMETHING TO DO WITH THE BUTTON PREFAB INSTANTIATION!! <<<<
         public void CreateBattleButtons()
         {
-            
+
+            List<int> usedActions = new List<int>();
 
             // Create buttons
             for (int i = 0; i < 3; i++)
@@ -70,23 +69,21 @@ namespace BG.Battle
                 // Select a random action from entire action enum
                 Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
 
-                // Init last action to be an unreachable number so it doesn't just skip the first select
-                Action lastAction = (Action)1000;
-
                 // Instantiate button under parent transform buttonpos + space them out
                 Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 250,0,0), Quaternion.identity, GameObject.Find("ButtonPos").transform);
 
-                // While the action is the same as last, reroll until a new one is found ---- NOTE: MAKE THIS A LIST TO REMOVE FROM LATER
-                while (randomAction == lastAction)
+                // For each used action, if random action is a dupe, reroll
+                for (int j = 0; j < usedActions.Count; j++)
                 {
-                    //Debug.Log("Random action is: " + randomAction.ToString() + "Rerolling...");
-                    randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
+                    if ((int)randomAction == usedActions[j])
+                    {
+                        randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
+                    }
                 }
 
-                // Last action becomes random action
-                lastAction = randomAction;
+                usedActions.Add((int)randomAction);
 
-                // Update button to listen to it's new action + update button text to action name
+                //// Update button to listen to it's new action + update button text to action name
                 button.onClick.AddListener(delegate { UseAction(randomAction); });
                 button.GetComponentInChildren<TMP_Text>().text = randomAction.ToString();
             }

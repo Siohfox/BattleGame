@@ -456,6 +456,12 @@ MonoBehaviour:
   actionButtonPrefab: {fileID: 518045260910250241, guid: ca1c76e0891fb73449bfc8749ec1d50b, type: 3}
   playerEnergyTextValue: {fileID: 1219747469}
   player: {fileID: 457819855}
+  actionList:
+  - Bite
+  - Scratch
+  - Defend
+  - Hide
+  - Howl
 --- !u!4 &426695569
 Transform:
   m_ObjectHideFlags: 0
@@ -1855,6 +1861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundTextValue: {fileID: 890933218}
+  endTurnButton: {fileID: 1686787494}
   atkOptions: {fileID: 1229351753}
   battleManager: {fileID: 426695568}
   player: {fileID: 457819855}
