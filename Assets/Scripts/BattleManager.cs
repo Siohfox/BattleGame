@@ -13,7 +13,9 @@ namespace BG.Battle
     {
         
 
-        [SerializeField] public List<GameObject> enemyObjects;
+        public List<GameObject> enemyObjects;
+
+        public List<Button> atkButtons;
 
         [SerializeField] private Enemy enemyPrefab;
         [SerializeField] private Button actionButtonPrefab;
@@ -48,8 +50,6 @@ namespace BG.Battle
 
                 enemyObjects[i].transform.position = new Vector3(1 + spacialPos * i, 0, 0);
             }
-
-            CreateBattleButtons();
         }
 
         // Update is called once per frame
@@ -60,17 +60,20 @@ namespace BG.Battle
 
         public void CreateBattleButtons()
         {
+            // Before creating any new buttons, remove any null buttons (e.g buttons that have been destroyed)
+            atkButtons.RemoveAll(s => s == null);
 
+            // Create a list to store actions that have been used
             List<int> usedActions = new List<int>();
 
             // Create buttons
             for (int i = 0; i < 3; i++)
             {
-                // Select a random action from entire action enum
+                // Select a random action from entire Action enum
                 Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
 
-                // Instantiate button under parent transform buttonpos + space them out
-                Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 250,0,0), Quaternion.identity, GameObject.Find("ButtonPos").transform);
+                // Instantiate button under parent transform buttonpos + space them out from left to right
+                Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 190,0,0), Quaternion.identity, GameObject.Find("ButtonPos").transform);
 
                 // For each used action, if random action is a dupe, reroll
                 for (int j = 0; j < usedActions.Count; j++)
@@ -81,18 +84,20 @@ namespace BG.Battle
                     }
                 }
 
+                // After the loop, add the action used to the used list so it can't reuse it
                 usedActions.Add((int)randomAction);
 
-                //// Update button to listen to it's new action + update button text to action name
+                // Update button to listen to it's new action + update button text to action name
                 button.onClick.AddListener(delegate { UseAction(randomAction); });
                 button.GetComponentInChildren<TMP_Text>().text = randomAction.ToString();
-            }
 
+                // Add button to a list of buttons so they can be removed and replaced later
+                atkButtons.Add(button);
+            }
         }
 
         public void UseAction(Action action)
         {
-            Debug.Log("Action passed in: " + action.ToString());
             switch (action)
             {
                 case Action.Bite:
@@ -136,9 +141,19 @@ namespace BG.Battle
 
                     break;
 
+                case Action.Hide:
+                    // lower enemy attack
+                    if(player.playerCurrentEnergy > 0)
+                    {
+                        player.UpdateEnergy(-1, 0);
+                    }
+                    else { Debug.Log("Player energy is less than 0"); }
+
+                    break;
+
                 case Action.Howl:
                     // lower enemy attack
-                    if(player.playerCurrentEnergy > 1)
+                    if (player.playerCurrentEnergy > 0)
                     {
                         player.UpdateEnergy(-1, 0);
                     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using BG.Battle;
+using UnityEngine.UI;
 
 namespace BG.Turns
 {
@@ -15,6 +16,7 @@ namespace BG.Turns
         private TurnType turn;
         private bool enemyTurnDone;
         private bool enemyActionDone;
+        private bool playerDoOnce;
 
         [SerializeField] private TMP_Text roundTextValue;
         [SerializeField] private GameObject endTurnButton;
@@ -38,6 +40,8 @@ namespace BG.Turns
 
             enemyActionDone = false;
 
+            playerDoOnce = true;
+
         }
 
         // Update is called once per frame
@@ -46,10 +50,6 @@ namespace BG.Turns
             if (roundStarted && turn == TurnType.Player)
             {
                 PlayerTurn();
-                if(enemyActionDone)
-                {
-                    enemyActionDone = false;
-                }
             }
 
             if (roundStarted && turn == TurnType.Enemy)
@@ -74,23 +74,44 @@ namespace BG.Turns
         private void PlayerTurn()
         {
             Debug.Log("Player's Turn!");
-            atkOptions.SetActive(true);
+            if (enemyActionDone)
+            {
+                enemyActionDone = false;
+            }
+
+            if(playerDoOnce)
+            {
+                atkOptions.SetActive(true);
+                battleManager.CreateBattleButtons();
+
+                // Redundant object cleanup
+                GameObject[] redundantObjs = GameObject.FindGameObjectsWithTag("Redundant");
+                foreach(GameObject obj in redundantObjs)
+                {
+                    Destroy(obj);
+                }
+
+                playerDoOnce = false;
+            } 
         }
 
         IEnumerator EnemyTurn()
         {
             Debug.Log("Enemies' Turn!");
+
+
             atkOptions.SetActive(false);
-            
+            foreach (Button atkbtn in battleManager.atkButtons)
+            {
+                Destroy(atkbtn.gameObject);
+            }
 
             // Do enemy actions
-
-            if(battleManager.enemyObjects.Count > 0)
+            if (battleManager.enemyObjects.Count > 0)
             {
                 battleManager.enemyObjects[0].GetComponent<Enemy>().Attack();
                 enemyTurnDone = true;
-            }
-
+            } else { Debug.LogError("No more enemies to perform actions. They're all dead!"); }
 
             yield return new WaitForSeconds(3);
 
@@ -101,6 +122,7 @@ namespace BG.Turns
                 UpdateTurnText();
                 EndTurn();
                 enemyTurnDone = false;
+                playerDoOnce = true;
             }
         }
 

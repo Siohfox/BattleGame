@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2756302140019096064}
   m_Layer: 0
   m_Name: Shield
-  m_TagString: Untagged
+  m_TagString: Redundant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

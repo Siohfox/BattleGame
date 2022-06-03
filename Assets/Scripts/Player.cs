@@ -91,6 +91,7 @@ public class Player : Entity
         playerAnimator.SetBool("Attacking", false);
     }
 
+    // Shields will stay attached to player... remember to remove later
     public void Shield()
     {
         Instantiate(shieldPrefab, transform);
