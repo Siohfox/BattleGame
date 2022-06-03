@@ -102,7 +102,7 @@ namespace BG.Battle
                             Debug.Log("Biting");
                             player.UpdateEnergy(-1, 0);
                             player.Attack();
-                            enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-5, 0);
+                            enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-(Random.Range(1,7)), 0);
                         }
                     }
                     else { Debug.Log("Player energy is less than 0"); }
@@ -117,7 +117,7 @@ namespace BG.Battle
                             Debug.Log("Scratching");
                             player.UpdateEnergy(-2, 0);
                             player.Attack();
-                            enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-10, 0);
+                            enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-(Random.Range(4, 16)), 0);
                         }     
                     } 
                     else { Debug.Log("Player energy is less than 0"); }
@@ -129,7 +129,7 @@ namespace BG.Battle
                     {
                         Debug.Log("Defending");
                         player.Shield();
-                        player.UpdateShield(10);
+                        player.UpdateShield(Random.Range(2,8));
                         player.UpdateEnergy(-1, 0);
                     } 
                     else { Debug.Log("Player energy is less than 0"); }
