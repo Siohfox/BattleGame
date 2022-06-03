@@ -145,6 +145,7 @@ namespace BG.Battle
                         if(player.playerState == Player.State.Hidden)
                         {
                             player.playerStateIcon.SetActive(true);
+                            player.gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
                         }
                         player.UpdateEnergy(-4, 0);
 
@@ -158,6 +159,7 @@ namespace BG.Battle
                     // lower enemy attack
                     if (player.playerCurrentEnergy > 0)
                     {
+                        enemyObjects[0].GetComponent<Enemy>().UpdateAttack(-Random.Range(1, 8));  
                         player.UpdateEnergy(-1, 0);
                     }
                     else { Debug.Log("Player energy is less than 0"); }

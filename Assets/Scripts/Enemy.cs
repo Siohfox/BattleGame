@@ -116,9 +116,21 @@ public class Enemy : Entity
         enemyAnimator.SetBool("EnemyAttacking", false);
     }
 
-    public void UpdateAttack()
+    public void UpdateAttack(int AtkChange)
     {
-        enemyAtkDamage = Random.Range(10, 20);
+        if (AtkChange == 0)
+        {
+            enemyAtkDamage = Random.Range(10, 20);
+        }
+        else
+        {
+            enemyAtkDamage += AtkChange;
+        }
+
+        if (enemyAtkDamage < 0)
+        {
+            enemyAtkDamage = 0;
+        }
 
         actionQuantityValText.text = enemyAtkDamage.ToString();
     }
