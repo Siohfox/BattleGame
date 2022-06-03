@@ -149,12 +149,12 @@ public class SettingsMenu : MonoBehaviour
         }
     }
 
-    public void playClick()
+    public void PlayClick()
 	{
         src.PlayOneShot(uiClick);
 	}
 
-    public void playHover()
+    public void PlayHover()
 	{
         src.PlayOneShot(uiHover);
 	}

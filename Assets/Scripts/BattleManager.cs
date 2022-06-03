@@ -52,12 +52,6 @@ namespace BG.Battle
             }
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
-
         public void CreateBattleButtons()
         {
             // Before creating any new buttons, remove any null buttons (e.g buttons that have been destroyed)
