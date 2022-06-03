@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BG.Battle 
 {
-    public enum Action { Bite, Scratch, Defend, Hide, Howl };
+    public enum Action { Bite, Scratch, Defend, Hide, Howl, Sprint };
 
     public class BattleManager : MonoBehaviour
     {
@@ -23,12 +23,15 @@ namespace BG.Battle
         [SerializeField] private TMP_Text playerEnergyTextValue;
 
         [SerializeField] private Player player;
+        public int playerDefenceBonus;
 
         public List<string> actionList = System.Enum.GetNames(typeof(Action)).ToList();
 
         // Start is called before the first frame update
         void Start()
         {
+            playerDefenceBonus = 1;
+
             // Make a bunch of enemies
             int amountOfEnemiesToMake = 1;
             for (int i = 0; i < amountOfEnemiesToMake; i++)
@@ -129,7 +132,7 @@ namespace BG.Battle
                     {
                         Debug.Log("Defending");
                         player.Shield();
-                        player.UpdateShield(Random.Range(2,8));
+                        player.UpdateShield(Random.Range(2 * playerDefenceBonus, 8 * playerDefenceBonus));
                         player.UpdateEnergy(-1, 0);
                     } 
                     else { Debug.Log("Player energy is less than 0"); }
@@ -160,6 +163,17 @@ namespace BG.Battle
                     if (player.playerCurrentEnergy > 0)
                     {
                         enemyObjects[0].GetComponent<Enemy>().UpdateAttack(-Random.Range(1, 8));  
+                        player.UpdateEnergy(-1, 0);
+                    }
+                    else { Debug.Log("Player energy is less than 0"); }
+
+                    break;
+
+                case Action.Sprint:
+                    // lower enemy attack
+                    if (player.playerCurrentEnergy > 0)
+                    {
+                        playerDefenceBonus = 2;
                         player.UpdateEnergy(-1, 0);
                     }
                     else { Debug.Log("Player energy is less than 0"); }

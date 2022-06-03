@@ -142,6 +142,7 @@ namespace BG.Turns
                 player.playerState = Player.State.Normal;
                 player.playerStateIcon.SetActive(false);
                 player.gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                battleManager.playerDefenceBonus = 1;
 
                 if (player.playerCurrentEnergy < player.playerMaxEnergy)
                 {
