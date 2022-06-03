@@ -129,26 +129,6 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // Switches between controls and settings
-    public void SwitchSetting(int setting)
-    {
-        if(setting == 0)
-        {
-            settingsCanvas.SetActive(true);
-            controlsCanvas.SetActive(false);
-        }
-        if (setting == 1)
-        {
-            settingsCanvas.SetActive(false);
-            controlsCanvas.SetActive(true);
-        }
-        if(setting == 2)
-        {
-            settingsCanvas.SetActive(false);
-            controlsCanvas.SetActive(false);
-        }
-    }
-
     public void PlayClick()
 	{
         src.PlayOneShot(uiClick);

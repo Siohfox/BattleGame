@@ -65,14 +65,30 @@ public class Enemy : Entity
 
         enemyAnimator.SetBool("EnemyAttacking", true);
 
-        player.GetComponent<Player>().UpdateHealth(-(enemyAtkDamage - player.playerCurrentShield), 0);
+        if (enemyAtkDamage > player.playerCurrentShield)
+        {
+            Debug.Log("Enemy damage more than player current shield, break it");
+            // find dif between atk dmg and players shield. (13 attack - 8 shield = 5 leftover)
+            int dif = enemyAtkDamage - player.playerCurrentShield;
 
-        StartCoroutine(enemyAnim());
+            // remove shield entirely
+            player.UpdateShield(-player.playerCurrentShield);
+
+            // apply leftover damage
+            player.UpdateHealth(-dif, 0);
+        }
+        else if(enemyAtkDamage <= player.playerCurrentShield)
+        {
+            player.UpdateShield(-enemyAtkDamage);
+        }
+
+       
+
+        StartCoroutine(EnemyAnim());
     }
 
-    IEnumerator enemyAnim()
+    IEnumerator EnemyAnim()
     {
-        //WaitUntil(() => enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("EnemyBasicAtk"));
         yield return new WaitUntil(() => enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("EnemyBasicAtk"));
 
         enemyAnimator.SetBool("EnemyAttacking", false);
