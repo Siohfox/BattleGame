@@ -109,7 +109,10 @@ namespace BG.Turns
             {
                 turn = TurnType.Player;
 
-                player.UpdateEnergy(5, 0);
+                if(player.playerCurrentEnergy < player.playerMaxEnergy)
+                {
+                    player.UpdateEnergy(player.playerMaxEnergy - player.playerCurrentEnergy, 0);
+                }
             }
         }
 
