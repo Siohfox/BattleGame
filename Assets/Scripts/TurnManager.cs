@@ -139,12 +139,12 @@ namespace BG.Turns
             {
                 turn = TurnType.Player;
                 endTurnButton.SetActive(true);
+                player.playerState = Player.State.Normal;
 
                 if (player.playerCurrentEnergy < player.playerMaxEnergy)
                 {
                     player.UpdateEnergy(player.playerMaxEnergy - player.playerCurrentEnergy, 0);
                 }
-
 
                 for (int i = 0; i < battleManager.enemyObjects.Count; i++)
                 {

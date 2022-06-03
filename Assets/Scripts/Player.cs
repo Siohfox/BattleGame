@@ -8,11 +8,15 @@ using System;
 
 public class Player : Entity 
 {
+    public enum State { Normal, Hidden };
+
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthTextValue;
     [SerializeField] private TMP_Text playerEnergyTextValue;
     [SerializeField] private TMP_Text playerShieldTextValue;
     [SerializeField] private GameObject shieldPrefab;
+
+    public State playerState;
 
     private Animator playerAnimator;
 
@@ -38,6 +42,7 @@ public class Player : Entity
         UpdateEnergy(5, 5);
         UpdateShield(0);
 
+        playerState = State.Normal;
     }
 
     // Update is called once per frame

@@ -138,9 +138,13 @@ namespace BG.Battle
 
                 case Action.Hide:
                     // lower enemy attack
-                    if(player.playerCurrentEnergy > 0)
+                    if(player.playerCurrentEnergy > 3)
                     {
-                        player.UpdateEnergy(-1, 0);
+                        Debug.Log("Hiding");
+                        player.playerState = Player.State.Hidden;
+                        player.UpdateEnergy(-4, 0);
+
+                        Debug.Log("Player state is: " + player.playerState);
                     }
                     else { Debug.Log("Player energy is less than 0"); }
 

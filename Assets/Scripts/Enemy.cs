@@ -68,6 +68,29 @@ public class Enemy : Entity
 
         enemyAnimator.SetBool("EnemyAttacking", true);
 
+        if(player.playerState == Player.State.Hidden)
+        {
+            int hitOrMiss = Random.Range(0, 4);
+            if(hitOrMiss < 1) // 20% chance of being hit
+            {
+                Debug.Log("Player found, hitting anyway");
+                CalculateDamage();
+            }
+            else
+            {
+                Debug.Log("Missed because player hidden");
+            }
+        }
+        else
+        {
+            CalculateDamage();
+        }
+        
+        StartCoroutine(EnemyAnim());
+    }
+
+    void CalculateDamage()
+    {
         if (enemyAtkDamage > player.playerCurrentShield)
         {
             Debug.Log("Enemy damage more than player current shield, break it");
@@ -80,11 +103,10 @@ public class Enemy : Entity
             // apply leftover damage
             player.UpdateHealth(-dif, 0);
         }
-        else if(enemyAtkDamage <= player.playerCurrentShield)
+        else if (enemyAtkDamage <= player.playerCurrentShield)
         {
             player.UpdateShield(-enemyAtkDamage);
         }
-        StartCoroutine(EnemyAnim());
     }
 
     IEnumerator EnemyAnim()
