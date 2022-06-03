@@ -140,6 +140,7 @@ namespace BG.Turns
                 turn = TurnType.Player;
                 endTurnButton.SetActive(true);
                 player.playerState = Player.State.Normal;
+                player.playerStateIcon.SetActive(false);
 
                 if (player.playerCurrentEnergy < player.playerMaxEnergy)
                 {

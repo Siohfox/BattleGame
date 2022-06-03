@@ -142,6 +142,10 @@ namespace BG.Battle
                     {
                         Debug.Log("Hiding");
                         player.playerState = Player.State.Hidden;
+                        if(player.playerState == Player.State.Hidden)
+                        {
+                            player.playerStateIcon.SetActive(true);
+                        }
                         player.UpdateEnergy(-4, 0);
 
                         Debug.Log("Player state is: " + player.playerState);

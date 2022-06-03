@@ -15,6 +15,7 @@ public class Player : Entity
     [SerializeField] private TMP_Text playerEnergyTextValue;
     [SerializeField] private TMP_Text playerShieldTextValue;
     [SerializeField] private GameObject shieldPrefab;
+    [SerializeField] public GameObject playerStateIcon;
 
     public State playerState;
 
