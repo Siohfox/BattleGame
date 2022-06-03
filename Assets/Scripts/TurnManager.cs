@@ -144,6 +144,13 @@ namespace BG.Turns
                 {
                     player.UpdateEnergy(player.playerMaxEnergy - player.playerCurrentEnergy, 0);
                 }
+
+
+                for (int i = 0; i < battleManager.enemyObjects.Count; i++)
+                {
+                    battleManager.enemyObjects[i].GetComponent<Enemy>().UpdateAttack();
+                }
+                
             }
         }
 

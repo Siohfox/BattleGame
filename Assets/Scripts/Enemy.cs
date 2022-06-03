@@ -10,6 +10,7 @@ public class Enemy : Entity
 {
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthTextValue;
+    [SerializeField] private TMP_Text actionQuantityValText;
 
     [SerializeField] private Player player;
 
@@ -33,6 +34,8 @@ public class Enemy : Entity
         healthTextValue.text = entityCurrentHealth.ToString() + "/" + entityMaxHealth.ToString();
         healthBar.maxValue = entityMaxHealth;
         healthBar.value = entityCurrentHealth;
+
+        actionQuantityValText.text = enemyAtkDamage.ToString();
     }
 
     // Update is called once per frame
@@ -81,9 +84,6 @@ public class Enemy : Entity
         {
             player.UpdateShield(-enemyAtkDamage);
         }
-
-       
-
         StartCoroutine(EnemyAnim());
     }
 
@@ -94,9 +94,16 @@ public class Enemy : Entity
         enemyAnimator.SetBool("EnemyAttacking", false);
     }
 
+    public void UpdateAttack()
+    {
+        enemyAtkDamage = Random.Range(10, 20);
+
+        actionQuantityValText.text = enemyAtkDamage.ToString();
+    }
+
     void OnDeath()
     {
-        // remove self from 
+        // remove self from remaining enemies list
         GameObject.Find("BattleManager").GetComponent<BattleManager>().enemyObjects.Remove(gameObject);
 
         Destroy(gameObject);

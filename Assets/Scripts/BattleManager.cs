@@ -67,7 +67,7 @@ namespace BG.Battle
                 Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
 
                 // Instantiate button under parent transform buttonpos + space them out from left to right
-                Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 190,0,0), Quaternion.identity, GameObject.Find("ButtonPos").transform);
+                Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 550,0,0), Quaternion.identity, GameObject.Find("ButtonPos").transform);
 
                 // For each used action, if random action is a dupe, reroll
                 for (int j = 0; j < usedActions.Count; j++)
