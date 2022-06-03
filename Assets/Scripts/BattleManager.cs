@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
 namespace BG.Battle 
 {
@@ -20,6 +21,8 @@ namespace BG.Battle
         [SerializeField] private TMP_Text playerEnergyTextValue;
 
         [SerializeField] private Player player;
+
+        public List<string> actionList = System.Enum.GetNames(typeof(Action)).ToList();
 
         // Start is called before the first frame update
         void Start()
@@ -52,20 +55,24 @@ namespace BG.Battle
         // Update is called once per frame
         void Update()
         {
-
+            Debug.Log(actionList.Count());
         }
 
+
+        // >>> PERHAPS ISSUE IS SOMETHING TO DO WITH THE BUTTON PREFAB INSTANTIATION!! <<<<
         public void CreateBattleButtons()
         {
-            // Select a random action from entire action enum
-            Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
-
-            // Init last action to be an unreachable number so it doesn't just skip the first select
-            Action lastAction = (Action)1000;
+            
 
             // Create buttons
             for (int i = 0; i < 3; i++)
             {
+                // Select a random action from entire action enum
+                Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
+
+                // Init last action to be an unreachable number so it doesn't just skip the first select
+                Action lastAction = (Action)1000;
+
                 // Instantiate button under parent transform buttonpos + space them out
                 Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 250,0,0), Quaternion.identity, GameObject.Find("ButtonPos").transform);
 
@@ -79,15 +86,16 @@ namespace BG.Battle
                 // Last action becomes random action
                 lastAction = randomAction;
 
-                // Update button to listen to it's new action + update button text to action name ---- NOTE: SEEMS BUGGED (Always uses last action?)
+                // Update button to listen to it's new action + update button text to action name
                 button.onClick.AddListener(delegate { UseAction(randomAction); });
-                Debug.Log((int)randomAction);
                 button.GetComponentInChildren<TMP_Text>().text = randomAction.ToString();
             }
+
         }
 
         public void UseAction(Action action)
         {
+            Debug.Log("Action passed in: " + action.ToString());
             switch (action)
             {
                 case Action.Bite:
