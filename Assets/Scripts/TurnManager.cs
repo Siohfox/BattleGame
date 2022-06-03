@@ -17,6 +17,7 @@ namespace BG.Turns
         private bool enemyActionDone;
 
         [SerializeField] private TMP_Text roundTextValue;
+        [SerializeField] private GameObject endTurnButton;
         [SerializeField] private GameObject atkOptions;
         [SerializeField] private BattleManager battleManager;
         [SerializeField] private Player player;
@@ -34,7 +35,9 @@ namespace BG.Turns
             UpdateTurnText();
 
             StartNewRound();
-            
+
+            enemyActionDone = false;
+
         }
 
         // Update is called once per frame
@@ -43,11 +46,21 @@ namespace BG.Turns
             if (roundStarted && turn == TurnType.Player)
             {
                 PlayerTurn();
+                if(enemyActionDone)
+                {
+                    enemyActionDone = false;
+                }
             }
 
             if (roundStarted && turn == TurnType.Enemy)
             {
-                EnemyTurn();
+                
+                if(!enemyActionDone)
+                {
+                    StartCoroutine(EnemyTurn());
+                    enemyActionDone = true;
+                    Debug.Log("AAAAAAAAAAA");
+                }
             }
         }
 
@@ -66,28 +79,22 @@ namespace BG.Turns
             atkOptions.SetActive(true);
         }
 
-        private void EnemyTurn()
+        IEnumerator EnemyTurn()
         {
             Debug.Log("Enemies' Turn!");
             atkOptions.SetActive(false);
-            enemyActionDone = false;
-
-            // Do enemy actions
-            if (!enemyActionDone)
-            {
-                if(battleManager.enemyObjects.Count > 0)
-                {
-                    battleManager.enemyObjects[0].GetComponent<Enemy>().Attack();
-                    enemyTurnDone = true;
-                }
-            }
             
 
-            if (Input.GetKeyDown(KeyCode.P))
+            // Do enemy actions
+
+            if(battleManager.enemyObjects.Count > 0)
             {
+                battleManager.enemyObjects[0].GetComponent<Enemy>().Attack();
                 enemyTurnDone = true;
             }
 
+
+            yield return new WaitForSeconds(3);
 
             // When complete, end turn & round
             if (enemyTurnDone)
@@ -104,12 +111,14 @@ namespace BG.Turns
             if(turn == TurnType.Player)
             {
                 turn = TurnType.Enemy;
+                endTurnButton.SetActive(false);
             }
             else if (turn == TurnType.Enemy)
             {
                 turn = TurnType.Player;
+                endTurnButton.SetActive(true);
 
-                if(player.playerCurrentEnergy < player.playerMaxEnergy)
+                if (player.playerCurrentEnergy < player.playerMaxEnergy)
                 {
                     player.UpdateEnergy(player.playerMaxEnergy - player.playerCurrentEnergy, 0);
                 }
