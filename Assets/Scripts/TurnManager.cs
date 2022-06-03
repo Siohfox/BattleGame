@@ -84,6 +84,8 @@ namespace BG.Turns
                 atkOptions.SetActive(true);
                 battleManager.CreateBattleButtons();
 
+                player.UpdateShield(-player.playerCurrentShield);
+
                 // Redundant object cleanup
                 GameObject[] redundantObjs = GameObject.FindGameObjectsWithTag("Redundant");
                 foreach(GameObject obj in redundantObjs)
@@ -113,7 +115,7 @@ namespace BG.Turns
                 enemyTurnDone = true;
             } else { Debug.LogError("No more enemies to perform actions. They're all dead!"); }
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(2);
 
             // When complete, end turn & round
             if (enemyTurnDone)

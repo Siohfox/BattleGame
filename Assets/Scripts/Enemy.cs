@@ -11,7 +11,7 @@ public class Enemy : Entity
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthTextValue;
 
-    [SerializeField] private GameObject player;
+    [SerializeField] private Player player;
 
     private Animator enemyAnimator;
 
@@ -23,7 +23,7 @@ public class Enemy : Entity
         healthBar = GetComponentInChildren<Slider>();
         healthTextValue = healthBar.GetComponentInChildren<TMP_Text>();
         enemyAnimator = GetComponent<Animator>();
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Player").GetComponent<Player>();
 
         entityMaxHealth = 70;
         entityCurrentHealth = 50;
@@ -65,7 +65,7 @@ public class Enemy : Entity
 
         enemyAnimator.SetBool("EnemyAttacking", true);
 
-        player.GetComponent<Player>().UpdateHealth(-enemyAtkDamage, 0);
+        player.GetComponent<Player>().UpdateHealth(-(enemyAtkDamage - player.playerCurrentShield), 0);
 
         StartCoroutine(enemyAnim());
     }

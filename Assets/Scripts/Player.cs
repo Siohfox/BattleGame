@@ -11,12 +11,15 @@ public class Player : Entity
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthTextValue;
     [SerializeField] private TMP_Text playerEnergyTextValue;
+    [SerializeField] private TMP_Text playerShieldTextValue;
     [SerializeField] private GameObject shieldPrefab;
 
-    [SerializeField] public Animator playerAnimator;
+    private Animator playerAnimator;
 
     public int playerMaxEnergy;
     public int playerCurrentEnergy;
+
+    public int playerCurrentShield;
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +35,8 @@ public class Player : Entity
         healthBar.maxValue = entityMaxHealth;
         healthBar.value = entityCurrentHealth;
 
-
         UpdateEnergy(5, 5);
+        UpdateShield(0);
 
     }
 
@@ -75,6 +78,13 @@ public class Player : Entity
         playerMaxEnergy += maxEnergy;
 
         playerEnergyTextValue.text = playerCurrentEnergy.ToString() + "/" + playerMaxEnergy.ToString();
+    }
+
+    public void UpdateShield(int shieldAmount)
+    {
+        playerCurrentShield += shieldAmount;
+
+        playerShieldTextValue.text = playerCurrentShield.ToString();
     }
 
     public void Attack()

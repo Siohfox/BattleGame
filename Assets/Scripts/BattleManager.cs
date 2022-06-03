@@ -135,6 +135,7 @@ namespace BG.Battle
                     {
                         Debug.Log("Defending");
                         player.Shield();
+                        player.UpdateShield(10);
                         player.UpdateEnergy(-1, 0);
                     } 
                     else { Debug.Log("Player energy is less than 0"); }
