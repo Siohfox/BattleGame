@@ -68,7 +68,7 @@ public class Enemy : Entity
 
         enemyAnimator.SetBool("EnemyAttacking", true);
 
-        if(player.playerState == Player.State.Hidden)
+        if(player.playerState[0] == Player.State.Hidden)
         {
             int hitOrMiss = Random.Range(0, 4);
             if(hitOrMiss < 1) // 20% chance of being hit

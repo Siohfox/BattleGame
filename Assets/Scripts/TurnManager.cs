@@ -139,7 +139,7 @@ namespace BG.Turns
             {
                 turn = TurnType.Player;
                 endTurnButton.SetActive(true);
-                player.playerState = Player.State.Normal;
+                player.playerState[0] = Player.State.Normal;
                 player.playerStateIcon.SetActive(false);
                 player.gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 battleManager.playerDefenceBonus = 1;
@@ -147,6 +147,11 @@ namespace BG.Turns
                 if (player.playerCurrentEnergy < player.playerMaxEnergy)
                 {
                     player.UpdateEnergy(player.playerMaxEnergy - player.playerCurrentEnergy, 0);
+                }
+
+                if(player.playerState[1] == Player.State.Energized)
+                {
+                    player.UpdateEnergy(1,0);
                 }
 
                 for (int i = 0; i < battleManager.enemyObjects.Count; i++)

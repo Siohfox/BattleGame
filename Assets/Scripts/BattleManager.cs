@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BG.Battle 
 {
-    public enum Action { Bite, Scratch, Defend, Hide, Howl, Sprint };
+    public enum Action { Bite, Scratch, Defend, Hide, Howl, Sprint, Prepare };
 
     public class BattleManager : MonoBehaviour
     {
@@ -64,7 +64,7 @@ namespace BG.Battle
             List<int> usedActions = new List<int>();
 
             // Create buttons
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 // Select a random action from entire Action enum
                 Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
@@ -144,15 +144,15 @@ namespace BG.Battle
                     if(player.playerCurrentEnergy > 3)
                     {
                         Debug.Log("Hiding");
-                        player.playerState = Player.State.Hidden;
-                        if(player.playerState == Player.State.Hidden)
+                        player.playerState[0] = Player.State.Hidden;
+                        if(player.playerState[0] == Player.State.Hidden)
                         {
                             player.playerStateIcon.SetActive(true);
                             player.gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
                         }
                         player.UpdateEnergy(-4, 0);
 
-                        Debug.Log("Player state is: " + player.playerState);
+                        Debug.Log("Player state is: " + player.playerState[0]);
                     }
                     else { Debug.Log("Player energy is less than 0"); }
 
@@ -174,6 +174,22 @@ namespace BG.Battle
                     if (player.playerCurrentEnergy > 0)
                     {
                         playerDefenceBonus = 2;
+                        player.UpdateEnergy(-1, 0);
+                    }
+                    else { Debug.Log("Player energy is less than 0"); }
+
+                    break;
+
+                case Action.Prepare:
+                    // lower enemy attack
+                    if (player.playerCurrentEnergy > 0)
+                    {
+                        player.playerState[1] = Player.State.Energized;
+                        if(player.playerState[1] == Player.State.Energized)
+                        {
+                            // Set icon thingy
+                            player.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 1.0f, 0.0f, 0.5f);
+                        }
                         player.UpdateEnergy(-1, 0);
                     }
                     else { Debug.Log("Player energy is less than 0"); }
