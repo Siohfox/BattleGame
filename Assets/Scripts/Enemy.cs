@@ -93,7 +93,6 @@ public class Enemy : Entity
     {
         if (enemyAtkDamage > player.playerCurrentShield)
         {
-            Debug.Log("Enemy damage more than player current shield, break it");
             // find dif between atk dmg and players shield. (13 attack - 8 shield = 5 leftover)
             int dif = enemyAtkDamage - player.playerCurrentShield;
 

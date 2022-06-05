@@ -2520,10 +2520,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec98b55a68534e47a74af0b512ea3b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 16
-  height: 9
+  width: 8
+  height: 8
+  mapObject: {fileID: 1727988387}
   tilePrefab: {fileID: 2041666658287751354, guid: 0d328741687580e488037da38ae1c10c, type: 3}
   backgroundImage: {fileID: 6439837052101868937, guid: ac04ebb23aa49c448906705e5691bc7f, type: 3}
+  offsetX: 190
+  offsetY: 90
+  tileSpacingX: 50
+  tileSpacingY: 50
 --- !u!4 &1602802792
 Transform:
   m_ObjectHideFlags: 0

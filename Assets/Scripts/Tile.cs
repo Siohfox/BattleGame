@@ -1,18 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Color baseColour, offsetColour;
+    [SerializeField] private Image image;
+    [SerializeField] private GameObject highlight;
+
+    private void Awake()
     {
-        
+        image = gameObject.GetComponent<Image>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Init(bool isOffset)
     {
-        
+        image.color = isOffset ? offsetColour : baseColour;
+    }
+
+    private void OnMouseEnter()
+    {
+        Debug.Log("mousey");
+        highlight.SetActive(true);
+    }
+
+    private void OnMouseExit()
+    {
+        highlight.SetActive(false);
     }
 }
