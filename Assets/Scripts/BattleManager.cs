@@ -64,14 +64,18 @@ namespace BG.Battle
             List<int> usedActions = new List<int>();
 
             // Create buttons
-            for (int i = 0; i < 4; i++)
+            int amountOfButtons = 5;
+            for (int i = 0; i < amountOfButtons; i++)
             {
                 // Select a random action from entire Action enum
                 Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
 
                 // Instantiate button under parent transform buttonpos + space them out from left to right
-                Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 550,0,0), Quaternion.identity, GameObject.Find("ButtonPos").transform);
-
+                Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 550,0,0), Quaternion.identity );
+                button.transform.SetParent(GameObject.Find("ButtonPos").transform);
+                button.transform.position = GameObject.Find("ButtonPos").transform.position 
+                + new Vector3(i * (GameObject.Find("AtkOptionsBackground").transform.GetComponent<Image>().rectTransform.sizeDelta.x / amountOfButtons), 0, 0)
+                + new Vector3(i * 30, 0);
                 // For each used action, if random action is a dupe, reroll
                 for (int j = 0; j < usedActions.Count; j++)
                 {
