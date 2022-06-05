@@ -164,7 +164,7 @@ namespace BG.Turns
 
         private void UpdateTurnText()
         {
-            roundTextValue.text = roundNumber.ToString();
+            roundTextValue.text = "Round: " + roundNumber.ToString();
         }
     }
 }

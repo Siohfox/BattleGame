@@ -24,8 +24,8 @@ namespace BG.Core
             goldAmount = 0;
             levelAmount = 0;
 
-            goldTextValue.text = goldAmount.ToString();
-            levelTextValue.text = levelAmount.ToString();
+            goldTextValue.text = "Gold: " + goldAmount.ToString();
+            levelTextValue.text = "Level: " + levelAmount.ToString();
         }
 
         // Update is called once per frame
