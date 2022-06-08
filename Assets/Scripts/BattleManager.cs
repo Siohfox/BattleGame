@@ -25,6 +25,7 @@ namespace BG.Battle
         [SerializeField] private Player player;
         public int playerDefenceBonus;
 
+        // put this in superclass
         public List<string> actionList = System.Enum.GetNames(typeof(Action)).ToList();
 
         // Start is called before the first frame update
