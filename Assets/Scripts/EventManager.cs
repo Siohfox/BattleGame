@@ -3,26 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using BG.Battle;
+using BG.Core;
 
 public class EventManager : MonoBehaviour
 {
     public List<Button> optionButtons;
     [SerializeField] private Button objectButtonPrefab;
-
-    [SerializeField] private BattleManager battleManager;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void CreateOptionButtons()
     {

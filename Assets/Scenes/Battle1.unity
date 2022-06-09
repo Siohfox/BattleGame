@@ -145,6 +145,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23541c8bb9f0848449cd691a5618304f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &465964721 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7775407952879478077, guid: f6421f15ec574444fa206674d43d1f11, type: 3}
+  m_PrefabInstance: {fileID: 7775407953338430041}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4123f17b343d61a4f8f0e129c5ee81c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &701198482 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3006301393261378621, guid: 3f9b3e9c2eb848340a5d5e6a036cf4fd, type: 3}
@@ -605,6 +616,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 457819855}
+    - target: {fileID: 4675059806033961873, guid: 069628054ac889f4c84cf1fbd00c6825, type: 3}
+      propertyPath: gameState
+      value: 
+      objectReference: {fileID: 465964721}
     - target: {fileID: 4675059806033961873, guid: 069628054ac889f4c84cf1fbd00c6825, type: 3}
       propertyPath: playerEnergyTextValue
       value: 

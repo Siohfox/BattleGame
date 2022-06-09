@@ -4,29 +4,27 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Linq;
+using BG.Core;
 
 namespace BG.Battle 
 {
-    public enum Action { Bite, Scratch, Defend, Hide, Howl, Sprint, Prepare };
+    
 
     public class BattleManager : MonoBehaviour
     {
         
 
         public List<GameObject> enemyObjects;
-
         public List<Button> atkButtons;
 
         [SerializeField] private Enemy enemyPrefab;
         [SerializeField] private Button actionButtonPrefab;
-
         [SerializeField] private TMP_Text playerEnergyTextValue;
 
         [SerializeField] private Player player;
-        public int playerDefenceBonus;
+        [SerializeField] private GameState gameState;
 
-        // put this in superclass
-        public List<string> actionList = System.Enum.GetNames(typeof(Action)).ToList();
+        public int playerDefenceBonus;
 
         // Start is called before the first frame update
         void Start()
@@ -62,32 +60,33 @@ namespace BG.Battle
             atkButtons.RemoveAll(s => s == null);
 
             // Create a list to store actions that have been used
-            List<int> usedActions = new List<int>();
+            List<Action> usedActions = new List<Action>();
 
             // Create buttons
-            int amountOfButtons = 5;
+            int amountOfButtons = 4;
             for (int i = 0; i < amountOfButtons; i++)
             {
                 // Select a random action from entire Action enum
-                Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
+                Action randomAction = (Action)Random.Range(0, gameState.actionsLearnt.Count);
 
                 // Instantiate button under parent transform buttonpos + space them out from left to right
                 Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 550,0,0), Quaternion.identity );
                 button.transform.SetParent(GameObject.Find("ButtonPos").transform);
-                button.transform.position = GameObject.Find("ButtonPos").transform.position 
-                + new Vector3(i * (GameObject.Find("AtkOptionsBackground").transform.GetComponent<Image>().rectTransform.sizeDelta.x / amountOfButtons), 0, 0)
-                + new Vector3(i * 30, 0);
+                button.transform.position = GameObject.Find("ButtonPos").transform.position + new Vector3(i * (GameObject.Find("AtkOptionsBackground").transform.GetComponent<Image>().rectTransform.sizeDelta.x / amountOfButtons), 0, 0) + new Vector3(i * 30, 0);
+
                 // For each used action, if random action is a dupe, reroll
                 for (int j = 0; j < usedActions.Count; j++)
                 {
-                    if ((int)randomAction == usedActions[j])
+                    while (randomAction == usedActions[j])
                     {
                         randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
-                    }
+                    }                
                 }
 
                 // After the loop, add the action used to the used list so it can't reuse it
-                usedActions.Add((int)randomAction);
+                usedActions.Add(randomAction);
+
+                Debug.Log("Used action " + i + " = " + usedActions[i].ToString());
 
                 // Update button to listen to it's new action + update button text to action name
                 button.onClick.AddListener(delegate { UseAction(randomAction); });
