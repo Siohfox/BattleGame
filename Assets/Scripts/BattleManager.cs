@@ -58,11 +58,15 @@ namespace BG.Battle
             // Before creating any new buttons, remove any null buttons (e.g buttons that have been destroyed)
             atkButtons.RemoveAll(s => s == null);
 
+            // Create a list to store actions that have been used
+            List<int> usedActions = new List<int>(); ;
+
             // Create buttons
             int amountOfButtons = 4;
+
             for (int i = 0; i < amountOfButtons; i++)
             {
-                CreateButtons(i, amountOfButtons);
+                CreateButtons(i, amountOfButtons, usedActions);
             }
         }
 
@@ -70,18 +74,29 @@ namespace BG.Battle
         /// Creates battle buttons. It's important to note this void function must be seperate from the intial for loop. Not sure why this is.
         /// </summary>
         /// <param name="i"></param>
-        private void CreateButtons(int _i, int _amountOfButtons)
+        private void CreateButtons(int _i, int _amountOfButtons, List<int> _usedActions)
         {
             // Instantiate button under parent transform buttonpos + space them out from left to right
             Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(_i * 550, 0, 0), Quaternion.identity);
             button.transform.SetParent(GameObject.Find("ButtonPos").transform);
             button.transform.position = GameObject.Find("ButtonPos").transform.position + new Vector3(_i * (GameObject.Find("AtkOptionsBackground").transform.GetComponent<Image>().rectTransform.sizeDelta.x / _amountOfButtons), 0, 0) + new Vector3(_i * 30, 0);
 
-            // Update button to listen to it's new action + update button text to action name
-            button.onClick.AddListener(delegate { UseAction(gameState.actionsLearnt[_i].Index); });
-            button.GetComponentInChildren<TMP_Text>().text = gameState.actionsLearnt[_i].Name.ToString();
+            int randomAction = Random.Range(0, gameState.actionsLearnt.Count);
 
-            Debug.Log("Action " + gameState.actionsLearnt[_i].Name + "'s index is: " + gameState.actionsLearnt[_i].Index);
+            for (int j = 0; j < _usedActions.Count; j++)
+            {
+                while (randomAction == _usedActions[j]) //if random action is equal to a used action, reroll
+                {
+                    randomAction = Random.Range(0, gameState.actionsLearnt.Count);
+                    Debug.Log("Random action equal to used action " + gameState.actionsLearnt[_usedActions[j]].Name + "... rerolling");
+                }
+            }
+
+            _usedActions.Add(randomAction);
+
+            // Update button to listen to it's new action + update button text to action name
+            button.onClick.AddListener(delegate { UseAction(gameState.actionsLearnt[randomAction].Index); });
+            button.GetComponentInChildren<TMP_Text>().text = gameState.actionsLearnt[randomAction].Name;
 
             // Add button to a list of buttons so they can be removed and replaced later
             atkButtons.Add(button);

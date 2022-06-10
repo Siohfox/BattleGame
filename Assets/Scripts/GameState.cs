@@ -53,22 +53,6 @@ namespace BG.Core
             goldTextValue.text = "Gold: " + goldAmount.ToString();
             levelTextValue.text = "Level: " + levelAmount.ToString();
         }
-
-        public void DebugActionsLearnt()
-        {
-            // for each action that exists
-            for (int i = 0; i < System.Enum.GetValues(typeof(Action)).Length; i++)
-            {
-                // compare it against which actions have been learnt
-                for (int j = 0; j < actionsLearnt.Count; j++)
-                {
-                    if (i == actionsLearnt[j].Index)
-                    {
-                        Debug.Log("Action " + i + " learnt = " + actionList[i].ToString());
-                    }
-                }
-            }
-        }
     }
 
     public class ActionThing
