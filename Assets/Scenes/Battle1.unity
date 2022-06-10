@@ -551,6 +551,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1133839541}
+    - target: {fileID: 3006301392913902807, guid: 3f9b3e9c2eb848340a5d5e6a036cf4fd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 152
+      objectReference: {fileID: 0}
     - target: {fileID: 3006301393261378621, guid: 3f9b3e9c2eb848340a5d5e6a036cf4fd, type: 3}
       propertyPath: m_text
       value: 'Round:'

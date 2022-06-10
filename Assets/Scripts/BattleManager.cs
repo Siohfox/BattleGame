@@ -49,7 +49,6 @@ namespace BG.Battle
 
                 int spacialPos = totalAreaFromWidth / enemyObjects.Count;
 
-
                 enemyObjects[i].transform.position = new Vector3(1 + spacialPos * i, 0, 0);
             }
         }
@@ -59,49 +58,40 @@ namespace BG.Battle
             // Before creating any new buttons, remove any null buttons (e.g buttons that have been destroyed)
             atkButtons.RemoveAll(s => s == null);
 
-            // Create a list to store actions that have been used
-            List<Action> usedActions = new List<Action>();
-
             // Create buttons
             int amountOfButtons = 4;
             for (int i = 0; i < amountOfButtons; i++)
             {
-                // Select a random action from entire Action enum
-                Action randomAction = (Action)Random.Range(0, gameState.actionsLearnt.Count);
-
-                // Instantiate button under parent transform buttonpos + space them out from left to right
-                Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(i * 550,0,0), Quaternion.identity );
-                button.transform.SetParent(GameObject.Find("ButtonPos").transform);
-                button.transform.position = GameObject.Find("ButtonPos").transform.position + new Vector3(i * (GameObject.Find("AtkOptionsBackground").transform.GetComponent<Image>().rectTransform.sizeDelta.x / amountOfButtons), 0, 0) + new Vector3(i * 30, 0);
-
-                // For each used action, if random action is a dupe, reroll
-                for (int j = 0; j < usedActions.Count; j++)
-                {
-                    while (randomAction == usedActions[j])
-                    {
-                        randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
-                    }                
-                }
-
-                // After the loop, add the action used to the used list so it can't reuse it
-                usedActions.Add(randomAction);
-
-                Debug.Log("Used action " + i + " = " + usedActions[i].ToString());
-
-                // Update button to listen to it's new action + update button text to action name
-                button.onClick.AddListener(delegate { UseAction(randomAction); });
-                button.GetComponentInChildren<TMP_Text>().text = randomAction.ToString();
-
-                // Add button to a list of buttons so they can be removed and replaced later
-                atkButtons.Add(button);
+                CreateButtons(i, amountOfButtons);
             }
         }
 
-        public void UseAction(Action action)
+        /// <summary>
+        /// Creates battle buttons. It's important to note this void function must be seperate from the intial for loop. Not sure why this is.
+        /// </summary>
+        /// <param name="i"></param>
+        private void CreateButtons(int _i, int _amountOfButtons)
+        {
+            // Instantiate button under parent transform buttonpos + space them out from left to right
+            Button button = Instantiate(actionButtonPrefab, GameObject.Find("ButtonPos").transform.position + new Vector3(_i * 550, 0, 0), Quaternion.identity);
+            button.transform.SetParent(GameObject.Find("ButtonPos").transform);
+            button.transform.position = GameObject.Find("ButtonPos").transform.position + new Vector3(_i * (GameObject.Find("AtkOptionsBackground").transform.GetComponent<Image>().rectTransform.sizeDelta.x / _amountOfButtons), 0, 0) + new Vector3(_i * 30, 0);
+
+            // Update button to listen to it's new action + update button text to action name
+            button.onClick.AddListener(delegate { UseAction(gameState.actionsLearnt[_i].Index); });
+            button.GetComponentInChildren<TMP_Text>().text = gameState.actionsLearnt[_i].Name.ToString();
+
+            Debug.Log("Action " + gameState.actionsLearnt[_i].Name + "'s index is: " + gameState.actionsLearnt[_i].Index);
+
+            // Add button to a list of buttons so they can be removed and replaced later
+            atkButtons.Add(button);
+        }
+
+        public void UseAction(int action)
         {
             switch (action)
             {
-                case Action.Bite:
+                case (int)Action.Bite:
                     if (player.playerCurrentEnergy > 0)
                     {           
                         if(enemyObjects.Count > 0)
@@ -115,7 +105,7 @@ namespace BG.Battle
                     else { Debug.Log("Player energy is less than 0"); }
                     break;
 
-                case Action.Scratch:
+                case (int)Action.Scratch:
                     if (player.playerCurrentEnergy > 1)
                     {
                         
@@ -131,7 +121,7 @@ namespace BG.Battle
 
                     break;
 
-                case Action.Defend:
+                case (int)Action.Defend:
                     if (player.playerCurrentEnergy > 0)
                     {
                         Debug.Log("Defending");
@@ -143,7 +133,7 @@ namespace BG.Battle
 
                     break;
 
-                case Action.Hide:
+                case (int)Action.Hide:
                     // lower enemy attack
                     if(player.playerCurrentEnergy > 3)
                     {
@@ -162,8 +152,9 @@ namespace BG.Battle
 
                     break;
 
-                case Action.Howl:
+                case (int)Action.Howl:
                     // lower enemy attack
+                    Debug.Log("Howling");
                     if (player.playerCurrentEnergy > 0)
                     {
                         enemyObjects[0].GetComponent<Enemy>().UpdateAttack(-Random.Range(1, 8));  
@@ -173,8 +164,9 @@ namespace BG.Battle
 
                     break;
 
-                case Action.Sprint:
+                case (int)Action.Sprint:
                     // lower enemy attack
+                    Debug.Log("Sprinting");
                     if (player.playerCurrentEnergy > 0)
                     {
                         playerDefenceBonus = 2;
@@ -184,8 +176,9 @@ namespace BG.Battle
 
                     break;
 
-                case Action.Prepare:
+                case (int)Action.Prepare:
                     // lower enemy attack
+                    Debug.Log("Preparing");
                     if (player.playerCurrentEnergy > 0)
                     {
                         player.playerState[1] = Player.State.Energized;
