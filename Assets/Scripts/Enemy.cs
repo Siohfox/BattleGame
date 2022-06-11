@@ -36,6 +36,8 @@ public class Enemy : Entity
         healthBar.value = entityCurrentHealth;
 
         actionQuantityValText.text = enemyAtkDamage.ToString();
+
+        Debug.Log("I am alive");
     }
 
     // Update is called once per frame
