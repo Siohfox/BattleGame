@@ -23,37 +23,42 @@ public class EventManager : MonoBehaviour
         // Before creating any new buttons, remove any null buttons (e.g buttons that have been destroyed)
         optionButtons.RemoveAll(s => s == null);
 
-        // Create a list to store actions that have been used
+        // Create a list to store actions that have been used - this is to avoid dupes
         List<int> usedActions = new List<int>();
 
         // Create buttons
         int amountOfButtons = 3;
         for (int i = 0; i < amountOfButtons; i++)
         {
-            OptionsButtons(i);
+            OptionsButtons(i, usedActions);
         }
         
     }
 
-    private void OptionsButtons(int _index)
+    private void OptionsButtons(int _index, List<int> _usedActions)
     {
         // Instantiate button under parent transform buttonpos + space them out from left to right
         Button button = Instantiate(objectButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);     
         button.transform.SetParent(GameObject.Find("OptionButtons").transform);
         button.transform.position = GameObject.Find("OptionButtons").transform.position + new Vector3(0, _index * -100, 0);
 
+        // Create a random action and set it to a random int
         int randomAction = Random.Range(0, gameState.actionList.Count);
 
+        // Create bool for loop
         bool notGood = true;
+        int count = 0;
 
         // For each action known, check randomAction against the index.
-        // If any single action is the same, notgood will stay true
+        // If any single action is the same, notgood will stay true and break loop
+        // Finally, if random action was any of the learnt actions, it'll reroll and try again
         while(notGood)
         {
-            foreach (var action in gameState.actionsLearnt)
+            for (int i = 0; i < gameState.actionsLearnt.Count; i++)
             {
-                if (randomAction == action.Index)
+                if (randomAction == gameState.actionsLearnt[i].Index)
                 {
+                    Debug.Log("Doing first thing");
                     notGood = true;
                     break;
                 }
@@ -62,18 +67,49 @@ public class EventManager : MonoBehaviour
                     notGood = false;
                 }
             }
-            if(notGood)
+            
+            // If it's passed the actions learnt check:
+            // Check if the action chosen is one chosen before instead
+            if (!notGood)
+            {
+                for (int i = 0; i < _usedActions.Count; i++)
+                {
+                    if (randomAction == _usedActions[i])
+                    {
+                        Debug.Log("doing second thing");
+                        notGood = true;
+                        break;
+                    }
+                    else
+                    {
+                        notGood = false;
+                    }
+                }
+            }
+            
+
+            if (notGood)
             {
                 randomAction = Random.Range(0, gameState.actionList.Count);
             }
-        }
-        
-        
 
+            // Check if infinite loop, if so exit.
+            count++;
+            if(count >= 200)
+            {
+                notGood = false;
+                Debug.LogWarning("Looped way too many times... likely due to not enough actions left");
+            }
+        }
+
+        // Action picked gets added to the used actions list as to not be picked again m
+        _usedActions.Add(randomAction);
+        
+        // Assign button listeners and text
         button.onClick.AddListener(delegate { gameState.UnlockNewAbility(gameState.actionList[randomAction].Index); });
         button.GetComponentInChildren<TMP_Text>().text = gameState.actionList[randomAction].Name;
 
-        // Add button to a list of buttons so they can be removed and replaced later
+        // Add button to a list of buttons so they can be removed and/or replaced later
         optionButtons.Add(button);
     }
 }

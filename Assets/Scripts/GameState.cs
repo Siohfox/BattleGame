@@ -39,8 +39,8 @@ namespace BG.Core
 
             actionsLearnt.Add(actionList[0]);
             actionsLearnt.Add(actionList[1]);
-            actionsLearnt.Add(actionList[5]);
             actionsLearnt.Add(actionList[2]);
+            actionsLearnt.Add(actionList[4]);
 
             for (int i = 0; i < actionsLearnt.Count; i++)
             {
@@ -56,6 +56,16 @@ namespace BG.Core
 
         public void UnlockNewAbility(int _actionIndex)
         {
+            // Catch to see if ability is already learnt
+            foreach (var action in actionsLearnt)
+            {
+                if (_actionIndex == action.Index)
+                {
+                    Debug.LogWarning("Action " + actionList[_actionIndex].Name + " already learnt. Is this an error?");
+                }
+            }
+            
+
             Debug.Log("Unlocking new ability: " + actionList[_actionIndex].Name);
         }
     }

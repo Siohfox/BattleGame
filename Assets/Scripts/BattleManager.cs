@@ -58,8 +58,8 @@ namespace BG.Battle
             // Before creating any new buttons, remove any null buttons (e.g buttons that have been destroyed)
             atkButtons.RemoveAll(s => s == null);
 
-            // Create a list to store actions that have been used
-            List<int> usedActions = new List<int>(); ;
+            // Create a list to store actions that have been used - this is to avoid dupes
+            List<int> usedActions = new List<int>();
 
             // Create buttons
             int amountOfButtons = 4;
