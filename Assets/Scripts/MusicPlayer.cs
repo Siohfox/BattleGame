@@ -17,7 +17,16 @@ public class MusicPlayer : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(Instance);
+        }
+
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("Music");
+        if(obj.Length > 1)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this);
         }
     }
 
@@ -36,5 +45,14 @@ public class MusicPlayer : MonoBehaviour
         {
             src.Play();
         }
+    }
+    
+    /// <summary>
+    /// Plays a music clip with given clip
+    /// </summary>
+    /// <param name="clip"></param>
+    public void PlaySound(AudioClip clip)
+    {
+        src.PlayOneShot(clip, 1);
     }
 }
