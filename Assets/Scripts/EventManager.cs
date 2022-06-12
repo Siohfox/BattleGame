@@ -42,17 +42,33 @@ public class EventManager : MonoBehaviour
         button.transform.SetParent(GameObject.Find("OptionButtons").transform);
         button.transform.position = GameObject.Find("OptionButtons").transform.position + new Vector3(0, _index * -100, 0);
 
-        int randomAction = Random.Range(0, gameState.actionsLearnt.Count);
+        int randomAction = Random.Range(0, gameState.actionList.Count);
 
-        //... For each action learnt
-        for (int j = 0; j < gameState.actionsLearnt.Count; j++) 
+        bool notGood = true;
+
+        // For each action known, check randomAction against the index.
+        // If any single action is the same, notgood will stay true
+        while(notGood)
         {
-            while (randomAction == gameState.actionsLearnt[j].Index) // If random action is equal to an action learnt index, reroll
+            foreach (var action in gameState.actionsLearnt)
+            {
+                if (randomAction == action.Index)
+                {
+                    notGood = true;
+                    break;
+                }
+                else
+                {
+                    notGood = false;
+                }
+            }
+            if(notGood)
             {
                 randomAction = Random.Range(0, gameState.actionList.Count);
-                Debug.Log("Random action equal to already learnt action " + gameState.actionsLearnt[j].Name + "... rerolling");
             }
         }
+        
+        
 
         button.onClick.AddListener(delegate { gameState.UnlockNewAbility(gameState.actionList[randomAction].Index); });
         button.GetComponentInChildren<TMP_Text>().text = gameState.actionList[randomAction].Name;

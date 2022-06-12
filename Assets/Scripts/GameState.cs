@@ -42,10 +42,10 @@ namespace BG.Core
             actionsLearnt.Add(actionList[5]);
             actionsLearnt.Add(actionList[2]);
 
-            //for (int i = 0; i < actionsLearnt.Count; i++)
-            //{
-            //    Debug.Log("Action " + i + " learnt = " + actionsLearnt[i].Name);
-            //}
+            for (int i = 0; i < actionsLearnt.Count; i++)
+            {
+                Debug.Log("Action " + i + " learnt = " + actionsLearnt[i].Name);
+            }
 
             goldAmount = 0;
             levelAmount = 0;
