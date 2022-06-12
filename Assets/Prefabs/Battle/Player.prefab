@@ -52,6 +52,7 @@ MonoBehaviour:
   playerEnergyTextValue: {fileID: 0}
   playerShieldTextValue: {fileID: 6868972927304095755}
   shieldPrefab: {fileID: 2756302140019096065, guid: b3832028b4bb13a4f94268551bc1031b, type: 3}
+  atkSound: {fileID: 8300000, guid: d25a793b9f65c124db4d7fb90ad78f97, type: 3}
   playerStateIcon: {fileID: 6868972926053982450}
   playerState: 
   playerMaxEnergy: 0

@@ -15,6 +15,8 @@ public class Player : Entity
     [SerializeField] private TMP_Text playerEnergyTextValue;
     [SerializeField] private TMP_Text playerShieldTextValue;
     [SerializeField] private GameObject shieldPrefab;
+    [SerializeField] private AudioClip atkSound;
+
     public GameObject playerStateIcon;
 
     public State[] playerState;
@@ -113,5 +115,10 @@ public class Player : Entity
     public void Shield()
     {
         Instantiate(shieldPrefab, transform);
+    }
+
+    public void PlayAtkSound()
+    {
+        MusicPlayer.Instance.PlaySound(atkSound, 100.0f);
     }
 }

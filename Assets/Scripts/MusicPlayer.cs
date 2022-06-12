@@ -51,8 +51,8 @@ public class MusicPlayer : MonoBehaviour
     /// Plays a music clip with given clip
     /// </summary>
     /// <param name="clip"></param>
-    public void PlaySound(AudioClip clip)
+    public void PlaySound(AudioClip clip, float volume)
     {
-        src.PlayOneShot(clip, 1);
+        src.PlayOneShot(clip, volume);
     }
 }
