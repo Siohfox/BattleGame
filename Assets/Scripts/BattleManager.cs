@@ -88,7 +88,7 @@ namespace BG.Battle
                 while (randomAction == _usedActions[j]) //if random action is equal to a used action, reroll
                 {
                     randomAction = Random.Range(0, gameState.actionsLearnt.Count);
-                    Debug.Log("Random action equal to used action " + gameState.actionsLearnt[_usedActions[j]].Name + "... rerolling");
+                    //Debug.Log("Random action equal to used action " + gameState.actionsLearnt[_usedActions[j]].Name + "... rerolling");
                 }
             }
 

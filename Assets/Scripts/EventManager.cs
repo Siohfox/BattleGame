@@ -58,7 +58,6 @@ public class EventManager : MonoBehaviour
             {
                 if (randomAction == gameState.actionsLearnt[i].Index)
                 {
-                    Debug.Log("Doing first thing");
                     notGood = true;
                     break;
                 }
@@ -76,7 +75,6 @@ public class EventManager : MonoBehaviour
                 {
                     if (randomAction == _usedActions[i])
                     {
-                        Debug.Log("doing second thing");
                         notGood = true;
                         break;
                     }
