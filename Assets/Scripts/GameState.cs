@@ -14,15 +14,25 @@ namespace BG.Core
         public List<ActionThing> actionsLearnt;
         public List<ActionThing> actionList;
 
-        [SerializeField] private TMP_Text goldTextValue;
-        [SerializeField] private TMP_Text levelTextValue;
+        private TMP_Text goldTextValue;
+        private TMP_Text levelTextValue;
 
         private int goldAmount;
         private int levelAmount;
 
+        private void Awake()
+        {
+            DontDestroyOnLoad(this);
+        }
+
         // Start is called before the first frame update
         void Start()
         {
+            goldAmount = 10;
+            levelAmount = 0;
+
+            UpdateGameStateVariableHolds();
+
             actionsLearnt = new List<ActionThing> { };
 
             actionList = new List<ActionThing>
@@ -46,27 +56,35 @@ namespace BG.Core
             //{
             //    Debug.Log("Action " + i + " learnt = " + actionsLearnt[i].Name);
             //}
-
-            goldAmount = 0;
-            levelAmount = 0;
-
-            goldTextValue.text = "Gold: " + goldAmount.ToString();
-            levelTextValue.text = "Level: " + levelAmount.ToString();
         }
 
         public void UnlockNewAbility(int _actionIndex)
         {
+            bool abilityAlreadyLearnt = false;
             // Catch to see if ability is already learnt
             foreach (var action in actionsLearnt)
             {
                 if (_actionIndex == action.Index)
                 {
+                    abilityAlreadyLearnt = true;
                     Debug.LogWarning("Action " + actionList[_actionIndex].Name + " already learnt. Is this an error?");
                 }
             }
             
+            if (!abilityAlreadyLearnt)
+            {
+                Debug.Log("Unlocking new ability: " + actionList[_actionIndex].Name);
+                actionsLearnt.Add(actionList[_actionIndex]);
+            }
+        }
 
-            Debug.Log("Unlocking new ability: " + actionList[_actionIndex].Name);
+        public void UpdateGameStateVariableHolds()
+        {
+            goldTextValue = GameObject.Find("GoldText").GetComponent<TMP_Text>();
+            levelTextValue = GameObject.Find("LevelText").GetComponent<TMP_Text>();
+
+            goldTextValue.text = "Gold: " + goldAmount.ToString();
+            levelTextValue.text = "Level: " + levelAmount.ToString();
         }
     }
 

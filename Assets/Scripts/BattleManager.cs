@@ -22,13 +22,15 @@ namespace BG.Battle
         [SerializeField] private TMP_Text playerEnergyTextValue;
 
         [SerializeField] private Player player;
-        [SerializeField] private GameState gameState;
+        private GameState gameState;
 
         public int playerDefenceBonus;
 
         // Start is called before the first frame update
         void Start()
         {
+            gameState = GameObject.Find("GameState").GetComponent<GameState>();
+
             playerDefenceBonus = 1;
 
             // Make a bunch of enemies
@@ -83,12 +85,14 @@ namespace BG.Battle
 
             int randomAction = Random.Range(0, gameState.actionsLearnt.Count);
 
+            Debug.LogWarning("actions learnt count: " + gameState.actionsLearnt.Count);
+
             for (int j = 0; j < _usedActions.Count; j++)
             {
                 while (randomAction == _usedActions[j]) //if random action is equal to a used action, reroll
                 {
                     randomAction = Random.Range(0, gameState.actionsLearnt.Count);
-                    //Debug.Log("Random action equal to used action " + gameState.actionsLearnt[_usedActions[j]].Name + "... rerolling");
+                    Debug.Log("Random action equal to used action " + gameState.actionsLearnt[_usedActions[j]].Name + "... rerolling");
                 }
             }
 
