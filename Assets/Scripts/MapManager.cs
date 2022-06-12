@@ -12,8 +12,11 @@ public class MapManager : MonoBehaviour
     [SerializeField] private Image backgroundImage;
 
     [SerializeField] private float offsetX, offsetY, tileSpacingX, tileSpacingY;
+
     private void Start()
     {
+        mapObject = GameObject.Find("Map");
+
         Image newMap = Instantiate(backgroundImage, GameObject.Find("Map").transform.position, Quaternion.identity, GameObject.Find("Map").transform);
         newMap.transform.SetAsFirstSibling();
 

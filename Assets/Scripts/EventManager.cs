@@ -86,7 +86,6 @@ public class EventManager : MonoBehaviour
                     }
                 }
             }
-            
 
             if (notGood)
             {
