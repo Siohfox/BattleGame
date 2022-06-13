@@ -15,6 +15,10 @@ public class MapManager : MonoBehaviour
 
     private AudioClip mapCrumpleClip;
 
+    bool mapClosable;
+
+    private Dictionary<Vector2, Tile> _tiles;
+
     public static MapManager Instance { get; private set; }
 
     private void Awake()
@@ -43,6 +47,8 @@ public class MapManager : MonoBehaviour
     {
         mapCrumpleClip = Resources.Load<AudioClip>("Sounds/MapCrumple");
 
+        mapClosable = true;
+
         mapObject = transform.GetChild(0).transform.GetChild(0).gameObject;
 
         Image newMap = Instantiate(backgroundImage, GameObject.Find("Map").transform.position, Quaternion.identity, GameObject.Find("Map").transform);
@@ -59,7 +65,7 @@ public class MapManager : MonoBehaviour
             mapObject.SetActive(true);
             MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
         }
-        else if (Input.GetKeyDown(KeyCode.M) && mapObject.activeSelf == true || Input.GetKeyDown(KeyCode.Escape) && mapObject.activeSelf == true)
+        else if (Input.GetKeyDown(KeyCode.M) && mapObject.activeSelf == true && mapClosable || Input.GetKeyDown(KeyCode.Escape) && mapObject.activeSelf == true && mapClosable)
         {
             mapObject.SetActive(false);
             MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
@@ -72,6 +78,7 @@ public class MapManager : MonoBehaviour
         {
             mapObject.SetActive(true);
             MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
+            mapClosable = false;
         }
         else if (mapObject.activeSelf == true)
         {
@@ -82,6 +89,7 @@ public class MapManager : MonoBehaviour
 
     void GenerateGrid(Image map)
     {
+        _tiles = new Dictionary<Vector2, Tile>();
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -99,7 +107,21 @@ public class MapManager : MonoBehaviour
 
                 spawnedTile.Init(isOffset);
 
+                _tiles[new Vector2  (x, y)] = spawnedTile;
             }
         }
+
+        GetTileAtPosition(new Vector2(0, 0)).GetComponent<Image>().color = GetTileAtPosition(new Vector2(0, 0)).activeColour;
+
+        GetTileAtPosition(new Vector2(2, 4)).GetComponent<Image>().color = GetTileAtPosition(new Vector2(2, 4)).usedColour;
+    }
+
+    public Tile GetTileAtPosition(Vector2 pos)
+    {
+        if(_tiles.TryGetValue(pos, out var tile))
+        {
+            return tile;
+        }
+        return null;
     }
 }

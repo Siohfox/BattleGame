@@ -168,6 +168,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseColour: {r: 0.20825914, g: 0.9433962, b: 0.22138652, a: 1}
   offsetColour: {r: 0.5471698, g: 0.1735075, b: 0.07949446, a: 1}
+  activeColour: {r: 1, g: 0.8846764, b: 0, a: 1}
+  usedColour: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 0.58431375}
   image: {fileID: 0}
   highlight: {fileID: 3163422128274614138}
 --- !u!61 &8328336406520986229

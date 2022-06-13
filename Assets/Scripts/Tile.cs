@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField] private Color baseColour, offsetColour;
+    public Color baseColour, offsetColour, activeColour, usedColour;
     [SerializeField] private Image image;
     [SerializeField] private GameObject highlight;
 
