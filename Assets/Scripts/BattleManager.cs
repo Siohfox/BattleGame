@@ -24,9 +24,13 @@ namespace BG.Battle
 
         public int playerDefenceBonus;
 
+        AudioClip battleWonClip;
+
         // Start is called before the first frame update
         void Start()
         {
+            battleWonClip = Resources.Load<AudioClip>("Sounds/BattleWon");
+
             gameState = GameObject.Find("GameState").GetComponent<GameState>();
 
             playerDefenceBonus = 1;
@@ -214,14 +218,14 @@ namespace BG.Battle
                     Debug.LogError("Failed to use proper action when using energy");
                     break;
             }
-            BattleEndCheck();
         }
 
-        private void BattleEndCheck()
+        public void BattleEndCheck()
         {
             Debug.Log("Checking for battle end.. enemy count: " + enemyObjects.Count);
             if(enemyObjects.Count < 1)
             {
+                MusicPlayer.Instance.PlaySound(battleWonClip, 10);
                 MapManager.Instance.ToggleMap();
             }
         }

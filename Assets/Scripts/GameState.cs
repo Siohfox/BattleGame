@@ -23,6 +23,9 @@ namespace BG.Core
         private int goldAmount;
         private int levelAmount;
 
+        // AudioClips
+        private AudioClip actionLearnClip;
+
         private void Awake()
         {
             // Make sure there aren't duplicate gamestates
@@ -43,6 +46,7 @@ namespace BG.Core
             // Initialise values
             goldAmount = 100;
             levelAmount = 1;
+            actionLearnClip = Resources.Load<AudioClip>("Sounds/ActionLearn");
 
             UpdateGameStateVariableHolds();
 
@@ -89,6 +93,7 @@ namespace BG.Core
             {
                 Debug.Log("Unlocking new ability: " + actionList[_actionIndex].Name);
                 actionsLearnt.Add(actionList[_actionIndex]);
+                MusicPlayer.Instance.PlaySound(actionLearnClip, 10);
             }
         }
 

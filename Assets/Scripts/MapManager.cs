@@ -13,6 +13,8 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] private float offsetX, offsetY, tileSpacingX, tileSpacingY;
 
+    private AudioClip mapCrumpleClip;
+
     public static MapManager Instance { get; private set; }
 
     private void Awake()
@@ -39,6 +41,8 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
+        mapCrumpleClip = Resources.Load<AudioClip>("Sounds/MapCrumple");
+
         mapObject = transform.GetChild(0).transform.GetChild(0).gameObject;
 
         Image newMap = Instantiate(backgroundImage, GameObject.Find("Map").transform.position, Quaternion.identity, GameObject.Find("Map").transform);
@@ -53,10 +57,12 @@ public class MapManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M) && mapObject.activeSelf == false || Input.GetKeyDown(KeyCode.Escape) && mapObject.activeSelf == false)
         {
             mapObject.SetActive(true);
+            MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
         }
         else if (Input.GetKeyDown(KeyCode.M) && mapObject.activeSelf == true || Input.GetKeyDown(KeyCode.Escape) && mapObject.activeSelf == true)
         {
             mapObject.SetActive(false);
+            MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
         } 
     }
 
@@ -65,10 +71,12 @@ public class MapManager : MonoBehaviour
         if(mapObject.activeSelf == false)
         {
             mapObject.SetActive(true);
+            MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
         }
         if (mapObject.activeSelf == true)
         {
             mapObject.SetActive(false);
+            MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
         }
     }
 

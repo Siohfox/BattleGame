@@ -137,7 +137,11 @@ public class Enemy : Entity
     void OnDeath()
     {
         // remove self from remaining enemies list
-        GameObject.Find("BattleManager").GetComponent<BattleManager>().enemyObjects.Remove(gameObject);
+        BattleManager battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
+
+        battleManager.enemyObjects.Remove(gameObject);
+
+        battleManager.BattleEndCheck();
 
         Destroy(gameObject);
     }
