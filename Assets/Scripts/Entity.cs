@@ -6,6 +6,8 @@ namespace BG.Entity
 {
     public class Entity : MonoBehaviour
     {
+        protected GameObject basicHitFX;
+
         protected int entityMaxHealth;
         protected int entityCurrentHealth;
     }

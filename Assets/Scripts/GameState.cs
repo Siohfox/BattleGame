@@ -91,7 +91,7 @@ namespace BG.Core
             
             if (!abilityAlreadyLearnt)
             {
-                Debug.Log("Unlocking new ability: " + actionList[_actionIndex].Name);
+                //Debug.Log("Unlocking new ability: " + actionList[_actionIndex].Name);
                 actionsLearnt.Add(actionList[_actionIndex]);
                 MusicPlayer.Instance.PlaySound(actionLearnClip, 10);
             }

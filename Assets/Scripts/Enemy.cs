@@ -14,6 +14,9 @@ public class Enemy : Entity
 
     [SerializeField] private Player player;
 
+    private AudioClip enemyAtkClip;
+    private AudioClip enemyAtkMissClip;
+
     private Animator enemyAnimator;
 
     public int enemyAtkDamage;
@@ -25,6 +28,9 @@ public class Enemy : Entity
         healthTextValue = healthBar.GetComponentInChildren<TMP_Text>();
         enemyAnimator = GetComponent<Animator>();
         player = GameObject.Find("Player").GetComponent<Player>();
+        enemyAtkClip = Resources.Load<AudioClip>("Sounds/BasicWhack");
+        enemyAtkMissClip = Resources.Load<AudioClip>("Sounds/AttackMiss");
+        basicHitFX = Resources.Load<GameObject>("Particles/BasicHitParticles");
 
         entityMaxHealth = 70;
         entityCurrentHealth = 10;
@@ -74,15 +80,20 @@ public class Enemy : Entity
             if(hitOrMiss < 1) // 20% chance of being hit
             {
                 Debug.Log("Player found, hitting anyway");
+                MusicPlayer.Instance.PlaySound(enemyAtkClip, 100);
+                Instantiate(basicHitFX, player.transform.position, transform.rotation);
                 CalculateDamage();
             }
             else
             {
+                MusicPlayer.Instance.PlaySound(enemyAtkMissClip, 100);
                 Debug.Log("Missed because player hidden");
             }
         }
         else
         {
+            Instantiate(basicHitFX, player.transform.position, transform.rotation);
+            MusicPlayer.Instance.PlaySound(enemyAtkClip, 100);
             CalculateDamage();
         }
         
@@ -110,6 +121,8 @@ public class Enemy : Entity
 
     IEnumerator EnemyAnim()
     {
+        
+
         yield return new WaitUntil(() => enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("EnemyBasicAtk"));
 
         enemyAnimator.SetBool("EnemyAttacking", false);

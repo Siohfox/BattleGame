@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using BG.Entity;
+using BG.Battle;
 using System;
 
 public class Player : Entity 
@@ -15,7 +16,9 @@ public class Player : Entity
     [SerializeField] private TMP_Text playerEnergyTextValue;
     [SerializeField] private TMP_Text playerShieldTextValue;
     [SerializeField] private GameObject shieldPrefab;
-    [SerializeField] private AudioClip atkSound;
+    [SerializeField] private BattleManager battleManager;
+    private AudioClip atkSoundClip;
+    private AudioClip shieldEquipClip;
 
     public GameObject playerStateIcon;
 
@@ -34,6 +37,10 @@ public class Player : Entity
         healthBar = GetComponentInChildren<Slider>();
         healthTextValue = healthBar.GetComponentInChildren<TMP_Text>();
         playerAnimator = GetComponent<Animator>();
+        shieldEquipClip = Resources.Load<AudioClip>("Sounds/ShieldEquip");
+        atkSoundClip = Resources.Load<AudioClip>("Sounds/BasicWhack");
+        basicHitFX = Resources.Load<GameObject>("Particles/BasicHitParticles");
+        battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
 
         entityMaxHealth = 100;
         entityCurrentHealth = 50;
@@ -99,6 +106,10 @@ public class Player : Entity
 
     public void Attack()
     {
+        MusicPlayer.Instance.PlaySound(atkSoundClip, 100.0f);
+
+        Instantiate(basicHitFX, battleManager.enemyObjects[0].transform.position, transform.rotation);
+
         playerAnimator.SetBool("Attacking", true);
 
         StartCoroutine(AtkAnim());
@@ -115,10 +126,6 @@ public class Player : Entity
     public void Shield()
     {
         Instantiate(shieldPrefab, transform);
-    }
-
-    public void PlayAtkSound()
-    {
-        MusicPlayer.Instance.PlaySound(atkSound, 100.0f);
+        MusicPlayer.Instance.PlaySound(shieldEquipClip, 100);
     }
 }
