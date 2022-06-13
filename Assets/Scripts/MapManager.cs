@@ -39,7 +39,7 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
-        mapObject = GameObject.Find("Map");
+        mapObject = transform.GetChild(0).transform.GetChild(0).gameObject;
 
         Image newMap = Instantiate(backgroundImage, GameObject.Find("Map").transform.position, Quaternion.identity, GameObject.Find("Map").transform);
         newMap.transform.SetAsFirstSibling();

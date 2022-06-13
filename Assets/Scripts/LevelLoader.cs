@@ -91,6 +91,6 @@ public class LevelLoader : MonoBehaviour
 
     public void UpdateVariableHoldsOnLoad()
     {
-        
+
     }
 }
