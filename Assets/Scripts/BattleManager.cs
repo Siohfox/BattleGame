@@ -8,8 +8,6 @@ using BG.Core;
 
 namespace BG.Battle 
 {
-    
-
     public class BattleManager : MonoBehaviour
     {
         
@@ -215,6 +213,16 @@ namespace BG.Battle
                 default:
                     Debug.LogError("Failed to use proper action when using energy");
                     break;
+            }
+            BattleEndCheck();
+        }
+
+        private void BattleEndCheck()
+        {
+            Debug.Log("Checking for battle end.. enemy count: " + enemyObjects.Count);
+            if(enemyObjects.Count < 1)
+            {
+                MapManager.Instance.ToggleMap();
             }
         }
     }

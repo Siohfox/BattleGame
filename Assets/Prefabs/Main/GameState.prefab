@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7775407952879478077}
   m_Layer: 0
   m_Name: GameState
-  m_TagString: Untagged
+  m_TagString: GameState
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,6 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4123f17b343d61a4f8f0e129c5ee81c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldTextValue: {fileID: 0}
-  levelTextValue: {fileID: 0}
-  turnManager: {fileID: 0}
+  enumActionList:
+  - Bite
+  - Scratch
+  - Defend
+  - Hide
+  - Howl
+  - Sprint
+  - Prepare

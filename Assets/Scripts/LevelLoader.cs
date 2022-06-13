@@ -6,9 +6,25 @@ using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour
 {
+    GameObject[] gameObjects;
+
     //public GameObject loadingScreen;
     public Slider slider;
     public Text progressText;
+
+    public static LevelLoader Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     private void Start()
     {
@@ -71,5 +87,10 @@ public class LevelLoader : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void UpdateVariableHoldsOnLoad()
+    {
+        
     }
 }

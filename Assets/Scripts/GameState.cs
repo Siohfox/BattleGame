@@ -10,30 +10,41 @@ namespace BG.Core
 
     public class GameState : MonoBehaviour
     {
+        // List arrays of actions
         public List<string> enumActionList = System.Enum.GetNames(typeof(Action)).ToList();
         public List<ActionThing> actionsLearnt;
         public List<ActionThing> actionList;
 
+        // UI
         private TMP_Text goldTextValue;
         private TMP_Text levelTextValue;
 
+        // Game Variables
         private int goldAmount;
         private int levelAmount;
 
         private void Awake()
         {
-            DontDestroyOnLoad(this);
+            // Make sure there aren't duplicate gamestates
+            GameObject[] obj = GameObject.FindGameObjectsWithTag("GameState");
+            if (obj.Length > 1)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                DontDestroyOnLoad(this);
+            }
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            goldAmount = 10;
-            levelAmount = 0;
+            // Initialise values
+            goldAmount = 100;
+            levelAmount = 1;
 
             UpdateGameStateVariableHolds();
-
-            actionsLearnt = new List<ActionThing> { };
 
             actionList = new List<ActionThing>
             {
@@ -46,11 +57,14 @@ namespace BG.Core
                 new ActionThing() { Name = "Prepare", Index = 6 }
             };
 
-
-            actionsLearnt.Add(actionList[0]);
-            actionsLearnt.Add(actionList[1]);
-            actionsLearnt.Add(actionList[2]);
-            actionsLearnt.Add(actionList[4]);
+            // initialise Actions learnt
+            actionsLearnt = new List<ActionThing>
+            { 
+                actionList[0],
+                actionList[1],
+                actionList[2],
+                actionList[3]
+            };
 
             //for (int i = 0; i < actionsLearnt.Count; i++)
             //{
@@ -78,7 +92,10 @@ namespace BG.Core
             }
         }
 
-        public void UpdateGameStateVariableHolds()
+        /// <summary>
+        /// Updates the GameState's pointer to text components and updates them
+        /// </summary>
+        private void UpdateGameStateVariableHolds()
         {
             goldTextValue = GameObject.Find("GoldText").GetComponent<TMP_Text>();
             levelTextValue = GameObject.Find("LevelText").GetComponent<TMP_Text>();

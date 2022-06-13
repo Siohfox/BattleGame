@@ -13,6 +13,30 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] private float offsetX, offsetY, tileSpacingX, tileSpacingY;
 
+    public static MapManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("Map");
+        if (obj.Length > 1)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this);
+        }
+    }
+
     private void Start()
     {
         mapObject = GameObject.Find("Map");
@@ -26,11 +50,23 @@ public class MapManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.M) && mapObject.activeSelf == false || Input.GetKeyDown(KeyCode.Escape) && mapObject.activeSelf == false)
+        if (Input.GetKeyDown(KeyCode.M) && mapObject.activeSelf == false || Input.GetKeyDown(KeyCode.Escape) && mapObject.activeSelf == false)
         {
             mapObject.SetActive(true);
         }
-        else if(Input.GetKeyDown(KeyCode.M) && mapObject.activeSelf == true || Input.GetKeyDown(KeyCode.Escape) && mapObject.activeSelf == true)
+        else if (Input.GetKeyDown(KeyCode.M) && mapObject.activeSelf == true || Input.GetKeyDown(KeyCode.Escape) && mapObject.activeSelf == true)
+        {
+            mapObject.SetActive(false);
+        } 
+    }
+
+    public void ToggleMap()
+    {
+        if(mapObject.activeSelf == false)
+        {
+            mapObject.SetActive(true);
+        }
+        if (mapObject.activeSelf == true)
         {
             mapObject.SetActive(false);
         }
