@@ -73,7 +73,7 @@ public class MapManager : MonoBehaviour
             mapObject.SetActive(true);
             MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
         }
-        if (mapObject.activeSelf == true)
+        else if (mapObject.activeSelf == true)
         {
             mapObject.SetActive(false);
             MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);

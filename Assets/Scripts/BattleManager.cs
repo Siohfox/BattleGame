@@ -226,7 +226,7 @@ namespace BG.Battle
             if(enemyObjects.Count < 1)
             {
                 MusicPlayer.Instance.PlaySound(battleWonClip, 10);
-                MapManager.Instance.ToggleMap();
+                GameObject.Find("MapManager").GetComponent<MapManager>().ToggleMap();
             }
         }
     }
