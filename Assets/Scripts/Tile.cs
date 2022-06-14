@@ -50,8 +50,8 @@ public class Tile : MonoBehaviour
         if(currentState == TileState.Selectable)
         {
             image.color = selectableColour;
+            GetComponent<Button>().onClick.RemoveAllListeners();
             GetComponent<Button>().onClick.AddListener(LoadRandomSceneThing);
-
         }
         if (currentState == TileState.Unused)
         {
