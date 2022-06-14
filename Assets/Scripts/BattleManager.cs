@@ -117,7 +117,7 @@ namespace BG.Battle
                     {           
                         if(enemyObjects.Count > 0)
                         {
-                            Debug.Log("Biting");
+                            //Debug.Log("Biting");
                             player.UpdateEnergy(-1, 0);
                             player.Attack();
                             enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-(Random.Range(1,7)), 0);
@@ -132,7 +132,7 @@ namespace BG.Battle
                         
                         if (enemyObjects.Count > 0)
                         {
-                            Debug.Log("Scratching");
+                            //Debug.Log("Scratching");
                             player.UpdateEnergy(-2, 0);
                             player.Attack();
                             enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-(Random.Range(4, 16)), 0);
@@ -145,7 +145,7 @@ namespace BG.Battle
                 case (int)Action.Defend:
                     if (player.playerCurrentEnergy > 0)
                     {
-                        Debug.Log("Defending");
+                        //Debug.Log("Defending");
                         player.Shield();
                         player.UpdateShield(Random.Range(2 * playerDefenceBonus, 8 * playerDefenceBonus));
                         player.UpdateEnergy(-1, 0);
@@ -158,7 +158,7 @@ namespace BG.Battle
                     // lower enemy attack
                     if(player.playerCurrentEnergy > 3)
                     {
-                        Debug.Log("Hiding");
+                        //Debug.Log("Hiding");
                         player.playerState[0] = Player.State.Hidden;
                         if(player.playerState[0] == Player.State.Hidden)
                         {
@@ -167,7 +167,7 @@ namespace BG.Battle
                         }
                         player.UpdateEnergy(-4, 0);
 
-                        Debug.Log("Player state is: " + player.playerState[0]);
+                        //Debug.Log("Player state is: " + player.playerState[0]);
                     }
                     else { Debug.Log("Player energy is less than 0"); }
 
@@ -175,7 +175,7 @@ namespace BG.Battle
 
                 case (int)Action.Howl:
                     // lower enemy attack
-                    Debug.Log("Howling");
+                    //Debug.Log("Howling");
                     if (player.playerCurrentEnergy > 0)
                     {
                         enemyObjects[0].GetComponent<Enemy>().UpdateAttack(-Random.Range(1, 8));  
@@ -187,7 +187,7 @@ namespace BG.Battle
 
                 case (int)Action.Sprint:
                     // lower enemy attack
-                    Debug.Log("Sprinting");
+                    //Debug.Log("Sprinting");
                     if (player.playerCurrentEnergy > 0)
                     {
                         playerDefenceBonus = 2;
@@ -199,7 +199,7 @@ namespace BG.Battle
 
                 case (int)Action.Prepare:
                     // lower enemy attack
-                    Debug.Log("Preparing");
+                    //Debug.Log("Preparing");
                     if (player.playerCurrentEnergy > 0)
                     {
                         player.playerState[1] = Player.State.Energized;

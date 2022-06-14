@@ -5,28 +5,56 @@ using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
-    public Color baseColour, offsetColour, activeColour, usedColour;
+    public enum TileState { Unused, Used, Active, Selectable };
+
+    public Color baseColour, offsetColour, activeColour, usedColour, selectableColour;
     [SerializeField] private Image image;
     [SerializeField] private GameObject highlight;
+
+    public TileState currentState;
 
     private void Awake()
     {
         image = gameObject.GetComponent<Image>();
     }
 
+    private void Start()
+    {
+        currentState = TileState.Unused;
+    }
+
     public void Init(bool isOffset)
     {
-        image.color = isOffset ? offsetColour : baseColour;
+        if (currentState == TileState.Unused)
+        {
+            image.color = isOffset ? offsetColour : baseColour;
+        }
     }
 
-    private void OnMouseEnter()
+    public TileState GetTileState()
     {
-        Debug.Log("mousey");
-        highlight.SetActive(true);
+        return currentState;
     }
 
-    private void OnMouseExit()
+    public void SetTileState(TileState state)
     {
-        highlight.SetActive(false);
+        currentState = state;
+
+        if(currentState == TileState.Active)
+        {
+            image.color = activeColour;
+        }
+        if(currentState == TileState.Selectable)
+        {
+            image.color = selectableColour;
+        }
+        if (currentState == TileState.Unused)
+        {
+            
+        }
+        if (currentState == TileState.Used)
+        {
+            image.color = usedColour;
+        }
     }
 }

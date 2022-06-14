@@ -111,9 +111,74 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        GetTileAtPosition(new Vector2(0, 0)).GetComponent<Image>().color = GetTileAtPosition(new Vector2(0, 0)).activeColour;
+        GetTileAtPosition(new Vector2(5, 5)).SetTileState(Tile.TileState.Active);
+        GetTileAtPosition(new Vector2(4, 4)).SetTileState(Tile.TileState.Used);
 
-        GetTileAtPosition(new Vector2(2, 4)).GetComponent<Image>().color = GetTileAtPosition(new Vector2(2, 4)).usedColour;
+
+        Vector2 activeTile = new Vector2(3, 3); // defaulted to 3x3y to check for errors
+        foreach (KeyValuePair<Vector2, Tile> dictionaryTile in _tiles)
+        {
+            if(dictionaryTile.Value.GetTileState() == Tile.TileState.Active)
+            {
+                activeTile = dictionaryTile.Key;
+            }
+        }
+
+        foreach (KeyValuePair<Vector2, Tile> dictionaryTile in _tiles)
+        {
+            Debug.Log(dictionaryTile.Value.GetTileState().ToString());
+
+            if(dictionaryTile.Value.GetTileState() != Tile.TileState.Used)
+            {
+                // Right side
+                if (dictionaryTile.Key.x > activeTile.x)
+                {
+                    if (dictionaryTile.Key.x < activeTile.x + 2)
+                    {
+                        if (dictionaryTile.Key.y < activeTile.y + 2 && dictionaryTile.Key.y > activeTile.y - 2)
+                        {
+                            dictionaryTile.Value.SetTileState(Tile.TileState.Selectable);
+                        }
+                    }
+                }
+
+                // Left side
+                if (dictionaryTile.Key.x < activeTile.x)
+                {
+                    if (dictionaryTile.Key.x > activeTile.x - 2)
+                    {
+                        if (dictionaryTile.Key.y < activeTile.y + 2 && dictionaryTile.Key.y > activeTile.y - 2)
+                        {
+                            dictionaryTile.Value.SetTileState(Tile.TileState.Selectable);
+                        }
+                    }
+                }
+
+                // Bottom side
+                if (dictionaryTile.Key.y > activeTile.y)
+                {
+                    if (dictionaryTile.Key.y < activeTile.y + 2)
+                    {
+                        if (dictionaryTile.Key.x < activeTile.x + 2 && dictionaryTile.Key.x > activeTile.x - 2)
+                        {
+                            dictionaryTile.Value.SetTileState(Tile.TileState.Selectable);
+                        }
+                    }
+                }
+
+                // Top side
+                if (dictionaryTile.Key.y < activeTile.y)
+                {
+                    if (dictionaryTile.Key.y > activeTile.y - 2)
+                    {
+                        if (dictionaryTile.Key.x < activeTile.x + 2 && dictionaryTile.Key.x > activeTile.x - 2)
+                        {
+                            dictionaryTile.Value.SetTileState(Tile.TileState.Selectable);
+                        }
+                    }
+                }
+            }
+        }    
     }
 
     public Tile GetTileAtPosition(Vector2 pos)

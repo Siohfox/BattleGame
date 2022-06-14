@@ -26,6 +26,9 @@ namespace BG.Core
         // AudioClips
         private AudioClip actionLearnClip;
 
+        // Script Refs
+        MapManager mapManager;
+
         private void Awake()
         {
             // Make sure there aren't duplicate gamestates
@@ -43,6 +46,10 @@ namespace BG.Core
         // Start is called before the first frame update
         void Start()
         {
+            mapManager = FindObjectOfType<MapManager>();
+
+            Debug.Log("Tile state 0,0 = " + mapManager.GetTileAtPosition(new Vector2(0, 0)).GetComponent<Tile>().GetTileState().ToString());
+
             // Initialise values
             goldAmount = 100;
             levelAmount = 1;
