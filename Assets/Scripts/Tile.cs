@@ -66,7 +66,7 @@ public class Tile : MonoBehaviour
     private void LoadRandomSceneThing()
     {
         Debug.Log("Loading random scene thing");
+        MapManager.Instance.ToggleMap(true);
         LevelLoader.Instance.LoadScene(randomScene);
-        MapManager.Instance.ToggleMap();
     }
 }

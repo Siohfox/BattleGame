@@ -72,13 +72,13 @@ public class MapManager : MonoBehaviour
         } 
     }
 
-    public void ToggleMap()
+    public void ToggleMap(bool _mapClosable)
     {
         if(mapObject.activeSelf == false)
         {
             mapObject.SetActive(true);
             MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
-            mapClosable = false;
+            mapClosable = _mapClosable;
         }
         else if (mapObject.activeSelf == true)
         {
