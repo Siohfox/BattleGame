@@ -5,24 +5,30 @@ using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] private int width, height;
+    // Singleton
+    public static MapManager Instance { get; private set; }
 
+    // Objects
     [SerializeField] private GameObject mapObject;
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private Image backgroundImage;
 
+    // Map variables
+    [SerializeField] private int width, height;
     [SerializeField] private float offsetX, offsetY, tileSpacingX, tileSpacingY;
 
+    // AudioClips
     private AudioClip mapCrumpleClip;
 
+    // Variables
     bool mapClosable;
 
-    private Dictionary<Vector2, Tile> _tiles;
-
-    public static MapManager Instance { get; private set; }
+    // Dictionaries and lists
+    public Dictionary<Vector2, Tile> _tiles;
 
     private void Awake()
     {
+        // Singleton instance
         if (Instance != null && Instance != this)
         {
             Destroy(this);
@@ -32,6 +38,7 @@ public class MapManager : MonoBehaviour
             Instance = this;
         }
 
+        // Make sure there can only ever be one map at a time
         GameObject[] obj = GameObject.FindGameObjectsWithTag("Map");
         if (obj.Length > 1)
         {
@@ -45,15 +52,18 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
+        // Load dependencies 
         mapCrumpleClip = Resources.Load<AudioClip>("Sounds/MapCrumple");
-
-        mapClosable = true;
-
         mapObject = transform.GetChild(0).transform.GetChild(0).gameObject;
 
+        // Set variables
+        mapClosable = true;
+
+        // Create a new map child of Map gameobject
         Image newMap = Instantiate(backgroundImage, GameObject.Find("Map").transform.position, Quaternion.identity, GameObject.Find("Map").transform);
         newMap.transform.SetAsFirstSibling();
 
+        // Generate map grid and set it to not be visible when done
         GenerateGrid(newMap);
         mapObject.SetActive(false);
     }
@@ -108,6 +118,7 @@ public class MapManager : MonoBehaviour
                 spawnedTile.Init(isOffset);
 
                 _tiles[new Vector2  (x, y)] = spawnedTile;
+                spawnedTile.tileLocation = new Vector2(x,y);
             }
         }
 

@@ -11,6 +11,10 @@ public class Tile : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private GameObject highlight;
 
+    private Color savedColor;
+
+    public Vector2 tileLocation;
+
     public TileState currentState;
 
     private int randomScene;
@@ -31,6 +35,7 @@ public class Tile : MonoBehaviour
         if (currentState == TileState.Unused)
         {
             image.color = isOffset ? offsetColour : baseColour;
+            savedColor = image.color;
         }
     }
 
@@ -45,22 +50,59 @@ public class Tile : MonoBehaviour
 
         if(currentState == TileState.Active)
         {
+            currentState = TileState.Active;
+            GetComponent<Button>().onClick.RemoveAllListeners();
             image.color = activeColour;
         }
         if(currentState == TileState.Selectable)
         {
+            // 1 - Set state to selectable & set colour
+            currentState = TileState.Selectable;
             image.color = selectableColour;
+
+            // Add load scene listener
             GetComponent<Button>().onClick.RemoveAllListeners();
-            GetComponent<Button>().onClick.AddListener(LoadRandomSceneThing);
+            GetComponent<Button>().onClick.AddListener(CalculateNextMapTiles);          
         }
         if (currentState == TileState.Unused)
         {
-            
+            image.color = savedColor;
+            currentState = TileState.Unused;
+            GetComponent<Button>().onClick.RemoveAllListeners();
         }
         if (currentState == TileState.Used)
         {
+            currentState = TileState.Used;
+            GetComponent<Button>().onClick.RemoveAllListeners();
             image.color = usedColour;
         }
+    }
+
+    /// <summary>
+    /// Calculates the next available choices for the player to go to in the map
+    /// </summary>
+    public void CalculateNextMapTiles()
+    {
+        // Remove any active tiles
+        foreach (var dictionaryTile in MapManager.Instance._tiles)
+        {
+            if (dictionaryTile.Value.GetTileState() == TileState.Active)
+            {
+                dictionaryTile.Value.SetTileState(TileState.Used);
+            }
+        }
+
+        foreach (var dictionaryTile in MapManager.Instance._tiles)
+        {
+            if (dictionaryTile.Value.GetTileState() == TileState.Selectable)
+            {
+                dictionaryTile.Value.SetTileState(TileState.Unused);
+            }
+        }
+
+        SetTileState(TileState.Active);
+        MapManager.Instance.CalculateSelectableTiles();
+        LoadRandomSceneThing();
     }
 
     private void LoadRandomSceneThing()
