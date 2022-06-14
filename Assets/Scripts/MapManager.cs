@@ -111,14 +111,18 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        GetTileAtPosition(new Vector2(5, 5)).SetTileState(Tile.TileState.Active);
+        GetTileAtPosition(new Vector2(0, 0)).SetTileState(Tile.TileState.Active);
         GetTileAtPosition(new Vector2(4, 4)).SetTileState(Tile.TileState.Used);
 
+        CalculateSelectableTiles();
+    }
 
+    public void CalculateSelectableTiles()
+    {
         Vector2 activeTile = new Vector2(3, 3); // defaulted to 3x3y to check for errors
         foreach (KeyValuePair<Vector2, Tile> dictionaryTile in _tiles)
         {
-            if(dictionaryTile.Value.GetTileState() == Tile.TileState.Active)
+            if (dictionaryTile.Value.GetTileState() == Tile.TileState.Active)
             {
                 activeTile = dictionaryTile.Key;
             }
@@ -126,9 +130,9 @@ public class MapManager : MonoBehaviour
 
         foreach (KeyValuePair<Vector2, Tile> dictionaryTile in _tiles)
         {
-            Debug.Log(dictionaryTile.Value.GetTileState().ToString());
+            //Debug.Log(dictionaryTile.Value.GetTileState().ToString()); // This debug shows how many tiles are in which state
 
-            if(dictionaryTile.Value.GetTileState() != Tile.TileState.Used)
+            if (dictionaryTile.Value.GetTileState() != Tile.TileState.Used)
             {
                 // Right side
                 if (dictionaryTile.Key.x > activeTile.x)
@@ -178,7 +182,7 @@ public class MapManager : MonoBehaviour
                     }
                 }
             }
-        }    
+        }
     }
 
     public Tile GetTileAtPosition(Vector2 pos)

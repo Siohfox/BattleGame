@@ -13,6 +13,8 @@ public class Tile : MonoBehaviour
 
     public TileState currentState;
 
+    private int randomScene;
+
     private void Awake()
     {
         image = gameObject.GetComponent<Image>();
@@ -21,6 +23,7 @@ public class Tile : MonoBehaviour
     private void Start()
     {
         currentState = TileState.Unused;
+        randomScene = Random.Range(1, 3); // 1 or 2
     }
 
     public void Init(bool isOffset)
@@ -47,6 +50,8 @@ public class Tile : MonoBehaviour
         if(currentState == TileState.Selectable)
         {
             image.color = selectableColour;
+            GetComponent<Button>().onClick.AddListener(LoadRandomSceneThing);
+
         }
         if (currentState == TileState.Unused)
         {
@@ -56,5 +61,12 @@ public class Tile : MonoBehaviour
         {
             image.color = usedColour;
         }
+    }
+
+    private void LoadRandomSceneThing()
+    {
+        Debug.Log("Loading random scene thing");
+        LevelLoader.Instance.LoadScene(randomScene);
+        MapManager.Instance.ToggleMap();
     }
 }
