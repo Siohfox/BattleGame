@@ -73,12 +73,12 @@ public class MapManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M) && mapObject.activeSelf == false || Input.GetKeyDown(KeyCode.Escape) && mapObject.activeSelf == false)
         {
             mapObject.SetActive(true);
-            MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
+            SfxPlayer.Instance.PlaySound(mapCrumpleClip, 1.0f);
         }
         else if (Input.GetKeyDown(KeyCode.M) && mapObject.activeSelf == true && mapClosable || Input.GetKeyDown(KeyCode.Escape) && mapObject.activeSelf == true && mapClosable)
         {
             mapObject.SetActive(false);
-            MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
+            SfxPlayer.Instance.PlaySound(mapCrumpleClip, 1.0f);
         } 
     }
 
@@ -87,13 +87,13 @@ public class MapManager : MonoBehaviour
         if(mapObject.activeSelf == false)
         {
             mapObject.SetActive(true);
-            MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
+            SfxPlayer.Instance.PlaySound(mapCrumpleClip, 1.0f);
             mapClosable = _mapClosable;
         }
         else if (mapObject.activeSelf == true)
         {
             mapObject.SetActive(false);
-            MusicPlayer.Instance.PlaySound(mapCrumpleClip, 10);
+            SfxPlayer.Instance.PlaySound(mapCrumpleClip, 1.0f);
         }
     }
 

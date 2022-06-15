@@ -11,9 +11,9 @@ namespace BG.Core
     public class GameState : MonoBehaviour
     {
         // List arrays of actions
-        public List<string> enumActionList = System.Enum.GetNames(typeof(Action)).ToList();
-        public List<ActionThing> actionsLearnt;
-        public List<ActionThing> actionList;
+        public List<string> enumActionList = System.Enum.GetNames(typeof(Action)).ToList(); // String names of actions - maybe not needed
+        public List<ActionThing> actionsLearnt; // Actions known from entire list
+        public List<ActionThing> actionList; // Actions entire list
 
         // UI
         private TMP_Text goldTextValue;
@@ -25,9 +25,6 @@ namespace BG.Core
 
         // AudioClips
         private AudioClip actionLearnClip;
-
-        // Script Refs
-        MapManager mapManager;
 
         private void Awake()
         {
@@ -46,10 +43,6 @@ namespace BG.Core
         // Start is called before the first frame update
         void Start()
         {
-            mapManager = FindObjectOfType<MapManager>();
-
-            Debug.Log("Tile state 0,0 = " + mapManager.GetTileAtPosition(new Vector2(0, 0)).GetComponent<Tile>().GetTileState().ToString());
-
             // Initialise values
             goldAmount = 100;
             levelAmount = 1;
@@ -100,7 +93,7 @@ namespace BG.Core
             {
                 //Debug.Log("Unlocking new ability: " + actionList[_actionIndex].Name);
                 actionsLearnt.Add(actionList[_actionIndex]);
-                MusicPlayer.Instance.PlaySound(actionLearnClip, 10);
+                SfxPlayer.Instance.PlaySound(actionLearnClip, 1.0f);
             }
         }
 

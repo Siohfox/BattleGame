@@ -8,6 +8,7 @@ TagManager:
   - Music
   - GameState
   - Map
+  - SFX
   layers:
   - Default
   - TransparentFX

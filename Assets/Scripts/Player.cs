@@ -34,6 +34,7 @@ public class Player : Entity
     // Start is called before the first frame update
     void Start()
     {
+        // Object refs
         healthBar = GetComponentInChildren<Slider>();
         healthTextValue = healthBar.GetComponentInChildren<TMP_Text>();
         playerAnimator = GetComponent<Animator>();
@@ -42,19 +43,19 @@ public class Player : Entity
         basicHitFX = Resources.Load<GameObject>("Particles/BasicHitParticles");
         battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
 
+        // Variable assigns
         entityMaxHealth = 100;
         entityCurrentHealth = 50;
-
-        healthTextValue.text = entityCurrentHealth.ToString() + "/" + entityMaxHealth.ToString();
-        healthBar.maxValue = entityMaxHealth;
-        healthBar.value = entityCurrentHealth;
-
-        UpdateEnergy(5, 5);
-        UpdateShield(0);
-
         playerState = new State[2];
         playerState[0] = State.Normal;
         playerState[1] = State.Normal;
+
+        // UI assigns
+        healthTextValue.text = entityCurrentHealth.ToString() + "/" + entityMaxHealth.ToString();
+        healthBar.maxValue = entityMaxHealth;
+        healthBar.value = entityCurrentHealth;
+        UpdateEnergy(5, 5);
+        UpdateShield(0);
     }
 
     // Update is called once per frame
@@ -79,7 +80,7 @@ public class Player : Entity
         // Update health bar:
         healthBar.maxValue = entityMaxHealth;
         healthBar.value = entityCurrentHealth;
-        healthTextValue.text = entityCurrentHealth.ToString() + "/" + entityMaxHealth.ToString();   
+        healthTextValue.text = entityCurrentHealth.ToString() + "/" + entityMaxHealth.ToString();
     }
 
     void OnDeath()
@@ -106,7 +107,7 @@ public class Player : Entity
 
     public void Attack()
     {
-        MusicPlayer.Instance.PlaySound(atkSoundClip, 100.0f);
+        SfxPlayer.Instance.PlaySound(atkSoundClip, 1.0f);
 
         Instantiate(basicHitFX, battleManager.enemyObjects[0].transform.position, transform.rotation);
 
@@ -126,6 +127,6 @@ public class Player : Entity
     public void Shield()
     {
         Instantiate(shieldPrefab, transform);
-        MusicPlayer.Instance.PlaySound(shieldEquipClip, 100);
+        SfxPlayer.Instance.PlaySound(shieldEquipClip, 1.0f);
     }
 }

@@ -9,6 +9,8 @@ public class EventManager : MonoBehaviour
 {
     public List<Button> optionButtons;
     [SerializeField] private Button objectButtonPrefab;
+    [SerializeField] private GameObject optionButtonContainer;
+    [SerializeField] private GameObject nextScreenButton;
     private GameState gameState;
 
     private void Start()
@@ -16,6 +18,8 @@ public class EventManager : MonoBehaviour
         gameState = GameObject.Find("GameState").GetComponent<GameState>();
 
         CreateOptionButtons();
+
+        nextScreenButton.SetActive(false);
     }
 
     public void CreateOptionButtons()
@@ -103,10 +107,17 @@ public class EventManager : MonoBehaviour
         _usedActions.Add(randomAction);
         
         // Assign button listeners and text
-        button.onClick.AddListener(delegate { gameState.UnlockNewAbility(gameState.actionList[randomAction].Index); });
+        button.onClick.AddListener(delegate { gameState.UnlockNewAbility(gameState.actionList[randomAction].Index);});
+        button.onClick.AddListener(FinishEvent);
         button.GetComponentInChildren<TMP_Text>().text = gameState.actionList[randomAction].Name;
 
         // Add button to a list of buttons so they can be removed and/or replaced later
         optionButtons.Add(button);
+    }
+
+    private void FinishEvent()
+    {
+        optionButtonContainer.SetActive(false);
+        nextScreenButton.SetActive(true);
     }
 }

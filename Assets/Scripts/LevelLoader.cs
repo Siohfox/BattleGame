@@ -6,13 +6,12 @@ using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour
 {
-    GameObject[] gameObjects;
+    // Singleton
+    public static LevelLoader Instance { get; private set; }
 
     //public GameObject loadingScreen;
     public Slider slider;
     public Text progressText;
-
-    public static LevelLoader Instance { get; private set; }
 
     private void Awake()
     {

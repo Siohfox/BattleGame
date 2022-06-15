@@ -225,7 +225,7 @@ namespace BG.Battle
             Debug.Log("Checking for battle end.. enemy count: " + enemyObjects.Count);
             if(enemyObjects.Count < 1)
             {
-                MusicPlayer.Instance.PlaySound(battleWonClip, 10);
+                SfxPlayer.Instance.PlaySound(battleWonClip, 1.0f);
                 GameObject.Find("MapManager").GetComponent<MapManager>().ToggleMap(false);
             }
         }

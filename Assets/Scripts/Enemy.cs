@@ -20,10 +20,12 @@ public class Enemy : Entity
     private Animator enemyAnimator;
 
     public int enemyAtkDamage;
+    private bool hoverEnabled;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Object refs
         healthBar = GetComponentInChildren<Slider>();
         healthTextValue = healthBar.GetComponentInChildren<TMP_Text>();
         enemyAnimator = GetComponent<Animator>();
@@ -32,10 +34,11 @@ public class Enemy : Entity
         enemyAtkMissClip = Resources.Load<AudioClip>("Sounds/AttackMiss");
         basicHitFX = Resources.Load<GameObject>("Particles/BasicHitParticles");
 
+        // Variable assigns
         entityMaxHealth = 70;
         entityCurrentHealth = 10;
-
         enemyAtkDamage = Random.Range(10, 20);
+        hoverEnabled = false;
 
         healthTextValue.text = entityCurrentHealth.ToString() + "/" + entityMaxHealth.ToString();
         healthBar.maxValue = entityMaxHealth;
@@ -80,20 +83,20 @@ public class Enemy : Entity
             if(hitOrMiss < 1) // 20% chance of being hit
             {
                 Debug.Log("Player found, hitting anyway");
-                MusicPlayer.Instance.PlaySound(enemyAtkClip, 100);
+                SfxPlayer.Instance.PlaySound(enemyAtkClip, 1.0f);
                 Instantiate(basicHitFX, player.transform.position, transform.rotation);
                 CalculateDamage();
             }
             else
             {
-                MusicPlayer.Instance.PlaySound(enemyAtkMissClip, 100);
+                SfxPlayer.Instance.PlaySound(enemyAtkMissClip, 1.0f);
                 Debug.Log("Missed because player hidden");
             }
         }
         else
         {
             Instantiate(basicHitFX, player.transform.position, transform.rotation);
-            MusicPlayer.Instance.PlaySound(enemyAtkClip, 100);
+            SfxPlayer.Instance.PlaySound(enemyAtkClip, 1.0f);
             CalculateDamage();
         }
         
@@ -157,5 +160,18 @@ public class Enemy : Entity
         battleManager.BattleEndCheck();
 
         Destroy(gameObject);
+    }
+
+    private void OnMouseEnter()
+    {
+        if (hoverEnabled)
+        {
+            GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+        } 
+    }
+
+    private void OnMouseExit()
+    {
+        GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     }
 }

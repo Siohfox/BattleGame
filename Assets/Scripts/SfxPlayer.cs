@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicPlayer : MonoBehaviour
+public class SfxPlayer : MonoBehaviour
 {
-    public static MusicPlayer Instance { get; private set; }
-
     AudioSource src;
+
+    public static SfxPlayer Instance { get; private set; }
 
     private void Awake()
     {
-        if(Instance != null && Instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(this);
         }
@@ -19,8 +19,8 @@ public class MusicPlayer : MonoBehaviour
             Instance = this;
         }
 
-        GameObject[] obj = GameObject.FindGameObjectsWithTag("Music");
-        if(obj.Length > 1)
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("SFX");
+        if (obj.Length > 1)
         {
             Destroy(gameObject);
         }
@@ -33,27 +33,13 @@ public class MusicPlayer : MonoBehaviour
     private void Start()
     {
         src = gameObject.GetComponent<AudioSource>();
-
-        GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("musicVolume", 0.35f);
     }
 
-    public void StopPlayMusic()
-    {
-        if(src.isPlaying)
-        {
-            src.Stop();
-        }    
-        else
-        {
-            src.Play();
-        }
-    }
-    
     /// <summary>
     /// Plays a music clip with given clip
     /// </summary>
     /// <param name="clip"></param>
-    public void PlayMusic(AudioClip clip, float volume)
+    public void PlaySound(AudioClip clip, float volume)
     {
         src.PlayOneShot(clip, volume);
     }
