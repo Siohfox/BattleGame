@@ -83,6 +83,9 @@ public class Tile : MonoBehaviour
     /// </summary>
     public void CalculateNextMapTiles()
     {
+        // Scuffed solution -- for some reason first tile won't be set to used
+        MapManager.Instance.GetTileAtPosition(new Vector2(0, 0)).SetTileState(TileState.Used);
+
         // Remove any active tiles
         foreach (var dictionaryTile in MapManager.Instance._tiles)
         {
@@ -92,6 +95,7 @@ public class Tile : MonoBehaviour
             }
         }
 
+        // Reset any selectable tiles before making new ones
         foreach (var dictionaryTile in MapManager.Instance._tiles)
         {
             if (dictionaryTile.Value.GetTileState() == TileState.Selectable)
@@ -100,8 +104,13 @@ public class Tile : MonoBehaviour
             }
         }
 
+        // Set chosen tile as active
         SetTileState(TileState.Active);
+
+        // Calculate new selectable tiles around new active tile
         MapManager.Instance.CalculateSelectableTiles();
+        
+        // Load new scene
         LoadRandomSceneThing();
     }
 

@@ -536,22 +536,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 965625406}
     m_Modifications:
-    - target: {fileID: 346412454032249089, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2303822766229954600, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2422101738420447043, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2737360374681608251, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8080189493780525206, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -640,18 +624,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: OptionsMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 8080189493780525207, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8080189494739416645, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8080189494908004683, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
 --- !u!1 &742414746
@@ -729,11 +701,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742414746}
   m_CullTransparentMesh: 1
---- !u!1 &931227754 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8080189493780525207, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
-  m_PrefabInstance: {fileID: 633516384}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &931227755 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8080189493780525206, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
@@ -954,6 +921,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1985272815 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8080189493923634560, guid: 09a394b26fae6a34c989b5b577be6d57, type: 3}
+  m_PrefabInstance: {fileID: 633516384}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2060091322
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,7 +1009,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 931227754}
+      - m_Target: {fileID: 1985272815}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6

@@ -123,7 +123,6 @@ public class MapManager : MonoBehaviour
         }
 
         GetTileAtPosition(new Vector2(0, 0)).SetTileState(Tile.TileState.Active);
-        GetTileAtPosition(new Vector2(4, 4)).SetTileState(Tile.TileState.Used);
 
         CalculateSelectableTiles();
     }
