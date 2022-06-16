@@ -12,7 +12,7 @@ namespace BG.Battle
     {
         public List<GameObject> enemyObjects;
         public List<Button> atkButtons;
-        private List<int> bufferList;
+        private List<Action> bufferList;
         private List<MiniAction> minibufferList;
         private bool waitForBuffer;
         private bool waitForMiniBuffer;
@@ -36,7 +36,7 @@ namespace BG.Battle
 
             gameState = GameObject.Find("GameState").GetComponent<GameState>();
 
-            bufferList = new List<int>();
+            bufferList = new List<Action>();
             minibufferList = new List<MiniAction>();
 
             waitForBuffer = false;
@@ -110,7 +110,7 @@ namespace BG.Battle
             _usedActions.Add(randomAction);
 
             // Update button to listen to it's new action + update button text to action name
-            button.onClick.AddListener(delegate { BufferAction(gameState.actionsLearnt[randomAction].Index); });
+            button.onClick.AddListener(delegate { BufferAction(gameState.actionsLearnt[randomAction]); });
             button.GetComponentInChildren<TMP_Text>().text = gameState.actionsLearnt[randomAction].Name;
 
             // Add button to a list of buttons so they can be removed and replaced later
@@ -130,7 +130,7 @@ namespace BG.Battle
             }
         }
 
-        private void BufferAction(int _action)
+        private void BufferAction(Action _action)
         {
             if (enemyObjects.Count > 0)
             {
@@ -141,8 +141,8 @@ namespace BG.Battle
         IEnumerator ExecuteAction()
         {
             waitForBuffer = true;
-            UseAction(bufferList[0]);
-            yield return new WaitForSeconds(0.6f);        
+            UseAction(bufferList[0].Index);
+            yield return new WaitForSeconds(bufferList[0].SpeedTime);        
             bufferList.RemoveAt(0);
             waitForBuffer = false;
         }
@@ -150,8 +150,8 @@ namespace BG.Battle
         IEnumerator ExecuteMiniAction()
         {
             waitForMiniBuffer = true;
-            UseMiniAction(minibufferList[0]);
-            yield return new WaitForSeconds(0.4f);
+            UseMiniAction(minibufferList[0].Index);
+            yield return new WaitForSeconds(minibufferList[0].SpeedTime);
             minibufferList.RemoveAt(0);
             waitForMiniBuffer = false;
         }
@@ -160,7 +160,7 @@ namespace BG.Battle
         {
             switch (action)
             {
-                case (int)Action.Bite:
+                case (int)ActionEnum.Bite:
                     if (player.playerCurrentEnergy > 0)
                     {           
                         if(enemyObjects.Count > 0)
@@ -175,7 +175,7 @@ namespace BG.Battle
                     else { Debug.Log("Player energy is less than 0"); }
                     break;
 
-                case (int)Action.Scratch:
+                case (int)ActionEnum.Scratch:
                     if (player.playerCurrentEnergy > 1)
                     {
                         
@@ -192,7 +192,7 @@ namespace BG.Battle
 
                     break;
 
-                case (int)Action.Defend:
+                case (int)ActionEnum.Defend:
                     if (player.playerCurrentEnergy > 0)
                     {
                         //Debug.Log("Defending");
@@ -205,7 +205,7 @@ namespace BG.Battle
 
                     break;
 
-                case (int)Action.Hide:
+                case (int)ActionEnum.Hide:
                     // lower enemy attack
                     if(player.playerCurrentEnergy > 3)
                     {
@@ -224,7 +224,7 @@ namespace BG.Battle
 
                     break;
 
-                case (int)Action.Howl:
+                case (int)ActionEnum.Howl:
                     // lower enemy attack
                     //Debug.Log("Howling");
                     if (player.playerCurrentEnergy > 0)
@@ -237,7 +237,7 @@ namespace BG.Battle
 
                     break;
 
-                case (int)Action.Sprint:
+                case (int)ActionEnum.Sprint:
                     // lower enemy attack
                     //Debug.Log("Sprinting");
                     if (player.playerCurrentEnergy > 0)
@@ -250,7 +250,7 @@ namespace BG.Battle
 
                     break;
 
-                case (int)Action.Prepare:
+                case (int)ActionEnum.Prepare:
                     // lower enemy attack
                     //Debug.Log("Preparing");
                     if (player.playerCurrentEnergy > 0)
@@ -268,14 +268,14 @@ namespace BG.Battle
 
                     break;
 
-                case (int)Action.Finisher:
-                    Debug.Log("Finisher");
+                case (int)ActionEnum.Finisher:
+                    //Debug.Log("Finisher");
                     if (player.playerCurrentEnergy > 0)
                     {
                         player.UpdateEnergy(-1, 0);
                         for (int i = 0; i < actionsUsed; i++)
                         {
-                            minibufferList.Add(MiniAction.FinisherMini);
+                            minibufferList.Add(gameState.miniActionList[0]);
                         }
                         actionsUsed++;
                     }
@@ -289,12 +289,12 @@ namespace BG.Battle
             }
         }
 
-        public void UseMiniAction(MiniAction _miniAction)
+        public void UseMiniAction(int _miniAction)
         {
             switch (_miniAction)
             {
-                case MiniAction.FinisherMini:
-                    Debug.Log("Finisher Mini");
+                case (int)MiniActionEnum.FinisherMini:
+                    //Debug.Log("Finisher Mini");
                     if(enemyObjects.Count > 0)
                     {
                         player.Attack();

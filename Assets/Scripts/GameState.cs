@@ -6,15 +6,16 @@ using System.Linq;
 
 namespace BG.Core
 {
-    public enum Action { Bite, Scratch, Defend, Hide, Howl, Sprint, Prepare, Finisher };
-    public enum MiniAction { FinisherMini };
+    public enum ActionEnum { Bite, Scratch, Defend, Hide, Howl, Sprint, Prepare, Finisher };
+    public enum MiniActionEnum { FinisherMini };
 
     public class GameState : MonoBehaviour
     {
         // List arrays of actions
-        public List<string> enumActionList = System.Enum.GetNames(typeof(Action)).ToList(); // String names of actions - maybe not needed
-        public List<ActionThing> actionsLearnt; // Actions known from entire list
-        public List<ActionThing> actionList; // Actions entire list
+        public List<string> enumActionList = System.Enum.GetNames(typeof(ActionEnum)).ToList(); // String names of actions - maybe not needed
+        public List<Action> actionsLearnt; // Actions known from entire list
+        public List<Action> actionList; // Actions entire list
+        public List<MiniAction> miniActionList; // Mini actions entire list
 
         // UI
         private TMP_Text goldTextValue;
@@ -51,20 +52,20 @@ namespace BG.Core
 
             UpdateGameStateVariableHolds();
 
-            actionList = new List<ActionThing>
+            actionList = new List<Action>
             {
-                new ActionThing() { Name = "Bite", Index = 0 },
-                new ActionThing() { Name = "Scratch", Index = 1 },
-                new ActionThing() { Name = "Defend", Index = 2 },
-                new ActionThing() { Name = "Hide", Index = 3 },
-                new ActionThing() { Name = "Howl", Index = 4 },
-                new ActionThing() { Name = "Sprint", Index = 5 },
-                new ActionThing() { Name = "Prepare", Index = 6 },
-                new ActionThing() { Name = "Finisher", Index = 7 }
+                new Action() { Name = "Bite", Index = 0, SpeedTime = 0.2f},
+                new Action() { Name = "Scratch", Index = 1, SpeedTime = 0.2f },
+                new Action() { Name = "Defend", Index = 2, SpeedTime = 0.3f },
+                new Action() { Name = "Hide", Index = 3, SpeedTime = 0.1f },
+                new Action() { Name = "Howl", Index = 4, SpeedTime = 0.3f },
+                new Action() { Name = "Sprint", Index = 5, SpeedTime = 0.4f },
+                new Action() { Name = "Prepare", Index = 6, SpeedTime = 0.1f },
+                new Action() { Name = "Finisher", Index = 7, SpeedTime = 2.0f }
             };
 
             // initialise Actions learnt
-            actionsLearnt = new List<ActionThing>
+            actionsLearnt = new List<Action>
             { 
                 actionList[0],
                 actionList[1],
@@ -72,6 +73,11 @@ namespace BG.Core
                 actionList[3]
             };
 
+
+            miniActionList = new List<MiniAction>
+            {
+                new MiniAction() {Name = "FinisherMini", Index = 0, SpeedTime = 0.1f}
+            };
             //for (int i = 0; i < actionsLearnt.Count; i++)
             //{
             //    Debug.Log("Action " + i + " learnt = " + actionsLearnt[i].Name);
@@ -112,9 +118,17 @@ namespace BG.Core
         }
     }
 
-    public class ActionThing
+    public class Action
     {
-        public string Name { get; set; }
-        public int Index { get; set; }
+        public string Name { get; set; } // The name of the action
+        public int Index { get; set; } // The index of the action
+        public float SpeedTime { get; set; } // The time it takes to finish animation
+    }
+
+    public class MiniAction
+    {
+        public string Name { get; set; } // The name of the action
+        public int Index { get; set; } // The index of the action
+        public float SpeedTime { get; set; } // The time it takes to finish animation
     }
 }
