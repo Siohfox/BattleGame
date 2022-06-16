@@ -11,6 +11,8 @@ public class Enemy : Entity
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthTextValue;
     [SerializeField] private TMP_Text actionQuantityValText;
+    [SerializeField] private SpriteRenderer actionQuantitySprite;
+    public TMP_Text enemyShieldTextValue;
 
     [SerializeField] private Player player;
 
@@ -20,6 +22,8 @@ public class Enemy : Entity
     private Animator enemyAnimator;
 
     public int enemyAtkDamage;
+    public int enemyDefence;
+    public int enemyCurrentDefence;
     private bool hoverEnabled;
 
     // Start is called before the first frame update
@@ -33,11 +37,14 @@ public class Enemy : Entity
         enemyAtkClip = Resources.Load<AudioClip>("Sounds/BasicWhack");
         enemyAtkMissClip = Resources.Load<AudioClip>("Sounds/AttackMiss");
         basicHitFX = Resources.Load<GameObject>("Particles/BasicHitParticles");
+        shieldEquipClip = Resources.Load<AudioClip>("Sounds/ShieldEquip");
 
         // Variable assigns
         entityMaxHealth = Random.Range(20, 60);
         entityCurrentHealth = entityMaxHealth;
         enemyAtkDamage = Random.Range(10, 20);
+        enemyDefence = 0;
+        UpdateDefence(0);
         hoverEnabled = false;
 
         healthTextValue.text = entityCurrentHealth.ToString() + "/" + entityMaxHealth.ToString();
@@ -45,6 +52,8 @@ public class Enemy : Entity
         healthBar.value = entityCurrentHealth;
 
         actionQuantityValText.text = enemyAtkDamage.ToString();
+        actionQuantitySprite.sprite = Resources.Load<Sprite>("Textures/AtkIcon");
+        enemyShieldTextValue.text = enemyCurrentDefence.ToString();
     }
 
     // Update is called once per frame
@@ -103,6 +112,14 @@ public class Enemy : Entity
         StartCoroutine(EnemyAnim());
     }
 
+    public void Defend()
+    {
+        Instantiate(shieldPrefab, transform);
+        SfxPlayer.Instance.PlaySound(shieldEquipClip, 1.0f);
+        enemyCurrentDefence = enemyDefence;
+        enemyShieldTextValue.text = enemyCurrentDefence.ToString();
+    }
+
     void CalculateDamage()
     {
         if (enemyAtkDamage > player.playerCurrentShield)
@@ -124,8 +141,6 @@ public class Enemy : Entity
 
     IEnumerator EnemyAnim()
     {
-        
-
         yield return new WaitUntil(() => enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("EnemyBasicAtk"));
 
         enemyAnimator.SetBool("EnemyAttacking", false);
@@ -133,6 +148,7 @@ public class Enemy : Entity
 
     public void UpdateAttack(int AtkChange)
     {
+        // If enemy attack is being modified, apply change, else pick a random atk range
         if (AtkChange == 0)
         {
             enemyAtkDamage = Random.Range(10, 20);
@@ -142,23 +158,57 @@ public class Enemy : Entity
             enemyAtkDamage += AtkChange;
         }
 
+        // Make sure enemy attack can't be negative
         if (enemyAtkDamage < 0)
         {
             enemyAtkDamage = 0;
         }
 
+        // Show new attack under the enemy
         actionQuantityValText.text = enemyAtkDamage.ToString();
+        actionQuantitySprite.sprite = Resources.Load<Sprite>("Textures/AtkIcon");
+    }
+
+    public void UpdateDefence(int _defenceChange)
+    {
+        // If enemy defence is being modified, apply change, else pick a random defence range
+        if (_defenceChange == 0)
+        {
+            enemyDefence = Random.Range(10, 15);
+        }
+        else
+        {
+            enemyDefence += _defenceChange;
+        }
+
+        // Make sure enemy defence can't be negative
+        if (enemyDefence < 0)
+        {
+            enemyDefence = 0;
+        }
+
+        // Show new defence under the enemy
+        actionQuantityValText.text = enemyDefence.ToString();
+        actionQuantitySprite.sprite = Resources.Load<Sprite>("Textures/SmallShieldIcon");
+    }
+
+    public void UpdateShield(int shieldAmount)
+    {
+        enemyCurrentDefence += shieldAmount;
+
+        enemyShieldTextValue.text = enemyCurrentDefence.ToString();
     }
 
     void OnDeath()
     {
         // remove self from remaining enemies list
         BattleManager battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
+        battleManager.enemyObjects.Remove(this);
 
-        battleManager.enemyObjects.Remove(gameObject);
-
+        // Since an enemy has died, check if there are any enemies left and if not end battle
         battleManager.BattleEndCheck();
 
+        // Destroy self
         Destroy(gameObject);
     }
 

@@ -11,7 +11,7 @@ namespace BG.Battle
     public class BattleManager : MonoBehaviour
     {
         // Object lists
-        public List<GameObject> enemyObjects;
+        public List<Enemy> enemyObjects;
         public List<Button> atkButtons;
         private List<Action> bufferList;
         private List<MiniAction> minibufferList;
@@ -53,7 +53,7 @@ namespace BG.Battle
             int amountOfEnemiesToMake = 1;
             for (int i = 0; i < amountOfEnemiesToMake; i++)
             {
-                GameObject newEnemy = Instantiate(enemyPrefab.gameObject);
+                Enemy newEnemy = Instantiate(enemyPrefab);
                 enemyObjects.Add(newEnemy);
             }
 
@@ -214,7 +214,8 @@ namespace BG.Battle
                             //Debug.Log("Biting");
                             player.UpdateEnergy(-1, 0);
                             player.Attack();
-                            enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-(Random.Range(1,7)), 0);
+                            CalculatePlayerDamage(Random.Range(1, 7));
+                            //enemyObjects[0].UpdateHealth(-(Random.Range(1,7)), 0);
                         }
                         actionsUsed++;
                     }
@@ -230,7 +231,7 @@ namespace BG.Battle
                             //Debug.Log("Scratching");
                             player.UpdateEnergy(-2, 0);
                             player.Attack();
-                            enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-(Random.Range(4, 16)), 0);
+                            enemyObjects[0].UpdateHealth(-(Random.Range(4, 16)), 0);
                         }
                         actionsUsed++;
                     } 
@@ -273,7 +274,7 @@ namespace BG.Battle
                     //Debug.Log("Howling");
                     if (player.playerCurrentEnergy > 0)
                     {
-                        enemyObjects[0].GetComponent<Enemy>().UpdateAttack(-Random.Range(1, 8));  
+                        enemyObjects[0].UpdateAttack(-Random.Range(1, 8));  
                         player.UpdateEnergy(-1, 0);
                         SfxPlayer.Instance.PlaySound(Resources.Load<AudioClip>("Sounds/Howl"), 1.0f);
                         actionsUsed++;
@@ -345,10 +346,29 @@ namespace BG.Battle
                     if(enemyObjects.Count > 0)
                     {
                         player.Attack();
-                        enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-6, 0);
+                        enemyObjects[0].UpdateHealth(-6, 0);
                     }
 
                     break;
+            }
+        }
+
+        private void CalculatePlayerDamage(int _atkDmg)
+        {
+            if (_atkDmg > enemyObjects[0].enemyCurrentDefence)
+            {
+                // find dif between atk dmg and players shield. (13 attack - 8 shield = 5 leftover)
+                int dif = _atkDmg - enemyObjects[0].enemyCurrentDefence;
+
+                // remove shield entirely
+                enemyObjects[0].UpdateShield(-enemyObjects[0].enemyCurrentDefence);
+
+                // apply leftover damage
+                enemyObjects[0].UpdateHealth(-dif, 0);
+            }
+            else if (_atkDmg <= enemyObjects[0].enemyCurrentDefence)
+            {
+                enemyObjects[0].UpdateShield(-_atkDmg);
             }
         }
 

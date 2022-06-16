@@ -15,10 +15,10 @@ public class Player : Entity
     [SerializeField] private TMP_Text healthTextValue;
     [SerializeField] private TMP_Text playerEnergyTextValue;
     [SerializeField] private TMP_Text playerShieldTextValue;
-    [SerializeField] private GameObject shieldPrefab;
+    
     [SerializeField] private BattleManager battleManager;
     private AudioClip atkSoundClip;
-    private AudioClip shieldEquipClip;
+    
 
     public GameObject playerStateIcon;
 
