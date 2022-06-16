@@ -6,7 +6,8 @@ using System.Linq;
 
 namespace BG.Core
 {
-    public enum Action { Bite, Scratch, Defend, Hide, Howl, Sprint, Prepare };
+    public enum Action { Bite, Scratch, Defend, Hide, Howl, Sprint, Prepare, Finisher };
+    public enum MiniAction { FinisherMini };
 
     public class GameState : MonoBehaviour
     {
@@ -58,7 +59,8 @@ namespace BG.Core
                 new ActionThing() { Name = "Hide", Index = 3 },
                 new ActionThing() { Name = "Howl", Index = 4 },
                 new ActionThing() { Name = "Sprint", Index = 5 },
-                new ActionThing() { Name = "Prepare", Index = 6 }
+                new ActionThing() { Name = "Prepare", Index = 6 },
+                new ActionThing() { Name = "Finisher", Index = 7 }
             };
 
             // initialise Actions learnt

@@ -158,7 +158,8 @@ namespace BG.Turns
                 {
                     battleManager.enemyObjects[i].GetComponent<Enemy>().UpdateAttack(0);
                 }
-                
+
+                battleManager.actionsUsed = 0;
             }
         }
 

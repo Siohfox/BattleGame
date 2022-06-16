@@ -10,10 +10,13 @@ namespace BG.Battle
 {
     public class BattleManager : MonoBehaviour
     {
-        
-
         public List<GameObject> enemyObjects;
         public List<Button> atkButtons;
+        private List<int> bufferList;
+        private List<MiniAction> minibufferList;
+        private bool waitForBuffer;
+        private bool waitForMiniBuffer;
+        public int actionsUsed;
 
         [SerializeField] private Enemy enemyPrefab;
         [SerializeField] private Button actionButtonPrefab;
@@ -33,7 +36,13 @@ namespace BG.Battle
 
             gameState = GameObject.Find("GameState").GetComponent<GameState>();
 
+            bufferList = new List<int>();
+            minibufferList = new List<MiniAction>();
+
+            waitForBuffer = false;
+            waitForMiniBuffer = false;
             playerDefenceBonus = 1;
+            actionsUsed = 0;
 
             // Make a bunch of enemies
             int amountOfEnemiesToMake = 1;
@@ -101,11 +110,50 @@ namespace BG.Battle
             _usedActions.Add(randomAction);
 
             // Update button to listen to it's new action + update button text to action name
-            button.onClick.AddListener(delegate { UseAction(gameState.actionsLearnt[randomAction].Index); });
+            button.onClick.AddListener(delegate { BufferAction(gameState.actionsLearnt[randomAction].Index); });
             button.GetComponentInChildren<TMP_Text>().text = gameState.actionsLearnt[randomAction].Name;
 
             // Add button to a list of buttons so they can be removed and replaced later
             atkButtons.Add(button);
+        }
+
+        private void Update()
+        {
+            if (bufferList.Count > 0 && !waitForBuffer)
+            {
+                StartCoroutine(ExecuteAction());
+            }
+
+            if(minibufferList.Count > 0 && !waitForMiniBuffer)
+            {
+                StartCoroutine(ExecuteMiniAction());
+            }
+        }
+
+        private void BufferAction(int _action)
+        {
+            if (enemyObjects.Count > 0)
+            {
+                bufferList.Add(_action);
+            }
+        }
+
+        IEnumerator ExecuteAction()
+        {
+            waitForBuffer = true;
+            UseAction(bufferList[0]);
+            yield return new WaitForSeconds(0.6f);        
+            bufferList.RemoveAt(0);
+            waitForBuffer = false;
+        }
+
+        IEnumerator ExecuteMiniAction()
+        {
+            waitForMiniBuffer = true;
+            UseMiniAction(minibufferList[0]);
+            yield return new WaitForSeconds(0.4f);
+            minibufferList.RemoveAt(0);
+            waitForMiniBuffer = false;
         }
 
         public void UseAction(int action)
@@ -122,6 +170,7 @@ namespace BG.Battle
                             player.Attack();
                             enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-(Random.Range(1,7)), 0);
                         }
+                        actionsUsed++;
                     }
                     else { Debug.Log("Player energy is less than 0"); }
                     break;
@@ -136,7 +185,8 @@ namespace BG.Battle
                             player.UpdateEnergy(-2, 0);
                             player.Attack();
                             enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-(Random.Range(4, 16)), 0);
-                        }     
+                        }
+                        actionsUsed++;
                     } 
                     else { Debug.Log("Player energy is less than 0"); }
 
@@ -149,6 +199,7 @@ namespace BG.Battle
                         player.Shield();
                         player.UpdateShield(Random.Range(2 * playerDefenceBonus, 8 * playerDefenceBonus));
                         player.UpdateEnergy(-1, 0);
+                        actionsUsed++;
                     } 
                     else { Debug.Log("Player energy is less than 0"); }
 
@@ -166,7 +217,7 @@ namespace BG.Battle
                             player.gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
                         }
                         player.UpdateEnergy(-4, 0);
-
+                        actionsUsed++;
                         //Debug.Log("Player state is: " + player.playerState[0]);
                     }
                     else { Debug.Log("Player energy is less than 0"); }
@@ -180,6 +231,7 @@ namespace BG.Battle
                     {
                         enemyObjects[0].GetComponent<Enemy>().UpdateAttack(-Random.Range(1, 8));  
                         player.UpdateEnergy(-1, 0);
+                        actionsUsed++;
                     }
                     else { Debug.Log("Player energy is less than 0"); }
 
@@ -192,6 +244,7 @@ namespace BG.Battle
                     {
                         playerDefenceBonus = 2;
                         player.UpdateEnergy(-1, 0);
+                        actionsUsed++;
                     }
                     else { Debug.Log("Player energy is less than 0"); }
 
@@ -207,6 +260,7 @@ namespace BG.Battle
                         {
                             // Set icon thingy
                             player.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 1.0f, 0.0f, 0.5f);
+                            actionsUsed++;
                         }
                         player.UpdateEnergy(-1, 0);
                     }
@@ -214,8 +268,39 @@ namespace BG.Battle
 
                     break;
 
+                case (int)Action.Finisher:
+                    Debug.Log("Finisher");
+                    if (player.playerCurrentEnergy > 0)
+                    {
+                        player.UpdateEnergy(-1, 0);
+                        for (int i = 0; i < actionsUsed; i++)
+                        {
+                            minibufferList.Add(MiniAction.FinisherMini);
+                        }
+                        actionsUsed++;
+                    }
+                    else { Debug.Log("Player energy is less than 0"); }
+
+                    break;
+
                 default:
                     Debug.LogError("Failed to use proper action when using energy");
+                    break;
+            }
+        }
+
+        public void UseMiniAction(MiniAction _miniAction)
+        {
+            switch (_miniAction)
+            {
+                case MiniAction.FinisherMini:
+                    Debug.Log("Finisher Mini");
+                    if(enemyObjects.Count > 0)
+                    {
+                        player.Attack();
+                        enemyObjects[0].GetComponent<Enemy>().UpdateHealth(-6, 0);
+                    }
+
                     break;
             }
         }

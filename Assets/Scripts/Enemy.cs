@@ -35,8 +35,8 @@ public class Enemy : Entity
         basicHitFX = Resources.Load<GameObject>("Particles/BasicHitParticles");
 
         // Variable assigns
-        entityMaxHealth = 70;
-        entityCurrentHealth = 10;
+        entityMaxHealth = Random.Range(20, 60);
+        entityCurrentHealth = entityMaxHealth;
         enemyAtkDamage = Random.Range(10, 20);
         hoverEnabled = false;
 
@@ -56,11 +56,11 @@ public class Enemy : Entity
         }
     }
 
-    // Update both player HP and health bar to match
+    // Update both entity HP and health bar to match
     public void UpdateHealth(int currentHPChangeValue, int maxHPChangeValue)
     {
-        // Update player hp:
-        if (entityCurrentHealth < entityMaxHealth)
+        // Update entity hp:
+        if (entityCurrentHealth <= entityMaxHealth)
         {
             entityCurrentHealth += currentHPChangeValue;
         }
