@@ -10,35 +10,40 @@ namespace BG.Battle
 {
     public class BattleManager : MonoBehaviour
     {
+        // Object lists
         public List<GameObject> enemyObjects;
         public List<Button> atkButtons;
         private List<Action> bufferList;
         private List<MiniAction> minibufferList;
+
+        // Variables
         private bool waitForBuffer;
         private bool waitForMiniBuffer;
         public int actionsUsed;
+        public int playerDefenceBonus;
 
+        // References
         [SerializeField] private Enemy enemyPrefab;
         [SerializeField] private Button actionButtonPrefab;
         [SerializeField] private TMP_Text playerEnergyTextValue;
-
         [SerializeField] private Player player;
         private GameState gameState;
 
-        public int playerDefenceBonus;
-
+        // Audio clips
         AudioClip battleWonClip;
 
         // Start is called before the first frame update
         void Start()
         {
+            // Find references
             battleWonClip = Resources.Load<AudioClip>("Sounds/BattleWon");
-
             gameState = GameObject.Find("GameState").GetComponent<GameState>();
 
+            // Initialise lists
             bufferList = new List<Action>();
             minibufferList = new List<MiniAction>();
 
+            // Set variables
             waitForBuffer = false;
             waitForMiniBuffer = false;
             playerDefenceBonus = 1;
@@ -59,7 +64,6 @@ namespace BG.Battle
                 int totalAreaOccupied = enemyPixelWidth * enemyObjects.Count;
                 int spaceAvailable = 16 / 2;
                 int totalAreaFromWidth = spaceAvailable - totalAreaOccupied;
-
                 int spacialPos = totalAreaFromWidth / enemyObjects.Count;
 
                 enemyObjects[i].transform.position = new Vector3(1 + spacialPos * i, 0, 0);
@@ -76,7 +80,6 @@ namespace BG.Battle
 
             // Create buttons
             int amountOfButtons = 4;
-
             for (int i = 0; i < amountOfButtons; i++)
             {
                 CreateButtons(i, amountOfButtons, usedActions);
@@ -94,19 +97,22 @@ namespace BG.Battle
             button.transform.SetParent(GameObject.Find("ButtonPos").transform);
             button.transform.position = GameObject.Find("ButtonPos").transform.position + new Vector3(_i * (GameObject.Find("AtkOptionsBackground").transform.GetComponent<Image>().rectTransform.sizeDelta.x / _amountOfButtons), 0, 0) + new Vector3(_i * 30, 0);
 
+            // Create a random action which is a selection from 0 to the max action learnt number
             int randomAction = Random.Range(0, gameState.actionsLearnt.Count);
 
             //Debug.Log("actions learnt count: " + gameState.actionsLearnt.Count);
 
+            // For each used action, while the random action is equal to the used action, reroll until unused action
             for (int j = 0; j < _usedActions.Count; j++)
             {
-                while (randomAction == _usedActions[j]) //if random action is equal to a used action, reroll
+                while (randomAction == _usedActions[j])
                 {
                     randomAction = Random.Range(0, gameState.actionsLearnt.Count);
                     //Debug.Log("Random action equal to used action " + gameState.actionsLearnt[_usedActions[j]].Name + "... rerolling");
                 }
             }
 
+            // Add new action to the list of used actions so they aren't repeated
             _usedActions.Add(randomAction);
 
             // Update button to listen to it's new action + update button text to action name
@@ -119,17 +125,25 @@ namespace BG.Battle
 
         private void Update()
         {
+            // If there is something in the buffer and it's not waiting for buffer to end
+            // Then execute that action
             if (bufferList.Count > 0 && !waitForBuffer)
             {
                 StartCoroutine(ExecuteAction());
             }
 
-            if(minibufferList.Count > 0 && !waitForMiniBuffer)
+            // If there is something in the minibuffer and it's not waiting for minibuffer to end
+            // Then execute that mini action
+            if (minibufferList.Count > 0 && !waitForMiniBuffer)
             {
                 StartCoroutine(ExecuteMiniAction());
             }
         }
 
+        /// <summary>
+        /// Buffers an action given parameter <paramref name="_action"/>
+        /// </summary>
+        /// <param name="_action"></param>
         private void BufferAction(Action _action)
         {
             if (enemyObjects.Count > 0)
@@ -138,24 +152,56 @@ namespace BG.Battle
             }
         }
 
+        /// <summary>
+        /// Executes an action and waits for action time to be over
+        /// </summary>
+        /// <returns></returns>
         IEnumerator ExecuteAction()
         {
             waitForBuffer = true;
+
+            // Use first action in buffer
             UseAction(bufferList[0].Index);
-            yield return new WaitForSeconds(bufferList[0].SpeedTime);        
+            
+            // If the buffered action is a finisher, then the speed of finisher is 0.2 * action used
+            if (bufferList[0].Index == (int)ActionEnum.Finisher)
+            {
+                gameState.actionList[(int)ActionEnum.Finisher].SpeedTime = 0.2f * actionsUsed;
+            }
+
+            // Wait for animation time
+            yield return new WaitForSeconds(bufferList[0].SpeedTime); 
+            
+            // Remove action from the buffer list
             bufferList.RemoveAt(0);
+
             waitForBuffer = false;
         }
 
+        /// <summary>
+        /// Executes a MiniAction and waits for action time to be over
+        /// </summary>
+        /// <returns></returns>
         IEnumerator ExecuteMiniAction()
         {
             waitForMiniBuffer = true;
+
+            // Use first action in buffer
             UseMiniAction(minibufferList[0].Index);
+
+            // Wait for animation time
             yield return new WaitForSeconds(minibufferList[0].SpeedTime);
+
+            // Remove action from the buffer list
             minibufferList.RemoveAt(0);
+
             waitForMiniBuffer = false;
         }
 
+        /// <summary>
+        /// Use an action based on given param "<paramref name="action"/>" and define their behaviour
+        /// </summary>
+        /// <param name="action"></param>
         public void UseAction(int action)
         {
             switch (action)
@@ -206,7 +252,6 @@ namespace BG.Battle
                     break;
 
                 case (int)ActionEnum.Hide:
-                    // lower enemy attack
                     if(player.playerCurrentEnergy > 3)
                     {
                         //Debug.Log("Hiding");
@@ -225,12 +270,12 @@ namespace BG.Battle
                     break;
 
                 case (int)ActionEnum.Howl:
-                    // lower enemy attack
                     //Debug.Log("Howling");
                     if (player.playerCurrentEnergy > 0)
                     {
                         enemyObjects[0].GetComponent<Enemy>().UpdateAttack(-Random.Range(1, 8));  
                         player.UpdateEnergy(-1, 0);
+                        SfxPlayer.Instance.PlaySound(Resources.Load<AudioClip>("Sounds/Howl"), 1.0f);
                         actionsUsed++;
                     }
                     else { Debug.Log("Player energy is less than 0"); }
@@ -238,7 +283,6 @@ namespace BG.Battle
                     break;
 
                 case (int)ActionEnum.Sprint:
-                    // lower enemy attack
                     //Debug.Log("Sprinting");
                     if (player.playerCurrentEnergy > 0)
                     {
@@ -251,7 +295,6 @@ namespace BG.Battle
                     break;
 
                 case (int)ActionEnum.Prepare:
-                    // lower enemy attack
                     //Debug.Log("Preparing");
                     if (player.playerCurrentEnergy > 0)
                     {
@@ -289,6 +332,10 @@ namespace BG.Battle
             }
         }
 
+        /// <summary>
+        /// Use a MiniAction based on given param "<paramref name="_miniAction"/>" and define their behaviour
+        /// </summary>
+        /// <param name="_miniAction"></param>
         public void UseMiniAction(int _miniAction)
         {
             switch (_miniAction)
@@ -305,9 +352,12 @@ namespace BG.Battle
             }
         }
 
+        /// <summary>
+        /// Checks if battle has ended - usually due to <see cref="enemyObjects"/> list being less than 1
+        /// </summary>
         public void BattleEndCheck()
         {
-            Debug.Log("Checking for battle end.. enemy count: " + enemyObjects.Count);
+            // If enemy objects less than 1, play win sound and open map for player
             if(enemyObjects.Count < 1)
             {
                 SfxPlayer.Instance.PlaySound(battleWonClip, 1.0f);
