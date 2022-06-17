@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BG.Core
 {
-    public enum ActionEnum { Bite, Scratch, Defend, Hide, Howl, Sprint, Prepare, Finisher };
+    public enum ActionEnum { Bite, Scratch, Defend, Hide, Howl, Sprint, Prepare, Finisher, GambleHit };
     public enum MiniActionEnum { FinisherMini };
 
     public class GameState : MonoBehaviour
@@ -65,8 +65,8 @@ namespace BG.Core
             goldAmount = 100;
             levelAmount = 1;
 
-            playerCurrentHP = 20;
-            playerMaxHP = 110;
+            playerMaxHP = 100;
+            playerCurrentHP = playerMaxHP;
 
             actionLearnClip = Resources.Load<AudioClip>("Sounds/ActionLearn");
 
@@ -81,7 +81,8 @@ namespace BG.Core
                 new Action() { Name = "Howl", Index = 4, SpeedTime = 0.3f },
                 new Action() { Name = "Sprint", Index = 5, SpeedTime = 0.4f },
                 new Action() { Name = "Prepare", Index = 6, SpeedTime = 0.1f },
-                new Action() { Name = "Finisher", Index = 7, SpeedTime = 2.0f }
+                new Action() { Name = "Finisher", Index = 7, SpeedTime = 2.0f },
+                new Action() { Name = "GambleHit", Index = 8, SpeedTime = 0.2f }
             };
 
             // initialise Actions learnt
@@ -98,10 +99,6 @@ namespace BG.Core
             {
                 new MiniAction() {Name = "FinisherMini", Index = 0, SpeedTime = 0.1f}
             };
-            //for (int i = 0; i < actionsLearnt.Count; i++)
-            //{
-            //    Debug.Log("Action " + i + " learnt = " + actionsLearnt[i].Name);
-            //}
         }
 
         public void UnlockNewAbility(int _actionIndex)

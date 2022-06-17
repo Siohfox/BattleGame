@@ -219,7 +219,6 @@ namespace BG.Battle
                             player.UpdateEnergy(-1, 0);
                             player.Attack();
                             CalculatePlayerDamage(Random.Range(1, 7));
-                            //enemyObjects[0].UpdateHealth(-(Random.Range(1,7)), 0);
                         }
                         actionsUsed++;
                     }
@@ -235,7 +234,7 @@ namespace BG.Battle
                             //Debug.Log("Scratching");
                             player.UpdateEnergy(-2, 0);
                             player.Attack();
-                            enemyObjects[0].UpdateHealth(-(Random.Range(4, 16)), 0);
+                            CalculatePlayerDamage(Random.Range(4, 16));
                         }
                         actionsUsed++;
                     } 
@@ -331,6 +330,18 @@ namespace BG.Battle
 
                     break;
 
+                case (int)ActionEnum.GambleHit:
+                    //Debug.Log("GambleHit");
+                    if (player.playerCurrentEnergy > 4)
+                    {
+                        player.UpdateEnergy(-5, 0);
+                        player.Attack();
+                        CalculatePlayerDamage(Random.Range(0,60));
+                    }
+                    else { Debug.Log("Player energy is less than 0"); }
+
+                    break;
+
                 default:
                     Debug.LogError("Failed to use proper action when using energy");
                     break;
@@ -350,7 +361,7 @@ namespace BG.Battle
                     if(enemyObjects.Count > 0)
                     {
                         player.Attack();
-                        enemyObjects[0].UpdateHealth(-6, 0);
+                        CalculatePlayerDamage(-5);
                     }
 
                     break;

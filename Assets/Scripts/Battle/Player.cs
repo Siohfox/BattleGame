@@ -82,7 +82,7 @@ public class Player : Entity
     public void UpdateHealth(int currentHPChangeValue, int maxHPChangeValue)
     {
         // Update player hp:
-        if(entityCurrentHealth < entityMaxHealth)
+        if(entityCurrentHealth <= entityMaxHealth)
         {
             entityCurrentHealth += currentHPChangeValue;
         }
