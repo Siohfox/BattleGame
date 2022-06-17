@@ -385,6 +385,11 @@ namespace BG.Battle
             if(enemyObjects.Count < 1)
             {
                 SfxPlayer.Instance.PlaySound(battleWonClip, 1.0f);
+
+                // Send player stats to gamestate for safekeeping through levels:
+                gameState.playerCurrentHP = player.GetPlayerCurrentHP();
+                gameState.playerMaxHP = player.GetPlayerMaxHP();
+
                 GameObject.Find("MapManager").GetComponent<MapManager>().ToggleMap(false);
             }
         }

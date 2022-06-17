@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using BG.Entity;
 using BG.Battle;
 using System;
+using BG.Core;
 
 public class Player : Entity 
 {
@@ -44,8 +45,8 @@ public class Player : Entity
         battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
 
         // Variable assigns
-        entityMaxHealth = 100;
-        entityCurrentHealth = 50;
+        entityMaxHealth = GameState.Instance.playerMaxHP;
+        entityCurrentHealth = GameState.Instance.playerCurrentHP;
         playerState = new State[2];
         playerState[0] = State.Normal;
         playerState[1] = State.Normal;
@@ -65,6 +66,16 @@ public class Player : Entity
         {
             OnDeath();
         }
+    }
+
+    public int GetPlayerCurrentHP()
+    {
+        return entityCurrentHealth;
+    }
+
+    public int GetPlayerMaxHP()
+    {
+        return entityMaxHealth;
     }
 
     // Update both player HP and health bar to match

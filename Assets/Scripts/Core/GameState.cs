@@ -11,6 +11,9 @@ namespace BG.Core
 
     public class GameState : MonoBehaviour
     {
+        // Singleton
+        public static GameState Instance { get; private set; }
+
         // List arrays of actions
         public List<string> enumActionList = System.Enum.GetNames(typeof(ActionEnum)).ToList(); // String names of actions - maybe not needed
         public List<Action> actionsLearnt; // Actions known from entire list
@@ -25,11 +28,24 @@ namespace BG.Core
         private int goldAmount;
         private int levelAmount;
 
+        // Player Variables
+        public int playerMaxHP;
+        public int playerCurrentHP;
+
         // AudioClips
         private AudioClip actionLearnClip;
 
         private void Awake()
         {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
+
             // Make sure there aren't duplicate gamestates
             GameObject[] obj = GameObject.FindGameObjectsWithTag("GameState");
             if (obj.Length > 1)
@@ -48,6 +64,10 @@ namespace BG.Core
             // Initialise values
             goldAmount = 100;
             levelAmount = 1;
+
+            playerCurrentHP = 20;
+            playerMaxHP = 110;
+
             actionLearnClip = Resources.Load<AudioClip>("Sounds/ActionLearn");
 
             UpdateGameStateVariableHolds();
