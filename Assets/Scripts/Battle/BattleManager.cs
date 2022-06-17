@@ -353,6 +353,10 @@ namespace BG.Battle
             }
         }
 
+        /// <summary>
+        /// Calculates damage to an enemy based on input dmg given
+        /// </summary>
+        /// <param name="_atkDmg"></param>
         private void CalculatePlayerDamage(int _atkDmg)
         {
             if (_atkDmg > enemyObjects[0].enemyCurrentDefence)

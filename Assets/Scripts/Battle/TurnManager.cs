@@ -198,8 +198,7 @@ namespace BG.Turns
                     }
                     else if(enemyActionDecision == EnemyActionDecision.Defend)
                     {
-                        battleManager.enemyObjects[i].GetComponent<Enemy>().UpdateDefence(0);
-                        Debug.Log("Enemy defending");
+                        battleManager.enemyObjects[i].GetComponent<Enemy>().UpdateDefence(0);;
                     }
                     else if(enemyActionDecision == EnemyActionDecision.Other)
                     {

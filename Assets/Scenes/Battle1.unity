@@ -592,6 +592,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3006301391526089318, guid: 3f9b3e9c2eb848340a5d5e6a036cf4fd, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.2520063
+      objectReference: {fileID: 0}
+    - target: {fileID: 3006301391526089318, guid: 3f9b3e9c2eb848340a5d5e6a036cf4fd, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3006301391526089318, guid: 3f9b3e9c2eb848340a5d5e6a036cf4fd, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3006301391526089318, guid: 3f9b3e9c2eb848340a5d5e6a036cf4fd, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4282449664
+      objectReference: {fileID: 0}
     - target: {fileID: 3006301391756788896, guid: 3f9b3e9c2eb848340a5d5e6a036cf4fd, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5
@@ -620,6 +636,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -184.8808
       objectReference: {fileID: 0}
+    - target: {fileID: 3006301391803315143, guid: 3f9b3e9c2eb848340a5d5e6a036cf4fd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 371ebbbe2bef3464386712f0c32916e2, type: 3}
     - target: {fileID: 3006301392047497985, guid: 3f9b3e9c2eb848340a5d5e6a036cf4fd, type: 3}
       propertyPath: m_Name
       value: GameCanvas

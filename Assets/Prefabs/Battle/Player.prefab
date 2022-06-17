@@ -47,12 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23541c8bb9f0848449cd691a5618304f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shieldPrefab: {fileID: 2756302140019096065, guid: b3832028b4bb13a4f94268551bc1031b, type: 3}
   healthBar: {fileID: 6868972927120625104}
   healthTextValue: {fileID: 6868972927084900872}
   playerEnergyTextValue: {fileID: 0}
   playerShieldTextValue: {fileID: 6868972927304095755}
-  shieldPrefab: {fileID: 2756302140019096065, guid: b3832028b4bb13a4f94268551bc1031b, type: 3}
-  atkSound: {fileID: 8300000, guid: d25a793b9f65c124db4d7fb90ad78f97, type: 3}
+  battleManager: {fileID: 0}
   playerStateIcon: {fileID: 6868972926053982450}
   playerState: 
   playerMaxEnergy: 0
@@ -99,12 +99,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 95fb3859a15c71846b66097664c4b86a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.56, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -622,7 +622,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.72}
+  m_AnchoredPosition: {x: 0, y: 0.9}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6868972927120625104
