@@ -83,35 +83,38 @@ public class Tile : MonoBehaviour
     /// </summary>
     public void CalculateNextMapTiles()
     {
-        // Scuffed solution -- for some reason first tile won't be set to used
-        MapManager.Instance.GetTileAtPosition(new Vector2(0, 0)).SetTileState(TileState.Used);
-
-        // Remove any active tiles
-        foreach (var dictionaryTile in MapManager.Instance._tiles)
+        if(MapManager.Instance.mapUsable == true)
         {
-            if (dictionaryTile.Value.GetTileState() == TileState.Active)
+            // Scuffed solution -- for some reason first tile won't be set to used
+            MapManager.Instance.GetTileAtPosition(new Vector2(0, 0)).SetTileState(TileState.Used);
+
+            // Remove any active tiles
+            foreach (var dictionaryTile in MapManager.Instance._tiles)
             {
-                dictionaryTile.Value.SetTileState(TileState.Used);
+                if (dictionaryTile.Value.GetTileState() == TileState.Active)
+                {
+                    dictionaryTile.Value.SetTileState(TileState.Used);
+                }
             }
-        }
 
-        // Reset any selectable tiles before making new ones
-        foreach (var dictionaryTile in MapManager.Instance._tiles)
-        {
-            if (dictionaryTile.Value.GetTileState() == TileState.Selectable)
+            // Reset any selectable tiles before making new ones
+            foreach (var dictionaryTile in MapManager.Instance._tiles)
             {
-                dictionaryTile.Value.SetTileState(TileState.Unused);
+                if (dictionaryTile.Value.GetTileState() == TileState.Selectable)
+                {
+                    dictionaryTile.Value.SetTileState(TileState.Unused);
+                }
             }
-        }
 
-        // Set chosen tile as active
-        SetTileState(TileState.Active);
+            // Set chosen tile as active
+            SetTileState(TileState.Active);
 
-        // Calculate new selectable tiles around new active tile
-        MapManager.Instance.CalculateSelectableTiles();
-        
-        // Load new scene
-        LoadRandomSceneThing();
+            // Calculate new selectable tiles around new active tile
+            MapManager.Instance.CalculateSelectableTiles();
+
+            // Load new scene
+            LoadRandomSceneThing();
+        } 
     }
 
     private void LoadRandomSceneThing()

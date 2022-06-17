@@ -49,6 +49,10 @@ namespace BG.Battle
             playerDefenceBonus = 1;
             actionsUsed = 0;
 
+            // Disable map from being usable, only look at-able
+            // This will be enabled true again when the battle ends
+            MapManager.Instance.mapUsable = false;
+
             // Make a bunch of enemies
             int amountOfEnemiesToMake = 1;
             for (int i = 0; i < amountOfEnemiesToMake; i++)
@@ -390,6 +394,8 @@ namespace BG.Battle
                 gameState.playerCurrentHP = player.GetPlayerCurrentHP();
                 gameState.playerMaxHP = player.GetPlayerMaxHP();
 
+                // Open map and force player to pick a new location
+                MapManager.Instance.mapUsable = true;
                 GameObject.Find("MapManager").GetComponent<MapManager>().ToggleMap(false);
             }
         }

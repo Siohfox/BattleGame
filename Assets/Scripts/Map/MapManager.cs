@@ -22,6 +22,7 @@ public class MapManager : MonoBehaviour
 
     // Variables
     bool mapClosable;
+    public bool mapUsable;
 
     // Dictionaries and lists
     public Dictionary<Vector2, Tile> _tiles;
@@ -58,6 +59,7 @@ public class MapManager : MonoBehaviour
 
         // Set variables
         mapClosable = true;
+        mapUsable = true;
 
         // Create a new map child of Map gameobject
         Image newMap = Instantiate(backgroundImage, GameObject.Find("Map").transform.position, Quaternion.identity, GameObject.Find("Map").transform);
