@@ -126,7 +126,12 @@ public class MapManager : MonoBehaviour
 
         GetTileAtPosition(new Vector2(0, 0)).SetTileState(Tile.TileState.Active);
 
+        GetTileAtPosition(new Vector2(1, 1)).SetTileType(Tile.TileType.Boss);
+        //GetTileAtPosition(new Vector2(width-1, height-1)).SetTileType(Tile.TileType.Boss);
+
         CalculateSelectableTiles();
+
+        GetAllTileTypes();
     }
 
     public void CalculateSelectableTiles()
@@ -204,5 +209,13 @@ public class MapManager : MonoBehaviour
             return tile;
         }
         return null;
+    }
+
+    public void GetAllTileTypes()
+    {
+        foreach (KeyValuePair<Vector2, Tile> dictionaryTile in _tiles)
+        {
+            Debug.Log("Tile type = " + dictionaryTile.Value.currentType);
+        }
     }
 }

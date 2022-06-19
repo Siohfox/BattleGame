@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class Tile : MonoBehaviour
 {
     public enum TileState { Unused, Used, Active, Selectable };
+    public enum TileType { Normal, Boss };
 
-    public Color baseColour, offsetColour, activeColour, usedColour, selectableColour;
+    public Color baseColour, offsetColour, activeColour, usedColour, selectableColour, bossColour;
     [SerializeField] private Image image;
     [SerializeField] private GameObject highlight;
 
@@ -16,6 +17,7 @@ public class Tile : MonoBehaviour
     public Vector2 tileLocation;
 
     public TileState currentState;
+    public TileType currentType;
 
     private int randomScene;
 
@@ -26,6 +28,7 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
+        currentType = TileType.Normal;
         currentState = TileState.Unused;
         randomScene = Random.Range(1, 3); // 1 or 2
     }
@@ -44,6 +47,26 @@ public class Tile : MonoBehaviour
         return currentState;
     }
 
+    public TileType GetTileType()
+    {
+        return currentType;
+    }
+
+    public void SetTileType(TileType type)
+    {
+        currentType = type;
+
+        if(currentType == TileType.Normal)
+        {
+            currentType = TileType.Normal;
+        }
+        if (currentType == TileType.Boss)
+        {
+            currentType = TileType.Boss;
+            image.color = bossColour;
+        }
+    }
+
     public void SetTileState(TileState state)
     {
         currentState = state;
@@ -58,11 +81,18 @@ public class Tile : MonoBehaviour
         {
             // 1 - Set state to selectable & set colour
             currentState = TileState.Selectable;
-            image.color = selectableColour;
+            if (currentType == TileType.Normal)
+            {
+                image.color = selectableColour;
+            }
+            else if (currentType == TileType.Boss)
+            {
+                image.color = bossColour;
+            }
 
             // Add load scene listener
             GetComponent<Button>().onClick.RemoveAllListeners();
-            GetComponent<Button>().onClick.AddListener(CalculateNextMapTiles);          
+            GetComponent<Button>().onClick.AddListener(CalculateNextMapTiles);
         }
         if (currentState == TileState.Unused)
         {
@@ -113,8 +143,24 @@ public class Tile : MonoBehaviour
             MapManager.Instance.CalculateSelectableTiles();
 
             // Load new scene
-            LoadRandomSceneThing();
+            if(currentType == TileType.Normal)
+            {
+                Debug.Log("Loading normal scene");
+                LoadRandomSceneThing();
+            }
+            else if(currentType == TileType.Boss)
+            {
+                Debug.Log("Loading boss scene");
+                LoadBossScene();
+            }
         } 
+    }
+
+    private void LoadBossScene()
+    {
+        Debug.Log("Loading boss scene");
+        MapManager.Instance.ToggleMap(true);
+        LevelLoader.Instance.LoadScene(2);
     }
 
     private void LoadRandomSceneThing()

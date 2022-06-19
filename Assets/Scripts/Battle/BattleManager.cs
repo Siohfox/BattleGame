@@ -361,7 +361,7 @@ namespace BG.Battle
                     if(enemyObjects.Count > 0)
                     {
                         player.Attack();
-                        CalculatePlayerDamage(-5);
+                        CalculatePlayerDamage(5);
                     }
 
                     break;
