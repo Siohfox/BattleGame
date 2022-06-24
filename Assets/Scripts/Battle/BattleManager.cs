@@ -52,6 +52,7 @@ namespace BG.Battle
             // Disable map from being usable, only look at-able
             // This will be enabled true again when the battle ends
             MapManager.Instance.mapUsable = false;
+            MapManager.Instance.mapClosable = true;
 
             // Make a bunch of enemies
             int amountOfEnemiesToMake = 1;

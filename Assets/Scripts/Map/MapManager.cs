@@ -21,7 +21,7 @@ public class MapManager : MonoBehaviour
     private AudioClip mapCrumpleClip;
 
     // Variables
-    bool mapClosable;
+    public bool mapClosable;
     public bool mapUsable;
 
     // Dictionaries and lists
