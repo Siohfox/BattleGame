@@ -136,11 +136,7 @@ public class MapManager : MonoBehaviour
         
         SetTileTypes();
 
-        CalculateSelectableTiles();
-
-        GetAllTileTypes();
-
-        
+        //CalculateSelectableTiles();
     }
 
     public void CalculateSelectableTiles()

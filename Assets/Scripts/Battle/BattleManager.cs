@@ -406,9 +406,13 @@ namespace BG.Battle
                 gameState.playerCurrentHP = player.GetPlayerCurrentHP();
                 gameState.playerMaxHP = player.GetPlayerMaxHP();
 
+                MapManager.Instance.CalculateSelectableTiles();
+
                 // Open map and force player to pick a new location
                 MapManager.Instance.mapUsable = true;
                 GameObject.Find("MapManager").GetComponent<MapManager>().ToggleMap(false);
+
+
             }
         }
     }

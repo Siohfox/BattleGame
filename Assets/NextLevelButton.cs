@@ -19,5 +19,6 @@ public class NextLevelButton : MonoBehaviour
     private void MapThingy()
     {
         mapManager.ToggleMap(false);
+        MapManager.Instance.CalculateSelectableTiles();
     }
 }

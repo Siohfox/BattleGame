@@ -155,7 +155,7 @@ public class Tile : MonoBehaviour
             }
 
             // Calculate new selectable tiles around new active tile
-            MapManager.Instance.CalculateSelectableTiles();        
+            //MapManager.Instance.CalculateSelectableTiles();        
         } 
     }
 
