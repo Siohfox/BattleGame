@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 473561742}
   - component: {fileID: 473561741}
   - component: {fileID: 473561740}
+  - component: {fileID: 473561743}
   m_Layer: 5
   m_Name: NextLevelButton
   m_TagString: Untagged
@@ -338,19 +339,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 473561741}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1781791451}
-        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
-        m_MethodName: LoadNextScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &473561741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,6 +378,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473561738}
   m_CullTransparentMesh: 1
+--- !u!114 &473561743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473561738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506cf870fb0998046b18efa03d489ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &494967453
 GameObject:
   m_ObjectHideFlags: 0
@@ -892,17 +893,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42fa5e288537d344183c89a59ac38f46, type: 3}
---- !u!114 &1781791451 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 427878842190609221, guid: 42fa5e288537d344183c89a59ac38f46, type: 3}
-  m_PrefabInstance: {fileID: 1781791450}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf98a58dfb19e5a42a2f1d91eaf17936, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2043780629
 GameObject:
   m_ObjectHideFlags: 0

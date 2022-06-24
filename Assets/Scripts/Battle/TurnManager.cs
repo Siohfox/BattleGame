@@ -76,7 +76,7 @@ namespace BG.Turns
 
         private void PlayerTurn()
         {
-            Debug.Log("Player's Turn!");
+            //Debug.Log("Player's Turn!");
             if (enemyActionDone)
             {
                 enemyActionDone = false;
@@ -102,7 +102,7 @@ namespace BG.Turns
 
         IEnumerator EnemyTurn()
         {
-            Debug.Log("Enemies' Turn!");
+            //Debug.Log("Enemies' Turn!");
 
             // Set all player attack buttons off so they can't click them during enemy turn
             // Then destroy them so they can be replaced with new ones next player turn

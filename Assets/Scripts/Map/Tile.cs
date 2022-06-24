@@ -31,6 +31,8 @@ public class Tile : MonoBehaviour
         currentType = TileType.Normal;
         currentState = TileState.Unused;
         randomScene = Random.Range(1, 3); // 1 or 2
+
+        Debug.Log("Making tile");
     }
 
     public void Init(bool isOffset)
@@ -113,7 +115,7 @@ public class Tile : MonoBehaviour
     /// </summary>
     public void CalculateNextMapTiles()
     {
-        if(MapManager.Instance.mapUsable == true)
+        if (MapManager.Instance.mapUsable == true)
         {
             // Scuffed solution -- for some reason first tile won't be set to used
             MapManager.Instance.GetTileAtPosition(new Vector2(0, 0)).SetTileState(TileState.Used);
@@ -127,6 +129,8 @@ public class Tile : MonoBehaviour
                 }
             }
 
+            
+
             // Reset any selectable tiles before making new ones
             foreach (var dictionaryTile in MapManager.Instance._tiles)
             {
@@ -139,20 +143,24 @@ public class Tile : MonoBehaviour
             // Set chosen tile as active
             SetTileState(TileState.Active);
 
+            // Load new scene
+            if (currentType == TileType.Normal)
+            {
+
+                LoadRandomSceneThing();
+            }
+            else if (currentType == TileType.Boss)
+            {
+                LoadBossScene();
+            }
+
             // Calculate new selectable tiles around new active tile
             MapManager.Instance.CalculateSelectableTiles();
 
-            // Load new scene
-            if(currentType == TileType.Normal)
-            {
-                Debug.Log("Loading normal scene");
-                LoadRandomSceneThing();
-            }
-            else if(currentType == TileType.Boss)
-            {
-                Debug.Log("Loading boss scene");
-                LoadBossScene();
-            }
+           
+
+
+            
         } 
     }
 
@@ -165,8 +173,20 @@ public class Tile : MonoBehaviour
 
     private void LoadRandomSceneThing()
     {
-        Debug.Log("Loading random scene thing");
+        Debug.Log("Loading normal scene");
         MapManager.Instance.ToggleMap(true);
         LevelLoader.Instance.LoadScene(randomScene);
+    }
+
+
+    public void RandomThingy()
+    {
+        foreach (var dictionaryTile in MapManager.Instance._tiles)
+        {
+            if (dictionaryTile.Value.GetTileType() == TileType.Boss)
+            {
+                Debug.Log("TILE " + dictionaryTile.Value.name + " is a boss tile still!!");
+            }
+        }
     }
 }

@@ -67,7 +67,16 @@ public class MapManager : MonoBehaviour
 
         // Generate map grid and set it to not be visible when done
         GenerateGrid(newMap);
+
+        StartCoroutine(StupidShit());
+        
+    }
+
+    IEnumerator StupidShit()
+    {
+        yield return new WaitForSeconds(0.001f);
         mapObject.SetActive(false);
+        SetTileTypes();
     }
 
     private void Update()
@@ -124,14 +133,14 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        GetTileAtPosition(new Vector2(0, 0)).SetTileState(Tile.TileState.Active);
-
-        GetTileAtPosition(new Vector2(1, 1)).SetTileType(Tile.TileType.Boss);
-        //GetTileAtPosition(new Vector2(width-1, height-1)).SetTileType(Tile.TileType.Boss);
+        
+        SetTileTypes();
 
         CalculateSelectableTiles();
 
         GetAllTileTypes();
+
+        
     }
 
     public void CalculateSelectableTiles()
@@ -202,6 +211,12 @@ public class MapManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Gets tile at a given Vector2 position and returns it if found, else return null
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
     public Tile GetTileAtPosition(Vector2 pos)
     {
         if(_tiles.TryGetValue(pos, out var tile))
@@ -217,5 +232,15 @@ public class MapManager : MonoBehaviour
         {
             Debug.Log("Tile type = " + dictionaryTile.Value.currentType);
         }
+
+        
+    }
+
+    public void SetTileTypes()
+    {
+        GetTileAtPosition(new Vector2(0, 0)).SetTileState(Tile.TileState.Active);
+
+        GetTileAtPosition(new Vector2(0, 3)).SetTileType(Tile.TileType.Boss);
+        //GetTileAtPosition(new Vector2(width-1, height-1)).SetTileType(Tile.TileType.Boss);
     }
 }
