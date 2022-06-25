@@ -59,8 +59,6 @@ namespace BG.Battle
             int amountOfEnemiesToMake = 1;
             for (int i = 0; i < amountOfEnemiesToMake; i++)
             {
-                Debug.Log("Current active tile pos = " + MapManager.Instance.GetActiveTile());
-
                 if (MapManager.Instance.GetActiveTile().GetTileType() == Tile.TileType.Boss)
                 {
                     Enemy newEnemy = Instantiate(enemyPrefabs[1]);
@@ -108,7 +106,7 @@ namespace BG.Battle
         }
 
         /// <summary>
-        /// Creates battle buttons. It's important to note this void function must be seperate from the intial for loop. Not sure why this is.
+        /// Creates battle buttons. It's important to note this void function must be separate from the intial for loop. Not sure why this is.
         /// </summary>
         /// <param name="i"></param>
         private void CreateButtons(int _i, int _amountOfButtons, List<int> _usedActions)

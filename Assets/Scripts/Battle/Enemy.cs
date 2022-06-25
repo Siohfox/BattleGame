@@ -9,11 +9,11 @@ using BG.Battle;
 public class Enemy : Entity
 {
     // References
-    private Player player;
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthTextValue;
     [SerializeField] private TMP_Text actionQuantityValText;
     [SerializeField] private SpriteRenderer actionQuantitySprite;
+    private Player player;
     private Animator enemyAnimator;
     public TMP_Text enemyShieldTextValue;
 
