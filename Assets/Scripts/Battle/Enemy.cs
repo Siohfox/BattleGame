@@ -8,22 +8,26 @@ using BG.Battle;
 
 public class Enemy : Entity
 {
+    // References
+    private Player player;
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthTextValue;
     [SerializeField] private TMP_Text actionQuantityValText;
     [SerializeField] private SpriteRenderer actionQuantitySprite;
+    private Animator enemyAnimator;
     public TMP_Text enemyShieldTextValue;
 
-    [SerializeField] private Player player;
-
+    // AudioClips
     private AudioClip enemyAtkClip;
     private AudioClip enemyAtkMissClip;
+    
+    // Variables
+    public int enemyHealthMinimum, enemyHealthMaximum; // Should be assigned in inspector
+    public int enemyAtkDamageMinimum, enemyAtkDamageMaximum; // Should be assigned in inspector
 
-    private Animator enemyAnimator;
-
-    public int enemyAtkDamage;
-    public int enemyDefence;
-    public int enemyCurrentDefence;
+    [System.NonSerialized] public int enemyAtkDamage;
+    [System.NonSerialized] public int enemyDefence;
+    [System.NonSerialized] public int enemyCurrentDefence;
     private bool hoverEnabled;
 
     // Start is called before the first frame update
@@ -40,9 +44,9 @@ public class Enemy : Entity
         shieldEquipClip = Resources.Load<AudioClip>("Sounds/ShieldEquip");
 
         // Variable assigns
-        entityMaxHealth = Random.Range(20, 60);
+        entityMaxHealth = Random.Range(enemyHealthMinimum, enemyHealthMaximum);
         entityCurrentHealth = entityMaxHealth;
-        enemyAtkDamage = Random.Range(10, 20);
+        enemyAtkDamage = Random.Range(enemyAtkDamageMinimum, enemyAtkDamageMaximum);
         enemyDefence = 0;
         UpdateDefence(0);
         hoverEnabled = false;

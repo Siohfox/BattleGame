@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 1043921892}
   - component: {fileID: 4780829773768372341}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: BossEnemyOne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -528,19 +528,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldPrefab: {fileID: 2756302140019096065, guid: b3832028b4bb13a4f94268551bc1031b, type: 3}
-  player: {fileID: 0}
   healthBar: {fileID: 8883159282003859759}
   healthTextValue: {fileID: 8883159281986185653}
   actionQuantityValText: {fileID: 741718116}
   actionQuantitySprite: {fileID: 213080652}
   enemyShieldTextValue: {fileID: 3765238494084599953}
-  enemyHealthMinimum: 20
-  enemyHealthMaximum: 40
-  enemyAtkDamageMinimum: 10
-  enemyAtkDamageMaximum: 20
-  enemyAtkDamage: 0
-  enemyDefence: 0
-  enemyCurrentDefence: 0
+  enemyHealthMinimum: 100
+  enemyHealthMaximum: 130
+  enemyAtkDamageMinimum: 20
+  enemyAtkDamageMaximum: 40
 --- !u!212 &8883159280908826371
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -582,8 +578,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 86170017cc97fec49b3f5ea7091ee951, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 95fb3859a15c71846b66097664c4b86a, type: 3}
+  m_Color: {r: 0.6792453, g: 0.3229619, b: 0.6750538, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0

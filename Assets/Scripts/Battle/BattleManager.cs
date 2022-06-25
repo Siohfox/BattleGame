@@ -23,7 +23,7 @@ namespace BG.Battle
         public int playerDefenceBonus;
 
         // References
-        [SerializeField] private Enemy enemyPrefab;
+        [SerializeField] private Enemy[] enemyPrefabs;
         [SerializeField] private Button actionButtonPrefab;
         [SerializeField] private TMP_Text playerEnergyTextValue;
         [SerializeField] private Player player;
@@ -53,13 +53,29 @@ namespace BG.Battle
             // This will be enabled true again when the battle ends
             MapManager.Instance.mapUsable = false;
             MapManager.Instance.mapClosable = true;
+            MapManager.Instance.FigureOutActiveTile();
 
             // Make a bunch of enemies
             int amountOfEnemiesToMake = 1;
             for (int i = 0; i < amountOfEnemiesToMake; i++)
             {
-                Enemy newEnemy = Instantiate(enemyPrefab);
-                enemyObjects.Add(newEnemy);
+                Debug.Log("Current active tile pos = " + MapManager.Instance.GetActiveTile());
+
+                if (MapManager.Instance.GetActiveTile().GetTileType() == Tile.TileType.Boss)
+                {
+                    Enemy newEnemy = Instantiate(enemyPrefabs[1]);
+                    enemyObjects.Add(newEnemy);
+                }
+                else if(MapManager.Instance.GetActiveTile().GetTileType() == Tile.TileType.Normal)
+                {
+                    Enemy newEnemy = Instantiate(enemyPrefabs[0]);
+                    enemyObjects.Add(newEnemy);
+                }
+                else
+                {
+                    Debug.LogError("Could not find the correct enemy to spawn");
+                }
+                
             }
 
             // try to space them out equally i guess (doesn't really work)

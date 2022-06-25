@@ -43,16 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672d64df0e23a994ebf13dcfb09d1fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyObjects: []
   atkButtons: []
-  enemyPrefab: {fileID: 8883159280908826370, guid: 17f9de1fd32223a4da5161ad918973f3, type: 3}
+  actionsUsed: 0
+  playerDefenceBonus: 0
+  enemyPrefabs:
+  - {fileID: 8883159280908826370, guid: 17f9de1fd32223a4da5161ad918973f3, type: 3}
+  - {fileID: 8883159280908826370, guid: 11c782acd0e94a548927ddc9f97fab66, type: 3}
   actionButtonPrefab: {fileID: 518045260910250241, guid: ca1c76e0891fb73449bfc8749ec1d50b, type: 3}
   playerEnergyTextValue: {fileID: 0}
   player: {fileID: 0}
-  playerDefenceBonus: 0
-  actionList:
-  - Bite
-  - Scratch
-  - Defend
-  - Hide
-  - Howl

@@ -16,6 +16,7 @@ public class MapManager : MonoBehaviour
     // Map variables
     [SerializeField] private int width, height;
     [SerializeField] private float offsetX, offsetY, tileSpacingX, tileSpacingY;
+    Vector2 activeTile = new Vector2(3, 3); // defaulted to 3x3y to check for errors
 
     // AudioClips
     private AudioClip mapCrumpleClip;
@@ -141,14 +142,8 @@ public class MapManager : MonoBehaviour
 
     public void CalculateSelectableTiles()
     {
-        Vector2 activeTile = new Vector2(3, 3); // defaulted to 3x3y to check for errors
-        foreach (KeyValuePair<Vector2, Tile> dictionaryTile in _tiles)
-        {
-            if (dictionaryTile.Value.GetTileState() == Tile.TileState.Active)
-            {
-                activeTile = dictionaryTile.Key;
-            }
-        }
+
+        FigureOutActiveTile();
 
         foreach (KeyValuePair<Vector2, Tile> dictionaryTile in _tiles)
         {
@@ -208,6 +203,17 @@ public class MapManager : MonoBehaviour
     }
 
 
+    public void FigureOutActiveTile()
+    {
+        foreach (KeyValuePair<Vector2, Tile> dictionaryTile in _tiles)
+        {
+            if (dictionaryTile.Value.GetTileState() == Tile.TileState.Active)
+            {
+                activeTile = dictionaryTile.Key;
+            }
+        }
+    }
+
     /// <summary>
     /// Gets tile at a given Vector2 position and returns it if found, else return null
     /// </summary>
@@ -220,6 +226,11 @@ public class MapManager : MonoBehaviour
             return tile;
         }
         return null;
+    }
+
+    public Tile GetActiveTile()
+    {
+        return GetTileAtPosition(activeTile);
     }
 
     public void GetAllTileTypes()

@@ -20,6 +20,8 @@ public class EventManager : MonoBehaviour
         CreateOptionButtons();
 
         nextScreenButton.SetActive(false);
+
+        MapManager.Instance.mapClosable = true;
     }
 
     public void CreateOptionButtons()
