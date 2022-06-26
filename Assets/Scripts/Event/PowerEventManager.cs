@@ -43,9 +43,9 @@ public class PowerEventManager : MonoBehaviour
         bool notGood = true;
         int count = 0;
 
-        // For each action known, check randomAction against the index.
-        // If any single action is the same, notgood will stay true and break loop
-        // Finally, if random action was any of the learnt actions, it'll reroll and try again
+        // For each action known, check randomPower against the index.
+        // If any single power is the same, notgood will stay true and break loop
+        // Finally, if random power was any of the learnt actions, it'll reroll and try again
         while (notGood)
         {
             for (int i = 0; i < gameState.powersKnown.Count; i++)
@@ -61,8 +61,8 @@ public class PowerEventManager : MonoBehaviour
                 }
             }
 
-            // If it's passed the actions learnt check:
-            // Check if the action chosen is one chosen before instead
+            // If it's passed the power learnt check:
+            // Check if the power chosen is one chosen before instead
             if (!notGood)
             {
                 for (int i = 0; i < usedPowers.Count; i++)
@@ -79,7 +79,7 @@ public class PowerEventManager : MonoBehaviour
                 }
             }
 
-            // If the action did not pass, reroll
+            // If the power did not pass, reroll
             if (notGood)
             {
                 randomPower = Random.Range(0, gameState.powerList.Count);
@@ -94,7 +94,7 @@ public class PowerEventManager : MonoBehaviour
             }
         }
 
-        // Action picked gets added to the used actions list as to not be picked again
+        // Power picked gets added to the used power list as to not be picked again (this is for rendering multiple buttons though)
         usedPowers.Add(randomPower);
 
         // Assign button listeners and text

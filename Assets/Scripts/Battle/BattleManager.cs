@@ -426,8 +426,6 @@ namespace BG.Battle
                 // Open map and force player to pick a new location
                 MapManager.Instance.mapUsable = true;
                 GameObject.Find("MapManager").GetComponent<MapManager>().ToggleMap(false);
-
-
             }
         }
     }

@@ -88,7 +88,7 @@ namespace BG.Core
                 new Action() { Name = "GambleHit", Index = 8, SpeedTime = 0.2f }
             };
 
-            // initialise Actions learnt
+            // Initialise Actions learnt
             actionsLearnt = new List<Action>
             { 
                 actionList[0],
@@ -99,23 +99,20 @@ namespace BG.Core
 
             powerList = new List<Power>
             {
-                new Power() { Name = "PowerOfTheMoon", Index = 0},
-                new Power() { Name = "PowerOfTheSun", Index = 1},
-                new Power() { Name = "PowerOfNature", Index = 2},
-                new Power() { Name = "PowerOfChaos", Index = 3},
-                new Power() { Name = "PowerOfOrder", Index = 4},
-                new Power() { Name = "PowerOfLight", Index = 5},
-                new Power() { Name = "PowerOfDark", Index = 6},
-                new Power() { Name = "PowerOfWeather", Index = 7},
-                new Power() { Name = "PowerOfAlpha", Index = 8},
-                new Power() { Name = "PowerOfLuck", Index = 9}
+                new Power() { Name = "PowerOfTheMoon", Index = 0, State = false},
+                new Power() { Name = "PowerOfTheSun", Index = 1, State = false},
+                new Power() { Name = "PowerOfNature", Index = 2, State = false},
+                new Power() { Name = "PowerOfChaos", Index = 3, State = false},
+                new Power() { Name = "PowerOfOrder", Index = 4, State = false},
+                new Power() { Name = "PowerOfLight", Index = 5, State = false},
+                new Power() { Name = "PowerOfDark", Index = 6, State = false},
+                new Power() { Name = "PowerOfWeather", Index = 7, State = false},
+                new Power() { Name = "PowerOfAlpha", Index = 8, State = false},
+                new Power() { Name = "PowerOfLuck", Index = 9, State = false}
             };
 
-            // initialise Actions learnt
-            powersKnown = new List<Power>
-            {
-                powerList[0]  
-            };
+            // Initialise Powers learnt
+            powersKnown = new List<Power>();
 
 
             miniActionList = new List<MiniAction>
@@ -164,6 +161,11 @@ namespace BG.Core
                 powersKnown.Add(powerList[_powerIndex]);
                 SfxPlayer.Instance.PlaySound(actionLearnClip, 1.0f);
             }
+
+            foreach (var power in powersKnown)
+            {
+                power.State = true;
+            }
         }
 
         /// <summary>
@@ -188,8 +190,9 @@ namespace BG.Core
 
     public class Power
     {
-        public string Name { get; set; } // The name of the action
-        public int Index { get; set; } // The index of the action
+        public string Name { get; set; } // The name of the power
+        public int Index { get; set; } // The index of the power
+        public bool State { get; set; } // Whether the power is enabled or not
     }
 
     public class MiniAction
