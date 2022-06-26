@@ -134,10 +134,8 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        
         SetTileTypes();
-
-        //CalculateSelectableTiles();
+        FigureOutActiveTile();
     }
 
     public void CalculateSelectableTiles()
@@ -245,9 +243,21 @@ public class MapManager : MonoBehaviour
 
     public void SetTileTypes()
     {
+        // Set the tiles that will always be the same
         GetTileAtPosition(new Vector2(0, 0)).SetTileState(Tile.TileState.Active);
+        GetTileAtPosition(new Vector2(width-1, height-1)).SetTileType(Tile.TileType.Boss);
 
-        GetTileAtPosition(new Vector2(0, 3)).SetTileType(Tile.TileType.Boss);
-        //GetTileAtPosition(new Vector2(width-1, height-1)).SetTileType(Tile.TileType.Boss);
+        // randomise some tiles   
+        //foreach (var tile in _tiles)
+        //{
+        //    if (tile.Value.GetTileState() == Tile.TileState.Active)
+        //    {
+        //        continue;
+        //    }
+
+        //    Tile.TileType randomSelect = (Tile.TileType)Random.Range(0, 4);
+
+        //    tile.Value.SetTileType(randomSelect);
+        //}
     }
 }

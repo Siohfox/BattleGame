@@ -144,7 +144,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 41e0b588a7a8ce243828dba32996e97a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -176,6 +176,7 @@ MonoBehaviour:
   highlight: {fileID: 3163422128274614138}
   tileLocation: {x: 0, y: 0}
   currentState: 0
+  currentType: 0
 --- !u!61 &8328336406520986229
 BoxCollider2D:
   m_ObjectHideFlags: 0

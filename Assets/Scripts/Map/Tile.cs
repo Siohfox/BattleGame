@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Tile : MonoBehaviour
 {
     public enum TileState { Unused, Used, Active, Selectable };
-    public enum TileType { Normal, Boss };
+    public enum TileType { Normal, ChooseActionEvent, ChoosePowerEvent, Boss };
 
     public Color baseColour, offsetColour, activeColour, usedColour, selectableColour, bossColour;
     [SerializeField] private Image image;
@@ -19,8 +19,6 @@ public class Tile : MonoBehaviour
     public TileState currentState;
     public TileType currentType;
 
-    private int randomScene;
-
     private void Awake()
     {
         image = gameObject.GetComponent<Image>();
@@ -28,9 +26,9 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
-        currentType = TileType.Normal;
+        TileType randomType = (TileType)Random.Range(0, 3);
+        currentType = randomType;
         currentState = TileState.Unused;
-        randomScene = Random.Range(1, 3); // 1 or 2
     }
 
     public void Init(bool isOffset)
@@ -64,6 +62,7 @@ public class Tile : MonoBehaviour
         {
             currentType = TileType.Boss;
             image.color = bossColour;
+            savedColor = image.color;
         }
     }
 
@@ -81,7 +80,7 @@ public class Tile : MonoBehaviour
         {
             // 1 - Set state to selectable & set colour
             currentState = TileState.Selectable;
-            if (currentType == TileType.Normal)
+            if (currentType != TileType.Boss)
             {
                 image.color = selectableColour;
             }
@@ -144,12 +143,19 @@ public class Tile : MonoBehaviour
             // Load new scene
             if (currentType == TileType.Normal)
             {
-
-                LoadRandomSceneThing();
+                LoadScene(2);
+            }
+            else if (currentType == TileType.ChooseActionEvent)
+            {
+                LoadScene(3);
+            }
+            else if (currentType == TileType.ChoosePowerEvent)
+            {
+                LoadScene(4);
             }
             else if (currentType == TileType.Boss)
             {
-                LoadBossScene();
+                LoadScene(5);
             }
 
             // Calculate new selectable tiles around new active tile
@@ -157,15 +163,9 @@ public class Tile : MonoBehaviour
         } 
     }
 
-    private void LoadBossScene()
+    private void LoadScene(int sceneIndex)
     {
         MapManager.Instance.ToggleMap(true);
-        LevelLoader.Instance.LoadScene(2);
-    }
-
-    private void LoadRandomSceneThing()
-    {
-        MapManager.Instance.ToggleMap(true);
-        LevelLoader.Instance.LoadScene(randomScene);
+        LevelLoader.Instance.LoadScene(sceneIndex);
     }
 }
