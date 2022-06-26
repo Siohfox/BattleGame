@@ -137,6 +137,7 @@ namespace BG.Battle
             // Update button to listen to it's new action + update button text to action name
             button.onClick.AddListener(delegate { BufferAction(gameState.actionsLearnt[randomAction]); });
             button.GetComponentInChildren<TMP_Text>().text = gameState.actionsLearnt[randomAction].Name;
+            button.name = $"Button-{gameState.actionsLearnt[randomAction].Name}";
 
             // Add button to a list of buttons so they can be removed and replaced later
             atkButtons.Add(button);

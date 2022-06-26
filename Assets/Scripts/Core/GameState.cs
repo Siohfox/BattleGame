@@ -7,6 +7,7 @@ using System.Linq;
 namespace BG.Core
 {
     public enum ActionEnum { Bite, Scratch, Defend, Hide, Howl, Sprint, Prepare, Finisher, GambleHit };
+    public enum PowersEnum { PowerOfTheMoon, PowerOfTheSun, PowerOfNature, PowerOfChaos, PowerOfOrder, PowerOfLight, PowerOfDark, PowerOfWeather, PowerOfAlpha, PowerOfLuck }
     public enum MiniActionEnum { FinisherMini };
 
     public class GameState : MonoBehaviour
@@ -18,6 +19,8 @@ namespace BG.Core
         public List<string> enumActionList = System.Enum.GetNames(typeof(ActionEnum)).ToList(); // String names of actions - maybe not needed
         public List<Action> actionsLearnt; // Actions known from entire list
         public List<Action> actionList; // Actions entire list
+        public List<Power> powersKnown; // Powers known from entire list
+        public List<Power> powerList; // Powers entire list
         public List<MiniAction> miniActionList; // Mini actions entire list
 
         // UI
@@ -94,6 +97,26 @@ namespace BG.Core
                 actionList[3]
             };
 
+            powerList = new List<Power>
+            {
+                new Power() { Name = "PowerOfTheMoon", Index = 0},
+                new Power() { Name = "PowerOfTheSun", Index = 1},
+                new Power() { Name = "PowerOfNature", Index = 2},
+                new Power() { Name = "PowerOfChaos", Index = 3},
+                new Power() { Name = "PowerOfOrder", Index = 4},
+                new Power() { Name = "PowerOfLight", Index = 5},
+                new Power() { Name = "PowerOfDark", Index = 6},
+                new Power() { Name = "PowerOfWeather", Index = 7},
+                new Power() { Name = "PowerOfAlpha", Index = 8},
+                new Power() { Name = "PowerOfLuck", Index = 9}
+            };
+
+            // initialise Actions learnt
+            powersKnown = new List<Power>
+            {
+                powerList[0]  
+            };
+
 
             miniActionList = new List<MiniAction>
             {
@@ -140,6 +163,12 @@ namespace BG.Core
         public string Name { get; set; } // The name of the action
         public int Index { get; set; } // The index of the action
         public float SpeedTime { get; set; } // The time it takes to finish animation
+    }
+
+    public class Power
+    {
+        public string Name { get; set; } // The name of the action
+        public int Index { get; set; } // The index of the action
     }
 
     public class MiniAction
