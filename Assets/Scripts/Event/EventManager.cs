@@ -90,7 +90,8 @@ public class EventManager : MonoBehaviour
                     }
                 }
             }
-
+            
+            // If the action did not pass, reroll
             if (notGood)
             {
                 randomAction = Random.Range(0, gameState.actionList.Count);
@@ -105,7 +106,7 @@ public class EventManager : MonoBehaviour
             }
         }
 
-        // Action picked gets added to the used actions list as to not be picked again m
+        // Action picked gets added to the used actions list as to not be picked again
         _usedActions.Add(randomAction);
         
         // Assign button listeners and text

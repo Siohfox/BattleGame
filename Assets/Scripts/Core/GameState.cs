@@ -145,6 +145,27 @@ namespace BG.Core
             }
         }
 
+        public void UnlockNewPower(int _powerIndex)
+        {
+            bool powerAlreadyKnown = false;
+            // Catch to see if power is already known
+            foreach (var power in powersKnown)
+            {
+                if(_powerIndex == power.Index)
+                {
+                    powerAlreadyKnown = true;
+                    Debug.LogWarning($"Power {powerList[_powerIndex].Name} already learnt. Is this an error?");
+                }
+            }
+
+            if(!powerAlreadyKnown)
+            {
+                Debug.Log($"Unlocking new ability {powerList[_powerIndex].Name}");
+                powersKnown.Add(powerList[_powerIndex]);
+                SfxPlayer.Instance.PlaySound(actionLearnClip, 1.0f);
+            }
+        }
+
         /// <summary>
         /// Updates the GameState's pointer to text components and updates them
         /// </summary>
