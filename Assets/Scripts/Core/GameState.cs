@@ -160,8 +160,7 @@ namespace BG.Core
             }
 
             if(!powerAlreadyKnown)
-            {
-                Debug.Log($"Unlocking new ability {powerList[_powerIndex].Name}");
+            {              
                 powersKnown.Add(powerList[_powerIndex]);
                 SfxPlayer.Instance.PlaySound(actionLearnClip, 1.0f);
             }

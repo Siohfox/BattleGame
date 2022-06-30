@@ -95,7 +95,7 @@ public class Enemy : Entity
             int hitOrMiss = Random.Range(0, 4);
             if(hitOrMiss < 1) // 20% chance of being hit
             {
-                Debug.Log("Player found, hitting anyway");
+                //Debug.Log("Player found, hitting anyway");
                 SfxPlayer.Instance.PlaySound(enemyAtkClip, 1.0f);
                 Instantiate(basicHitFX, player.transform.position, transform.rotation);
                 CalculateDamage();
@@ -103,7 +103,7 @@ public class Enemy : Entity
             else
             {
                 SfxPlayer.Instance.PlaySound(enemyAtkMissClip, 1.0f);
-                Debug.Log("Missed because player hidden");
+                //Debug.Log("Missed because player hidden");
             }
         }
         else
