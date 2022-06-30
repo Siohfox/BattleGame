@@ -79,6 +79,7 @@ namespace BG.Core
             bonesTextValue.text = "Bones: " + bonesAmount.ToString();
             levelTextValue.text = "Explored: " + tilesExploredAmount.ToString();
 
+            // Initialise list of Actions
             actionList = new List<Action>
             {
                 new Action() { Name = "Bite", Index = 0, SpeedTime = 0.2f},
@@ -101,6 +102,7 @@ namespace BG.Core
                 actionList[3]
             };
 
+            // Initialise list of Powers
             powerList = new List<Power>
             {
                 new Power() { Name = "PowerOfTheMoon", Index = 0, State = false},
@@ -118,13 +120,17 @@ namespace BG.Core
             // Initialise Powers learnt
             powersKnown = new List<Power>();
 
-
+            // Initialise mini action list
             miniActionList = new List<MiniAction>
             {
                 new MiniAction() {Name = "FinisherMini", Index = 0, SpeedTime = 0.1f}
             };
         }
 
+        /// <summary>
+        /// Unlocks new ability on given index
+        /// </summary>
+        /// <param name="_actionIndex"></param>
         public void UnlockNewAbility(int _actionIndex)
         {
             bool abilityAlreadyLearnt = false;
@@ -146,6 +152,10 @@ namespace BG.Core
             }
         }
 
+        /// <summary>
+        /// Unlocks new power on given index
+        /// </summary>
+        /// <param name="_powerIndex"></param>
         public void UnlockNewPower(int _powerIndex)
         {
             bool powerAlreadyKnown = false;

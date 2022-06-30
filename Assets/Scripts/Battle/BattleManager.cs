@@ -415,7 +415,12 @@ namespace BG.Battle
             // If enemy objects less than 1, play win sound and open map for player
             if(enemyObjects.Count < 1)
             {
+                // Play win sound
                 SfxPlayer.Instance.PlaySound(battleWonClip, 1.0f);
+
+                // Open victory rewards
+                GameState.Instance.bonesAmount += Random.Range(30, 60);
+
 
                 // Send player stats to gamestate for safekeeping through levels:
                 gameState.playerCurrentHP = player.GetPlayerCurrentHP();
