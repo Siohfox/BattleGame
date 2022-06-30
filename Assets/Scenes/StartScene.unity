@@ -1580,7 +1580,7 @@ GameObject:
   - component: {fileID: 963552310848868014}
   - component: {fileID: 963552310848868009}
   m_Layer: 5
-  m_Name: GoldText
+  m_Name: BonesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

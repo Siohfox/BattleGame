@@ -123,6 +123,71 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &78424120
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3747263491883444184, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444184, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1283.2578
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444184, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 482.19553
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444184, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1058.5063
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444184, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444184, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444184, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444184, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444184, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444184, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444184, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444186, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: m_Name
+      value: UIUpdater
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747263491883444187, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: bonesText
+      value: 
+      objectReference: {fileID: 963552310848868009}
+    - target: {fileID: 3747263491883444187, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
+      propertyPath: tilesExploredText
+      value: 
+      objectReference: {fileID: 963552311608764800}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 52f996607aee7e24b87774d2a4379310, type: 3}
 --- !u!1 &139974635
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,7 +1514,7 @@ GameObject:
   - component: {fileID: 963552310848868014}
   - component: {fileID: 963552310848868009}
   m_Layer: 5
-  m_Name: GoldText
+  m_Name: BonesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -24,12 +24,12 @@ namespace BG.Core
         public List<MiniAction> miniActionList; // Mini actions entire list
 
         // UI
-        private TMP_Text goldTextValue;
+        private TMP_Text bonesTextValue;
         private TMP_Text levelTextValue;
 
         // Game Variables
-        private int goldAmount;
-        private int levelAmount;
+        [System.NonSerialized] public int bonesAmount;
+        [System.NonSerialized] public int tilesExploredAmount;
 
         // Player Variables
         public int playerMaxHP;
@@ -65,15 +65,19 @@ namespace BG.Core
         void Start()
         {
             // Initialise values
-            goldAmount = 100;
-            levelAmount = 1;
+            bonesAmount = 100;
+            tilesExploredAmount = 1;
 
             playerMaxHP = 100;
             playerCurrentHP = playerMaxHP;
 
             actionLearnClip = Resources.Load<AudioClip>("Sounds/ActionLearn");
 
-            UpdateGameStateVariableHolds();
+            bonesTextValue = GameObject.Find("BonesText").GetComponent<TMP_Text>();
+            levelTextValue = GameObject.Find("LevelText").GetComponent<TMP_Text>();
+
+            bonesTextValue.text = "Bones: " + bonesAmount.ToString();
+            levelTextValue.text = "Explored: " + tilesExploredAmount.ToString();
 
             actionList = new List<Action>
             {
@@ -166,18 +170,6 @@ namespace BG.Core
             {
                 power.State = true;
             }
-        }
-
-        /// <summary>
-        /// Updates the GameState's pointer to text components and updates them
-        /// </summary>
-        private void UpdateGameStateVariableHolds()
-        {
-            goldTextValue = GameObject.Find("GoldText").GetComponent<TMP_Text>();
-            levelTextValue = GameObject.Find("LevelText").GetComponent<TMP_Text>();
-
-            goldTextValue.text = "Gold: " + goldAmount.ToString();
-            levelTextValue.text = "Level: " + levelAmount.ToString();
         }
     }
 
