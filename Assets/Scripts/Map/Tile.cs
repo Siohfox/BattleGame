@@ -155,7 +155,7 @@ public class Tile : MonoBehaviour
             }
             else if (currentType == TileType.Boss)
             {
-                LoadScene(5);
+                LoadScene(2);
             }
 
             // Calculate new selectable tiles around new active tile
