@@ -180,6 +180,17 @@ namespace BG.Core
                 power.State = true;
             }
         }
+
+        /// <summary>
+        /// Adds bones given on value and updates UI
+        /// </summary>
+        /// <param name="bonesAmount"></param>
+        public void AddBones(int _bonesAmount)
+        {
+            bonesAmount += _bonesAmount;
+
+            GameObject.Find("UIUpdater").GetComponent<UIUpdater>().UpdateUIElements();
+        }
     }
 
     public class Action

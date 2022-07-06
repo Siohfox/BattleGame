@@ -25,13 +25,12 @@ public class UIUpdater : MonoBehaviour
             Debug.LogWarning("Missing UI element references (Refs not found, check names)!");
         }
 
-        bonesText.text = $"Bones: {GameState.Instance.bonesAmount}";
-        tilesExploredText.text = $"Explored: {GameState.Instance.tilesExploredAmount}";
+        UpdateUIElements();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateUIElements()
     {
-        
+        bonesText.text = $"Bones: {GameState.Instance.bonesAmount}";
+        tilesExploredText.text = $"Explored: {GameState.Instance.tilesExploredAmount}";
     }
 }

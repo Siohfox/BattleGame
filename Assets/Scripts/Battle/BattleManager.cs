@@ -21,11 +21,14 @@ namespace BG.Battle
         private bool waitForMiniBuffer;
         public int actionsUsed;
         public int playerDefenceBonus;
+        private int bonesRewarded;
 
         // References
         [SerializeField] private Enemy[] enemyPrefabs;
         [SerializeField] private Button actionButtonPrefab;
+        [SerializeField] private Button bonesRewardButton;
         [SerializeField] private TMP_Text playerEnergyTextValue;
+        [SerializeField] private GameObject rewardsMenu;
         [SerializeField] private Player player;
         private GameState gameState;
 
@@ -46,8 +49,10 @@ namespace BG.Battle
             // Set variables
             waitForBuffer = false;
             waitForMiniBuffer = false;
+            rewardsMenu.SetActive(false);
             playerDefenceBonus = 1;
             actionsUsed = 0;
+            bonesRewarded = Random.Range(30, 60);
 
             // Disable map from being usable, only look at-able
             // This will be enabled true again when the battle ends
@@ -419,19 +424,36 @@ namespace BG.Battle
                 SfxPlayer.Instance.PlaySound(battleWonClip, 1.0f);
 
                 // Open victory rewards
-                GameState.Instance.bonesAmount += Random.Range(30, 60);
-
+                rewardsMenu.SetActive(true);
+                bonesRewardButton.GetComponentInChildren<TMP_Text>().text = bonesRewarded.ToString();
 
                 // Send player stats to gamestate for safekeeping through levels:
                 gameState.playerCurrentHP = player.GetPlayerCurrentHP();
                 gameState.playerMaxHP = player.GetPlayerMaxHP();
 
                 MapManager.Instance.CalculateSelectableTiles();
-
-                // Open map and force player to pick a new location
-                MapManager.Instance.mapUsable = true;
-                GameObject.Find("MapManager").GetComponent<MapManager>().ToggleMap(false);
             }
+        }
+
+        /// <summary>
+        /// Adds bones reward amount
+        /// </summary>
+        public void AddBonesReward()
+        {
+            SfxPlayer.Instance.PlaySound(Resources.Load<AudioClip>("Sounds/BoneCollect"), 1.0f);
+            GameState.Instance.AddBones(bonesRewarded);
+
+            Destroy(bonesRewardButton.gameObject);
+        }
+
+        /// <summary>
+        /// Opens the map and does not allow player to close 
+        /// Best for the next button to continue onwards
+        /// </summary>
+        public void ContinueMap()
+        {
+            MapManager.Instance.mapUsable = true;
+            GameObject.Find("MapManager").GetComponent<MapManager>().ToggleMap(false);
         }
     }
 }
