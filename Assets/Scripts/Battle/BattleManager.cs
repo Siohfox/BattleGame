@@ -38,6 +38,12 @@ namespace BG.Battle
         // Start is called before the first frame update
         void Start()
         {
+            // Disable map from being usable, only look at-able
+            // This will be enabled true again when the battle ends
+            MapManager.Instance.mapUsable = false;
+            MapManager.Instance.mapClosable = true;
+            MapManager.Instance.FigureOutActiveTile();
+
             // Find references
             battleWonClip = Resources.Load<AudioClip>("Sounds/BattleWon");
             gameState = GameObject.Find("GameState").GetComponent<GameState>();
@@ -61,12 +67,6 @@ namespace BG.Battle
             {
                 bonesRewarded = Random.Range(100, 130);
             }
-
-            // Disable map from being usable, only look at-able
-            // This will be enabled true again when the battle ends
-            MapManager.Instance.mapUsable = false;
-            MapManager.Instance.mapClosable = true;
-            MapManager.Instance.FigureOutActiveTile();
 
             // Make a bunch of enemies
             int amountOfEnemiesToMake = 1;
