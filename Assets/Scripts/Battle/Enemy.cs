@@ -95,15 +95,12 @@ public class Enemy : Entity
             int hitOrMiss = Random.Range(0, 4);
             if(hitOrMiss < 1) // 20% chance of being hit
             {
-                //Debug.Log("Player found, hitting anyway");
-                SfxPlayer.Instance.PlaySound(enemyAtkClip, 1.0f);
                 Instantiate(basicHitFX, player.transform.position, transform.rotation);
                 CalculateDamage();
             }
             else
             {
                 SfxPlayer.Instance.PlaySound(enemyAtkMissClip, 1.0f);
-                //Debug.Log("Missed because player hidden");
             }
         }
         else
@@ -128,6 +125,9 @@ public class Enemy : Entity
     {
         if (enemyAtkDamage > player.playerCurrentShield)
         {
+            // Play atk clip
+            SfxPlayer.Instance.PlaySound(enemyAtkClip, 1.0f);
+
             // find dif between atk dmg and players shield. (13 attack - 8 shield = 5 leftover)
             int dif = enemyAtkDamage - player.playerCurrentShield;
 
@@ -139,6 +139,7 @@ public class Enemy : Entity
         }
         else if (enemyAtkDamage <= player.playerCurrentShield)
         {
+            SfxPlayer.Instance.PlaySound(Resources.Load<AudioClip>("Sounds/Clang"), 1.0f);
             player.UpdateShield(-enemyAtkDamage);
         }
     }

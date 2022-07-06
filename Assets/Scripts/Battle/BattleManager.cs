@@ -417,6 +417,7 @@ namespace BG.Battle
             }
             else if (_atkDmg <= enemyObjects[0].enemyCurrentDefence)
             {
+                SfxPlayer.Instance.PlaySound(Resources.Load<AudioClip>("Sounds/Clang"), 1.0f);
                 enemyObjects[0].UpdateShield(-_atkDmg);
             }
         }
