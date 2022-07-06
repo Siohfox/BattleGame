@@ -52,7 +52,15 @@ namespace BG.Battle
             rewardsMenu.SetActive(false);
             playerDefenceBonus = 1;
             actionsUsed = 0;
-            bonesRewarded = Random.Range(30, 60);
+
+            if(MapManager.Instance.GetActiveTile().GetTileType() == Tile.TileType.Normal)
+            {
+                bonesRewarded = Random.Range(30, 60);
+            }
+            else if(MapManager.Instance.GetActiveTile().GetTileType() == Tile.TileType.Boss)
+            {
+                bonesRewarded = Random.Range(100, 130);
+            }
 
             // Disable map from being usable, only look at-able
             // This will be enabled true again when the battle ends
