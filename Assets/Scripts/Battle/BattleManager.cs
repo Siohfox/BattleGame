@@ -151,6 +151,7 @@ namespace BG.Battle
             button.onClick.AddListener(delegate { BufferAction(gameState.actionsLearnt[randomAction]); });
             button.GetComponentInChildren<TMP_Text>().text = gameState.actionsLearnt[randomAction].Name;
             button.name = $"Button-{gameState.actionsLearnt[randomAction].Name}";
+            button.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = gameState.actionsLearnt[randomAction].EnergyCost.ToString();
 
             // Add button to a list of buttons so they can be removed and replaced later
             atkButtons.Add(button);
@@ -245,7 +246,7 @@ namespace BG.Battle
                         if(enemyObjects.Count > 0)
                         {
                             //Debug.Log("Biting");
-                            player.UpdateEnergy(-1, 0);
+                            player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Bite].EnergyCost , 0);
                             player.Attack();
                             CalculatePlayerDamage(Random.Range(1, 7));
                         }
@@ -261,7 +262,7 @@ namespace BG.Battle
                         if (enemyObjects.Count > 0)
                         {
                             //Debug.Log("Scratching");
-                            player.UpdateEnergy(-2, 0);
+                            player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Scratch].EnergyCost, 0);
                             player.Attack();
                             CalculatePlayerDamage(Random.Range(4, 16));
                         }
@@ -277,7 +278,7 @@ namespace BG.Battle
                         //Debug.Log("Defending");
                         player.Shield();
                         player.UpdateShield(Random.Range(2 * playerDefenceBonus, 8 * playerDefenceBonus));
-                        player.UpdateEnergy(-1, 0);
+                        player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Defend].EnergyCost, 0);
                         actionsUsed++;
                     } 
                     else { Debug.Log("Player energy is less than 0"); }
@@ -294,7 +295,7 @@ namespace BG.Battle
                             player.playerStateIcon.SetActive(true);
                             player.gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
                         }
-                        player.UpdateEnergy(-4, 0);
+                        player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Hide].EnergyCost, 0);
                         actionsUsed++;
                         //Debug.Log("Player state is: " + player.playerState[0]);
                     }
@@ -306,8 +307,8 @@ namespace BG.Battle
                     //Debug.Log("Howling");
                     if (player.playerCurrentEnergy > 0)
                     {
-                        enemyObjects[0].UpdateAttack(-Random.Range(1, 8));  
-                        player.UpdateEnergy(-1, 0);
+                        enemyObjects[0].UpdateAttack(-Random.Range(1, 8));
+                        player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Howl].EnergyCost, 0);
                         SfxPlayer.Instance.PlaySound(Resources.Load<AudioClip>("Sounds/Howl"), 1.0f);
                         actionsUsed++;
                     }
@@ -320,7 +321,7 @@ namespace BG.Battle
                     if (player.playerCurrentEnergy > 0)
                     {
                         playerDefenceBonus = 2;
-                        player.UpdateEnergy(-1, 0);
+                        player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Sprint].EnergyCost, 0);
                         actionsUsed++;
                     }
                     else { Debug.Log("Player energy is less than 0"); }
@@ -338,7 +339,7 @@ namespace BG.Battle
                             player.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 1.0f, 0.0f, 0.5f);
                             actionsUsed++;
                         }
-                        player.UpdateEnergy(-1, 0);
+                        player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Prepare].EnergyCost, 0);
                     }
                     else { Debug.Log("Player energy is less than 0"); }
 
@@ -348,7 +349,7 @@ namespace BG.Battle
                     //Debug.Log("Finisher");
                     if (player.playerCurrentEnergy > 0)
                     {
-                        player.UpdateEnergy(-1, 0);
+                        player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Finisher].EnergyCost, 0);
                         for (int i = 0; i < actionsUsed; i++)
                         {
                             minibufferList.Add(gameState.miniActionList[0]);
@@ -363,7 +364,7 @@ namespace BG.Battle
                     //Debug.Log("GambleHit");
                     if (player.playerCurrentEnergy > 4)
                     {
-                        player.UpdateEnergy(-5, 0);
+                        player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.GambleHit].EnergyCost, 0);
                         player.Attack();
                         CalculatePlayerDamage(Random.Range(0,60));
                     }

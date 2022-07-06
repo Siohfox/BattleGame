@@ -82,15 +82,15 @@ namespace BG.Core
             // Initialise list of Actions
             actionList = new List<Action>
             {
-                new Action() { Name = "Bite", Index = 0, SpeedTime = 0.2f},
-                new Action() { Name = "Scratch", Index = 1, SpeedTime = 0.2f },
-                new Action() { Name = "Defend", Index = 2, SpeedTime = 0.3f },
-                new Action() { Name = "Hide", Index = 3, SpeedTime = 0.1f },
-                new Action() { Name = "Howl", Index = 4, SpeedTime = 0.3f },
-                new Action() { Name = "Sprint", Index = 5, SpeedTime = 0.4f },
-                new Action() { Name = "Prepare", Index = 6, SpeedTime = 0.1f },
-                new Action() { Name = "Finisher", Index = 7, SpeedTime = 2.0f },
-                new Action() { Name = "GambleHit", Index = 8, SpeedTime = 0.2f }
+                new Action() { Name = "Bite", Index = 0, SpeedTime = 0.2f, EnergyCost = 1 },
+                new Action() { Name = "Scratch", Index = 1, SpeedTime = 0.2f, EnergyCost = 2 },
+                new Action() { Name = "Defend", Index = 2, SpeedTime = 0.3f, EnergyCost = 1 },
+                new Action() { Name = "Hide", Index = 3, SpeedTime = 0.1f, EnergyCost = 4 },
+                new Action() { Name = "Howl", Index = 4, SpeedTime = 0.3f, EnergyCost = 1 },
+                new Action() { Name = "Sprint", Index = 5, SpeedTime = 0.4f, EnergyCost = 1 },
+                new Action() { Name = "Prepare", Index = 6, SpeedTime = 0.1f, EnergyCost = 1 },
+                new Action() { Name = "Finisher", Index = 7, SpeedTime = 2.0f, EnergyCost = 1 },
+                new Action() { Name = "GambleHit", Index = 8, SpeedTime = 0.2f, EnergyCost = 5 }
             };
 
             // Initialise Actions learnt
@@ -198,6 +198,7 @@ namespace BG.Core
         public string Name { get; set; } // The name of the action
         public int Index { get; set; } // The index of the action
         public float SpeedTime { get; set; } // The time it takes to finish animation
+        public int EnergyCost { get; set; } // The energy cost of the action
     }
 
     public class Power
