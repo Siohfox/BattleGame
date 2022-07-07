@@ -159,6 +159,7 @@ public class Enemy : Entity
 
     public void UpdateAttack(int AtkChange)
     {
+        Debug.Log("Updating Thingy");
         // If enemy attack is being modified, apply change, else pick a random atk range
         if (AtkChange == 0)
         {
@@ -182,6 +183,8 @@ public class Enemy : Entity
 
     public void UpdateDefence(int _defenceChange)
     {
+        Debug.Log("Updating Thingy");
+
         // If enemy defence is being modified, apply change, else pick a random defence range
         if (_defenceChange == 0)
         {
