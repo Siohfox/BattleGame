@@ -29,6 +29,7 @@ namespace BG.Battle
         [SerializeField] private Button bonesRewardButton;
         [SerializeField] private TMP_Text playerEnergyTextValue;
         [SerializeField] private GameObject rewardsMenu;
+        [SerializeField] private GameObject atkOptions;
         [SerializeField] private Player player;
         private GameState gameState;
 
@@ -427,22 +428,34 @@ namespace BG.Battle
         /// </summary>
         public void BattleEndCheck()
         {
+            Debug.Log("Checking battle end");
+
             // If enemy objects less than 1, play win sound and open map for player
             if(enemyObjects.Count < 1)
             {
                 // Play win sound
                 SfxPlayer.Instance.PlaySound(battleWonClip, 1.0f);
 
-                // Open victory rewards
-                rewardsMenu.SetActive(true);
-                bonesRewardButton.GetComponentInChildren<TMP_Text>().text = bonesRewarded.ToString();
+                // Turn usable buttons off
+                atkOptions.SetActive(false);
 
-                // Send player stats to gamestate for safekeeping through levels:
-                gameState.playerCurrentHP = player.GetPlayerCurrentHP();
-                gameState.playerMaxHP = player.GetPlayerMaxHP();
-
-                MapManager.Instance.CalculateSelectableTiles();
+                StartCoroutine(BattleEndWait());
             }
+        }
+
+        IEnumerator BattleEndWait()
+        {
+            yield return new WaitForSeconds(2.0f);
+
+            // Open victory rewards
+            rewardsMenu.SetActive(true);
+            bonesRewardButton.GetComponentInChildren<TMP_Text>().text = bonesRewarded.ToString();
+
+            // Send player stats to gamestate for safekeeping through levels:
+            gameState.playerCurrentHP = player.GetPlayerCurrentHP();
+            gameState.playerMaxHP = player.GetPlayerMaxHP();
+
+            MapManager.Instance.CalculateSelectableTiles();
         }
 
         /// <summary>

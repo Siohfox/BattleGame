@@ -24,6 +24,7 @@ public class Enemy : Entity
     // Variables
     public int enemyHealthMinimum, enemyHealthMaximum; // Should be assigned in inspector
     public int enemyAtkDamageMinimum, enemyAtkDamageMaximum; // Should be assigned in inspector
+    private bool doOnce;
 
     [System.NonSerialized] public int enemyAtkDamage;
     [System.NonSerialized] public int enemyDefence;
@@ -50,6 +51,7 @@ public class Enemy : Entity
         enemyDefence = 0;
         UpdateDefence(0);
         hoverEnabled = false;
+        doOnce = true;
 
         healthTextValue.text = entityCurrentHealth.ToString() + "/" + entityMaxHealth.ToString();
         healthBar.maxValue = entityMaxHealth;
@@ -63,9 +65,13 @@ public class Enemy : Entity
     // Update is called once per frame
     void Update()
     {
-        if (entityCurrentHealth <= 0)
+        if (doOnce)
         {
-            OnDeath();
+            if (entityCurrentHealth <= 0)
+            {
+                OnDeath();
+                doOnce = false;
+            }            
         }
     }
 
@@ -212,6 +218,18 @@ public class Enemy : Entity
 
         // Since an enemy has died, check if there are any enemies left and if not end battle
         battleManager.BattleEndCheck();
+
+        // Fade away
+        StartCoroutine(DeathFade());
+
+        
+    }
+
+    IEnumerator DeathFade()
+    {
+        enemyAnimator.SetBool("IsDead", true);
+
+        yield return new WaitForSeconds(3.0f);
 
         // Destroy self
         Destroy(gameObject);

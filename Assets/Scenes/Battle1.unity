@@ -2819,6 +2819,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 457819855}
     - target: {fileID: 4675059806033961873, guid: 069628054ac889f4c84cf1fbd00c6825, type: 3}
+      propertyPath: atkOptions
+      value: 
+      objectReference: {fileID: 1229351753}
+    - target: {fileID: 4675059806033961873, guid: 069628054ac889f4c84cf1fbd00c6825, type: 3}
       propertyPath: rewardsMenu
       value: 
       objectReference: {fileID: 216816323}

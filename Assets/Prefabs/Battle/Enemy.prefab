@@ -528,7 +528,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldPrefab: {fileID: 2756302140019096065, guid: b3832028b4bb13a4f94268551bc1031b, type: 3}
-  player: {fileID: 0}
   healthBar: {fileID: 8883159282003859759}
   healthTextValue: {fileID: 8883159281986185653}
   actionQuantityValText: {fileID: 741718116}
@@ -538,9 +537,6 @@ MonoBehaviour:
   enemyHealthMaximum: 40
   enemyAtkDamageMinimum: 10
   enemyAtkDamageMaximum: 20
-  enemyAtkDamage: 0
-  enemyDefence: 0
-  enemyCurrentDefence: 0
 --- !u!212 &8883159280908826371
 SpriteRenderer:
   m_ObjectHideFlags: 0
