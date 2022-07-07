@@ -10,7 +10,6 @@ public class NextLevelButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
 
         GetComponent<Button>().onClick.AddListener(MapThingy);

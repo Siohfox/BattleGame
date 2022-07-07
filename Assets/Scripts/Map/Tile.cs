@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Tile : MonoBehaviour
 {
     public enum TileState { Unused, Used, Active, Selectable };
-    public enum TileType { Normal, ChooseActionEvent, ChoosePowerEvent, Boss };
+    public enum TileType { Normal, ChooseActionEvent, ChoosePowerEvent, Shop, Boss };
 
     public Color baseColour, offsetColour, activeColour, usedColour, selectableColour, bossColour;
     [SerializeField] private Image image;
@@ -26,7 +26,7 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
-        TileType randomType = (TileType)Random.Range(0, 3);
+        TileType randomType = (TileType)Random.Range(0, 4);
         currentType = randomType;
         currentState = TileState.Unused;
     }
@@ -156,6 +156,10 @@ public class Tile : MonoBehaviour
             else if (currentType == TileType.Boss)
             {
                 LoadScene(2);
+            }
+            else if (currentType == TileType.Shop)
+            {
+                LoadScene(5);
             }
 
             // Calculate new selectable tiles around new active tile

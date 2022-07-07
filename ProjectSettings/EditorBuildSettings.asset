@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ChoosePowerEvent.unity
     guid: a6ddee6fdfd4d1c4e9a558e416c954d0
   - enabled: 1
-    path: Assets/Scenes/BossBattle.unity
-    guid: 1e8fd64795b5e2642886c67a3bda223b
+    path: Assets/Scenes/Shop.unity
+    guid: 3352e5e8f733b02439d68055e089c114
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}
