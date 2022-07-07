@@ -117,6 +117,8 @@ namespace BG.Battle
             {
                 CreateButtons(i, amountOfButtons, usedActions);
             }
+
+            CheckIfUseableEnergy();
         }
 
         /// <summary>
@@ -156,6 +158,25 @@ namespace BG.Battle
 
             // Add button to a list of buttons so they can be removed and replaced later
             atkButtons.Add(button);
+        }
+
+        /// <summary>
+        /// Checks the energy number given to the button
+        /// if this number is less than player energy, colour red, else green
+        /// </summary>
+        private void CheckIfUseableEnergy()
+        {
+            foreach (Button atkButton in atkButtons)
+            {
+                if (System.Convert.ToInt32(atkButton.gameObject.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text)  <= player.playerCurrentEnergy)
+                {
+                    atkButton.gameObject.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().color = Color.green;
+                }
+                else
+                {
+                    atkButton.gameObject.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().color = Color.red;
+                }
+            }
         }
 
         private void Update()
@@ -377,6 +398,8 @@ namespace BG.Battle
                     Debug.LogError("Failed to use proper action when using energy");
                     break;
             }
+
+            CheckIfUseableEnergy();
         }
 
         /// <summary>
