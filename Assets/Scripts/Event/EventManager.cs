@@ -11,17 +11,24 @@ public class EventManager : MonoBehaviour
     [SerializeField] private Button objectButtonPrefab;
     [SerializeField] private GameObject optionButtonContainer;
     [SerializeField] private GameObject nextScreenButton;
+    [SerializeField] private GameObject optionsButtonsHolder;
     private GameState gameState;
 
     private void Start()
     {
         gameState = GameObject.Find("GameState").GetComponent<GameState>();
 
-        CreateOptionButtons();
+        StartCoroutine(Test());
 
         nextScreenButton.SetActive(false);
 
         MapManager.Instance.mapClosable = true;
+    }
+
+    IEnumerator Test()
+    {
+        yield return new WaitForEndOfFrame();
+        CreateOptionButtons();
     }
 
     public void CreateOptionButtons()
@@ -45,8 +52,8 @@ public class EventManager : MonoBehaviour
     {
         // Instantiate button under parent transform buttonpos + space them out from left to right
         Button button = Instantiate(objectButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);     
-        button.transform.SetParent(GameObject.Find("OptionButtons").transform);
-        button.transform.position = GameObject.Find("OptionButtons").transform.position + new Vector3(0, _index * -100, 0);
+        button.transform.SetParent(optionsButtonsHolder.transform);
+        button.transform.position = optionsButtonsHolder.transform.position + new Vector3(0, _index * -100, 0);
 
         // Create a random action and set it to a random int
         int randomAction = Random.Range(0, gameState.actionList.Count);

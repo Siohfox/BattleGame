@@ -1793,6 +1793,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 473561738}
     - target: {fileID: 3351220343676928695, guid: dc7cc3b183af4d44b9e759d6a23035a4, type: 3}
+      propertyPath: optionsButtonsHolder
+      value: 
+      objectReference: {fileID: 2138507909}
+    - target: {fileID: 3351220343676928695, guid: dc7cc3b183af4d44b9e759d6a23035a4, type: 3}
       propertyPath: optionButtonContainer
       value: 
       objectReference: {fileID: 2138507909}
