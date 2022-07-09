@@ -270,7 +270,7 @@ namespace BG.Battle
                             //Debug.Log("Biting");
                             player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Bite].EnergyCost , 0);
                             player.Attack();
-                            CalculatePlayerDamage(Random.Range(1, 7));
+                            CalculatePlayerDamage(Random.Range(5, 8));
                         }
                         actionsUsed++;
                     }

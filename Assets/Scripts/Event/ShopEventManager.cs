@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using BG.Core;
 
-public class EventManager : MonoBehaviour
+public class ShopEventManager : MonoBehaviour
 {
     public List<Button> optionButtons;
     [SerializeField] private Button objectButtonPrefab;
@@ -14,19 +14,89 @@ public class EventManager : MonoBehaviour
     [SerializeField] private GameObject optionsButtonsHolder;
     private GameState gameState;
 
+    int maxHpIncreasePrice;
+    int maxHpIncreaseAmount;
+    int actionPrice;
+    int hpRegenPrice;
+    int hpRegenAmount;
+
     private void Start()
     {
         gameState = GameObject.Find("GameState").GetComponent<GameState>();
 
-        StartCoroutine(Test());
+        // Destroys all placeholders
+        foreach (Transform child in GameObject.Find("BuyActionButtonsList").GetComponentInChildren<Transform>())
+        {
+            Destroy(child.gameObject);
+        }
 
+
+        // Set variables
+        maxHpIncreasePrice = 20;
+        maxHpIncreaseAmount = 5;
+        actionPrice = 30;
+        hpRegenPrice = 10;
+        hpRegenAmount = 5;
+
+        GameObject.Find("BuyHealthButtons").transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = $"Cost: {hpRegenPrice}";
+        GameObject.Find("BuyMaxHealthButtons").transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = $"Cost: {maxHpIncreasePrice}";
+
+
+        StartCoroutine(LateStart());
         MapManager.Instance.mapClosable = true;
     }
 
-    IEnumerator Test()
+    IEnumerator LateStart()
     {
         yield return new WaitForEndOfFrame();
         CreateOptionButtons();
+    }
+
+    /// <summary>
+    /// Adds hp to player and updates UI
+    /// </summary>
+    public void BuyHealth()
+    {
+        if(gameState.playerCurrentHP < gameState.playerMaxHP)
+        {
+            if (gameState.bonesAmount >= hpRegenPrice)
+            {
+                gameState.AddBones(-hpRegenPrice);
+
+                gameState.ModifyHP(hpRegenAmount);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Adds max hp to player and updates UI
+    /// </summary>
+    public void BuyMaxHealth()
+    {
+        if (gameState.bonesAmount >= maxHpIncreasePrice)
+        {
+            gameState.AddBones(-maxHpIncreasePrice);
+
+            gameState.ModifyHP(maxHpIncreaseAmount);
+            gameState.ModifyMaxHP(maxHpIncreaseAmount);
+
+            maxHpIncreasePrice += 5;
+
+            // Update button text
+            GameObject.Find("BuyMaxHealthButtons").transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = $"Cost: {maxHpIncreasePrice}";
+        }
+    }
+
+    public void BuyAction(int _actionIndex, Button _actionBuyButton)
+    {
+        if (gameState.bonesAmount >= actionPrice)
+        {
+            gameState.AddBones(-actionPrice);
+
+            //buy action
+            gameState.UnlockNewAbility(gameState.actionList[_actionIndex].Index);
+            Destroy(_actionBuyButton.gameObject);
+        }
     }
 
     public void CreateOptionButtons()
@@ -43,13 +113,12 @@ public class EventManager : MonoBehaviour
         {
             OptionsButtons(i, usedActions);
         }
-        
     }
 
     private void OptionsButtons(int _index, List<int> _usedActions)
     {
         // Instantiate button under parent transform buttonpos + space them out from left to right
-        Button button = Instantiate(objectButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);     
+        Button button = Instantiate(objectButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         button.transform.SetParent(optionsButtonsHolder.transform);
         button.transform.position = optionsButtonsHolder.transform.position + new Vector3(0, _index * -100, 0);
 
@@ -63,7 +132,7 @@ public class EventManager : MonoBehaviour
         // For each action known, check randomAction against the index.
         // If any single action is the same, notgood will stay true and break loop
         // Finally, if random action was any of the learnt actions, it'll reroll and try again
-        while(notGood)
+        while (notGood)
         {
             for (int i = 0; i < gameState.actionsLearnt.Count; i++)
             {
@@ -77,7 +146,7 @@ public class EventManager : MonoBehaviour
                     notGood = false;
                 }
             }
-            
+
             // If it's passed the actions learnt check:
             // Check if the action chosen is one chosen before instead
             if (!notGood)
@@ -95,7 +164,7 @@ public class EventManager : MonoBehaviour
                     }
                 }
             }
-            
+
             // If the action did not pass, reroll
             if (notGood)
             {
@@ -104,7 +173,7 @@ public class EventManager : MonoBehaviour
 
             // Check if infinite loop, if so exit.
             count++;
-            if(count >= 200)
+            if (count >= 200)
             {
                 notGood = false;
                 Debug.LogWarning("Looped way too many times... likely due to not enough actions left");
@@ -113,19 +182,13 @@ public class EventManager : MonoBehaviour
 
         // Action picked gets added to the used actions list as to not be picked again
         _usedActions.Add(randomAction);
-        
+
         // Assign button listeners and text
-        button.onClick.AddListener(delegate { gameState.UnlockNewAbility(gameState.actionList[randomAction].Index);});
-        button.onClick.AddListener(FinishEvent);
+        button.onClick.AddListener(delegate { BuyAction(randomAction, button); });
         button.GetComponentInChildren<TMP_Text>().text = gameState.actionList[randomAction].Name;
+        button.transform.GetChild(1).GetComponentInChildren<TMP_Text>().text = $"{actionPrice}";
 
         // Add button to a list of buttons so they can be removed and/or replaced later
         optionButtons.Add(button);
-    }
-
-    private void FinishEvent()
-    {
-        optionButtonContainer.SetActive(false);
-        nextScreenButton.SetActive(true);
     }
 }

@@ -69,7 +69,7 @@ namespace BG.Core
             tilesExploredAmount = 1;
 
             playerMaxHP = 100;
-            playerCurrentHP = playerMaxHP;
+            playerCurrentHP = 80;
 
             actionLearnClip = Resources.Load<AudioClip>("Sounds/ActionLearn");
 
@@ -188,6 +188,28 @@ namespace BG.Core
         public void AddBones(int _bonesAmount)
         {
             bonesAmount += _bonesAmount;
+
+            GameObject.Find("UIUpdater").GetComponent<UIUpdater>().UpdateUIElements();
+        }
+
+        /// <summary>
+        /// Changes player's current HP based on input <paramref name="_HPAmount"/>
+        /// </summary>
+        /// <param name="_HPAmount"></param>
+        public void ModifyHP(int _HPAmount)
+        {
+            playerCurrentHP += _HPAmount;
+
+            GameObject.Find("UIUpdater").GetComponent<UIUpdater>().UpdateUIElements();
+        }
+
+        /// <summary>
+        /// Changes player's current HP based on input <paramref name="_HPAmount"/>
+        /// </summary>
+        /// <param name="_HPAmount"></param>
+        public void ModifyMaxHP(int _HPAmount)
+        {
+            playerMaxHP += _HPAmount;
 
             GameObject.Find("UIUpdater").GetComponent<UIUpdater>().UpdateUIElements();
         }

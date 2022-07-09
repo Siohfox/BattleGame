@@ -11,6 +11,7 @@ public class UIUpdater : MonoBehaviour
     // References to UI elements
     [SerializeField] private TMP_Text bonesText;
     [SerializeField] private TMP_Text tilesExploredText;
+    [SerializeField] private TMP_Text playerHpText;
 
     // Start is called before the first frame update
     void Start() 
@@ -19,6 +20,7 @@ public class UIUpdater : MonoBehaviour
         {
             bonesText = GameObject.Find("BonesText").GetComponent<TMP_Text>();
             tilesExploredText = GameObject.Find("LevelText").GetComponent<TMP_Text>();
+            playerHpText = GameObject.Find("PlayerHPText").GetComponent<TMP_Text>();
         }
         catch (Exception)
         {
@@ -32,5 +34,6 @@ public class UIUpdater : MonoBehaviour
     {
         bonesText.text = $"Bones: {GameState.Instance.bonesAmount}";
         tilesExploredText.text = $"Explored: {GameState.Instance.tilesExploredAmount}";
+        playerHpText.text = $"{GameState.Instance.playerCurrentHP}/{GameState.Instance.playerMaxHP}";
     }
 }
