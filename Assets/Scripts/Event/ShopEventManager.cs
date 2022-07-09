@@ -32,11 +32,11 @@ public class ShopEventManager : MonoBehaviour
 
 
         // Set variables
-        maxHpIncreasePrice = 20;
+        maxHpIncreasePrice = Random.Range(20, 26);
         maxHpIncreaseAmount = 5;
-        actionPrice = 30;
-        hpRegenPrice = 10;
-        hpRegenAmount = 5;
+        actionPrice = Random.Range(25, 36);
+        hpRegenPrice = Random.Range(8,11);
+        hpRegenAmount = 8;
 
         GameObject.Find("BuyHealthButtons").transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = $"Cost: {hpRegenPrice}";
         GameObject.Find("BuyMaxHealthButtons").transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = $"Cost: {maxHpIncreasePrice}";
@@ -63,7 +63,15 @@ public class ShopEventManager : MonoBehaviour
             {
                 gameState.AddBones(-hpRegenPrice);
 
-                gameState.ModifyHP(hpRegenAmount);
+                if(gameState.playerCurrentHP + hpRegenAmount > gameState.playerMaxHP)
+                {
+                    int dif = gameState.playerCurrentHP + hpRegenAmount - gameState.playerMaxHP;
+                    gameState.ModifyHP(hpRegenAmount - dif);
+                }
+                else
+                {
+                    gameState.ModifyHP(hpRegenAmount);
+                }
             }
         }
     }
@@ -180,15 +188,25 @@ public class ShopEventManager : MonoBehaviour
             }
         }
 
-        // Action picked gets added to the used actions list as to not be picked again
-        _usedActions.Add(randomAction);
+        if(count < 200)
+        {
+            // Action picked gets added to the used actions list as to not be picked again
+            _usedActions.Add(randomAction);
 
-        // Assign button listeners and text
-        button.onClick.AddListener(delegate { BuyAction(randomAction, button); });
-        button.GetComponentInChildren<TMP_Text>().text = gameState.actionList[randomAction].Name;
-        button.transform.GetChild(1).GetComponentInChildren<TMP_Text>().text = $"{actionPrice}";
+            // Assign button listeners and text
+            button.onClick.AddListener(delegate { BuyAction(randomAction, button); });
+            button.GetComponentInChildren<TMP_Text>().text = gameState.actionList[randomAction].Name;
+            button.transform.GetChild(1).GetComponentInChildren<TMP_Text>().text = $"{actionPrice}";
 
-        // Add button to a list of buttons so they can be removed and/or replaced later
-        optionButtons.Add(button);
+            // Add button to a list of buttons so they can be removed and/or replaced later
+            optionButtons.Add(button);
+        }
+        else
+        {
+            // UPGRADE BUTTON DEPLOY LATER
+            Debug.Log("Destroying button");
+            Destroy(button.gameObject);
+        }
+       
     }
 }

@@ -111,16 +111,26 @@ public class EventManager : MonoBehaviour
             }
         }
 
-        // Action picked gets added to the used actions list as to not be picked again
-        _usedActions.Add(randomAction);
-        
-        // Assign button listeners and text
-        button.onClick.AddListener(delegate { gameState.UnlockNewAbility(gameState.actionList[randomAction].Index);});
-        button.onClick.AddListener(FinishEvent);
-        button.GetComponentInChildren<TMP_Text>().text = gameState.actionList[randomAction].Name;
+        if (count < 200)
+        {
+            // Action picked gets added to the used actions list as to not be picked again
+            _usedActions.Add(randomAction);
 
-        // Add button to a list of buttons so they can be removed and/or replaced later
-        optionButtons.Add(button);
+            // Assign button listeners and text
+            button.onClick.AddListener(delegate { gameState.UnlockNewAbility(gameState.actionList[randomAction].Index); });
+            button.onClick.AddListener(FinishEvent);
+            button.GetComponentInChildren<TMP_Text>().text = gameState.actionList[randomAction].Name;
+
+            // Add button to a list of buttons so they can be removed and/or replaced later
+            optionButtons.Add(button);
+        }
+        else
+        {
+            // UPGRADE BUTTON DEPLOY LATER
+            Debug.Log("Destroying button");
+            Destroy(button.gameObject);
+        }
+
     }
 
     private void FinishEvent()
