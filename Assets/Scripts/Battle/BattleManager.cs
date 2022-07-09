@@ -461,6 +461,7 @@ namespace BG.Battle
 
                 // Turn usable buttons off
                 atkOptions.SetActive(false);
+                GameObject.Find("EndTurnButton").SetActive(false);
 
                 StartCoroutine(BattleEndWait());
             }
