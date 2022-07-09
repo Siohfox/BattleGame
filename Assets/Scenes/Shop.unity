@@ -212,7 +212,7 @@ RectTransform:
   m_LocalScale: {x: 1.8511739, y: 9.136318, z: 1.8511739}
   m_Children: []
   m_Father: {fileID: 3006301392338075599}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -699,6 +699,10 @@ PrefabInstance:
       propertyPath: nextScreenButton
       value: 
       objectReference: {fileID: 63555366}
+    - target: {fileID: 3351220343676928695, guid: dc7cc3b183af4d44b9e759d6a23035a4, type: 3}
+      propertyPath: objectButtonPrefab
+      value: 
+      objectReference: {fileID: 3799264097988587345, guid: 34f3d9008bdc9334b97daef67b514e9d, type: 3}
     - target: {fileID: 3351220343676928695, guid: dc7cc3b183af4d44b9e759d6a23035a4, type: 3}
       propertyPath: optionsButtonsHolder
       value: 
@@ -1253,8 +1257,8 @@ RectTransform:
   m_Children:
   - {fileID: 3006301392684412957}
   - {fileID: 121710288}
-  - {fileID: 328600837}
   - {fileID: 63555367}
+  - {fileID: 328600837}
   - {fileID: 1402119013}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -1554,7 +1558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7577276121885837634, guid: ebee25d89ff9ee446906b54122de1c0a, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7577276121885837634, guid: ebee25d89ff9ee446906b54122de1c0a, type: 3}
       propertyPath: m_AnchorMax.x

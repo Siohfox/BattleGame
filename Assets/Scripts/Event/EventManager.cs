@@ -18,9 +18,9 @@ public class EventManager : MonoBehaviour
     {
         gameState = GameObject.Find("GameState").GetComponent<GameState>();
 
-        StartCoroutine(Test());
+        CreateOptionButtons();
 
-        nextScreenButton.SetActive(false);
+        StartCoroutine(Test());
 
         MapManager.Instance.mapClosable = true;
     }
@@ -28,7 +28,7 @@ public class EventManager : MonoBehaviour
     IEnumerator Test()
     {
         yield return new WaitForEndOfFrame();
-        CreateOptionButtons();
+        
     }
 
     public void CreateOptionButtons()

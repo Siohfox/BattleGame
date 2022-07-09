@@ -437,6 +437,7 @@ MonoBehaviour:
   objectButtonPrefab: {fileID: 3799264097988587345, guid: 7a2c35b61fdd47d4184c86e3d8bce4b0, type: 3}
   optionButtonContainer: {fileID: 2138507909}
   nextScreenButton: {fileID: 473561738}
+  optionsButtonsHolder: {fileID: 2138507909}
 --- !u!1001 &690775295
 PrefabInstance:
   m_ObjectHideFlags: 0
