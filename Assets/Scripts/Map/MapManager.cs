@@ -245,6 +245,11 @@ public class MapManager : MonoBehaviour
     {
         // Set the tiles that will always be the same
         GetTileAtPosition(new Vector2(0, 0)).SetTileState(Tile.TileState.Active);
+
+        GetTileAtPosition(new Vector2(1, 1)).SetTileType(Tile.TileType.Normal);
+        GetTileAtPosition(new Vector2(0, 1)).SetTileType(Tile.TileType.Normal);
+        GetTileAtPosition(new Vector2(1, 0)).SetTileType(Tile.TileType.Normal);
+
         GetTileAtPosition(new Vector2(width-1, height-1)).SetTileType(Tile.TileType.Boss);
     }
 }

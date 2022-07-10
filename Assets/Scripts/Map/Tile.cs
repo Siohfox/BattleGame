@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour
     private Color savedColor;
 
     public Vector2 tileLocation;
+    float chooseWeightPercent;
 
     public TileState currentState;
     public TileType currentType;
@@ -26,6 +27,34 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
+        chooseWeightPercent = Random.Range(0.0f, 100.0f); //0-100
+        float length = System.Enum.GetValues(typeof(TileType)).Length;
+
+        if (chooseWeightPercent < 100.0f / length)
+        {
+            Debug.Log(1);
+        }
+        else if(chooseWeightPercent < 100.0f / length * 2)
+        {
+            Debug.Log(2);
+        }
+        else if (chooseWeightPercent < 100.0f / length * 3)
+        {
+            Debug.Log(3);
+        }
+        else if (chooseWeightPercent < 100.0f / length * 4)
+        {
+            Debug.Log(4);
+        }
+        else if (chooseWeightPercent < 100.0f / length * 5)
+        {
+            Debug.Log(5);
+        }
+        else
+        {
+            Debug.LogError("Something went wrong");
+        }
+
         TileType randomType = (TileType)Random.Range(0, 4);
         currentType = randomType;
         currentState = TileState.Unused;
