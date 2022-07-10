@@ -7,7 +7,7 @@ public class Tile : MonoBehaviour
 {
     // Enums
     public enum TileState { Unused, Used, Active, Selectable };
-    public enum TileType { Normal, ChooseActionEvent, ChoosePowerEvent, Shop, Boss };
+    public enum TileType { Normal, ChooseActionEvent, ChoosePowerEvent, Shop, Rest, Boss };
     
 
     // Inspector Variables
@@ -38,6 +38,7 @@ public class Tile : MonoBehaviour
         weights[(int)TileType.ChooseActionEvent] = 3;
         weights[(int)TileType.ChoosePowerEvent] = 3;
         weights[(int)TileType.Shop] = 2;
+        weights[(int)TileType.Rest] = 20;
 
         // Set the total weight value so it knows how much weight there is
         weightTotal = 0;
@@ -50,7 +51,7 @@ public class Tile : MonoBehaviour
         TileType randomType = (TileType)RandomWeighted();
         currentType = randomType;
 
-        //Debug.Log("My type is: " + currentType.ToString());
+        Debug.Log("My type is: " + currentType.ToString());
 
         currentState = TileState.Unused;
     }
@@ -217,6 +218,10 @@ public class Tile : MonoBehaviour
             else if (currentType == TileType.Shop)
             {
                 LoadScene(5);
+            }
+            else if (currentType == TileType.Rest)
+            {
+                LoadScene(6);
             }
 
             // Calculate new selectable tiles around new active tile

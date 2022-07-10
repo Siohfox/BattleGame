@@ -155,6 +155,31 @@ namespace BG.Core
         }
 
         /// <summary>
+        /// Deletes a known ability
+        /// </summary>
+        /// <param name="_actionIndex"></param>
+        public void ForgetAbility(int _actionIndex)
+        {
+            bool abilityAlreadyLearnt = false;
+            // Catch to see if ability is already learnt
+            foreach (var action in actionsLearnt)
+            {
+                if (_actionIndex == action.Index)
+                {
+                    abilityAlreadyLearnt = true;
+                    Debug.Log("Forgetting ability: " + actionList[_actionIndex].Name);
+                    actionsLearnt.Remove(actionList[_actionIndex]);
+                    SfxPlayer.Instance.PlaySound(actionLearnClip, 1.0f);
+                }
+            }
+
+            if (!abilityAlreadyLearnt)
+            {
+                Debug.LogWarning("Action " + actionList[_actionIndex].Name + " not learnt. Is this an error?");
+            }
+        }
+
+        /// <summary>
         /// Unlocks new power on given index
         /// </summary>
         /// <param name="_powerIndex"></param>

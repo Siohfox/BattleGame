@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using BG.Core;
 
-public class EventManager : MonoBehaviour
+public class RestEventManager : MonoBehaviour
 {
     public List<Button> optionButtons;
     [SerializeField] private Button objectButtonPrefab;
@@ -13,16 +13,16 @@ public class EventManager : MonoBehaviour
     [SerializeField] private GameObject nextScreenButton;
     private GameState gameState;
 
+
     private void Start()
     {
         gameState = GameObject.Find("GameState").GetComponent<GameState>();
 
-        StartCoroutine(Test());
-
+        StartCoroutine(LateStart());
         MapManager.Instance.mapClosable = true;
     }
 
-    IEnumerator Test()
+    IEnumerator LateStart()
     {
         yield return new WaitForEndOfFrame();
         CreateOptionButtons();
@@ -42,13 +42,12 @@ public class EventManager : MonoBehaviour
         {
             OptionsButtons(i, usedActions);
         }
-        
     }
 
     private void OptionsButtons(int _index, List<int> _usedActions)
     {
         // Instantiate button under parent transform buttonpos + space them out from left to right
-        Button button = Instantiate(objectButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);     
+        Button button = Instantiate(objectButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         button.transform.SetParent(optionButtonContainer.transform);
         button.transform.position = optionButtonContainer.transform.position + new Vector3(0, _index * -100, 0);
 
@@ -62,11 +61,11 @@ public class EventManager : MonoBehaviour
         // For each action known, check randomAction against the index.
         // If any single action is the same, notgood will stay true and break loop
         // Finally, if random action was any of the learnt actions, it'll reroll and try again
-        while(notGood)
+        while (notGood)
         {
             for (int i = 0; i < gameState.actionsLearnt.Count; i++)
             {
-                if (randomAction == gameState.actionsLearnt[i].Index)
+                if (randomAction != gameState.actionsLearnt[i].Index)
                 {
                     notGood = true;
                     break;
@@ -76,7 +75,7 @@ public class EventManager : MonoBehaviour
                     notGood = false;
                 }
             }
-            
+
             // If it's passed the actions learnt check:
             // Check if the action chosen is one chosen before instead
             if (!notGood)
@@ -94,7 +93,7 @@ public class EventManager : MonoBehaviour
                     }
                 }
             }
-            
+
             // If the action did not pass, reroll
             if (notGood)
             {
@@ -103,7 +102,7 @@ public class EventManager : MonoBehaviour
 
             // Check if infinite loop, if so exit.
             count++;
-            if(count >= 200)
+            if (count >= 200)
             {
                 notGood = false;
                 Debug.LogWarning("Looped way too many times... likely due to not enough actions left");
@@ -116,7 +115,7 @@ public class EventManager : MonoBehaviour
             _usedActions.Add(randomAction);
 
             // Assign button listeners and text
-            button.onClick.AddListener(delegate { gameState.UnlockNewAbility(gameState.actionList[randomAction].Index); });     
+            button.onClick.AddListener(delegate { gameState.ForgetAbility(gameState.actionList[randomAction].Index); });
             button.onClick.AddListener(FinishEvent);
             button.GetComponentInChildren<TMP_Text>().text = gameState.actionList[randomAction].Name;
 
@@ -129,7 +128,6 @@ public class EventManager : MonoBehaviour
             Debug.Log("Destroying button");
             Destroy(button.gameObject);
         }
-
     }
 
     private void FinishEvent()
