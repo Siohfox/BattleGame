@@ -263,14 +263,14 @@ namespace BG.Battle
             switch (action)
             {
                 case (int)ActionEnum.Bite:
-                    if (player.playerCurrentEnergy > 0)
+                    if (player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.Bite].EnergyCost)
                     {           
                         if(enemyObjects.Count > 0)
                         {
                             //Debug.Log("Biting");
                             player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Bite].EnergyCost , 0);
                             player.Attack();
-                            CalculatePlayerDamage(Random.Range(5, 8));
+                            CalculatePlayerDamage(Random.Range(3, 8));
                         }
                         actionsUsed++;
                     }
@@ -278,12 +278,13 @@ namespace BG.Battle
                     break;
 
                 case (int)ActionEnum.Scratch:
-                    if (player.playerCurrentEnergy > 1)
+                    Debug.Log("Scratching 1");
+                    if (player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.Scratch].EnergyCost)
                     {
-                        
+                        Debug.Log("Scratching 2");
                         if (enemyObjects.Count > 0)
                         {
-                            //Debug.Log("Scratching");
+                            Debug.Log("Scratching");
                             player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Scratch].EnergyCost, 0);
                             player.Attack();
                             CalculatePlayerDamage(Random.Range(4, 16));
@@ -295,7 +296,7 @@ namespace BG.Battle
                     break;
 
                 case (int)ActionEnum.Defend:
-                    if (player.playerCurrentEnergy > 0)
+                    if (player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.Defend].EnergyCost)
                     {
                         //Debug.Log("Defending");
                         player.Shield();
@@ -308,7 +309,7 @@ namespace BG.Battle
                     break;
 
                 case (int)ActionEnum.Hide:
-                    if(player.playerCurrentEnergy > 3)
+                    if(player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.Hide].EnergyCost)
                     {
                         //Debug.Log("Hiding");
                         player.playerState[0] = Player.State.Hidden;
@@ -327,7 +328,7 @@ namespace BG.Battle
 
                 case (int)ActionEnum.Howl:
                     //Debug.Log("Howling");
-                    if (player.playerCurrentEnergy > 0)
+                    if (player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.Howl].EnergyCost)
                     {
                         enemyObjects[0].UpdateAttack(-Random.Range(1, 8));
                         player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Howl].EnergyCost, 0);
@@ -340,7 +341,7 @@ namespace BG.Battle
 
                 case (int)ActionEnum.Sprint:
                     //Debug.Log("Sprinting");
-                    if (player.playerCurrentEnergy > 0)
+                    if (player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.Sprint].EnergyCost)
                     {
                         playerDefenceBonus = 2;
                         player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Sprint].EnergyCost, 0);
@@ -352,7 +353,7 @@ namespace BG.Battle
 
                 case (int)ActionEnum.Prepare:
                     //Debug.Log("Preparing");
-                    if (player.playerCurrentEnergy > 0)
+                    if (player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.Prepare].EnergyCost)
                     {
                         player.playerState[1] = Player.State.Energized;
                         if(player.playerState[1] == Player.State.Energized)
@@ -369,7 +370,7 @@ namespace BG.Battle
 
                 case (int)ActionEnum.Finisher:
                     //Debug.Log("Finisher");
-                    if (player.playerCurrentEnergy > 0)
+                    if (player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.Finisher].EnergyCost)
                     {
                         player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Finisher].EnergyCost, 0);
                         for (int i = 0; i < actionsUsed; i++)
@@ -384,11 +385,42 @@ namespace BG.Battle
 
                 case (int)ActionEnum.GambleHit:
                     //Debug.Log("GambleHit");
-                    if (player.playerCurrentEnergy > 4)
+                    if (player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.GambleHit].EnergyCost)
                     {
                         player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.GambleHit].EnergyCost, 0);
                         player.Attack();
                         CalculatePlayerDamage(Random.Range(0,60));
+                    }
+                    else { Debug.Log("Player energy is less than 0"); }
+
+                    break;
+
+                case (int)ActionEnum.Fortitude:
+                    //Debug.Log("GambleHit");
+                    if (player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.Fortitude].EnergyCost)
+                    {
+                        player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Fortitude].EnergyCost, 0);
+                        player.Shield();
+                        player.UpdateHealth(2, 0);
+                    }
+                    else { Debug.Log("Player energy is less than 0"); }
+
+                    break;
+
+                case (int)ActionEnum.Execute:
+                    //Debug.Log("GambleHit");
+                    if (player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.Execute].EnergyCost)
+                    {
+                        player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Execute].EnergyCost, 0);
+                        player.Attack();
+
+                        int zero = 2; // base damage
+                        int one = enemyObjects[0].GetMaxHealth() - enemyObjects[0].GetCurrentHealth(); // 15
+                        int two = Mathf.RoundToInt(one / 3); // 33% of total damage done
+                        int three = zero + two;
+                        int dmgtoDeal = three;
+
+                        CalculatePlayerDamage(dmgtoDeal);
                     }
                     else { Debug.Log("Player energy is less than 0"); }
 

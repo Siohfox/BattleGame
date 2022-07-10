@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BG.Core
 {
-    public enum ActionEnum { Bite, Scratch, Defend, Hide, Howl, Sprint, Prepare, Finisher, GambleHit };
+    public enum ActionEnum { Bite, Scratch, Defend, Hide, Howl, Sprint, Prepare, Finisher, GambleHit, Fortitude, Execute };
     public enum PowersEnum { PowerOfTheMoon, PowerOfTheSun, PowerOfNature, PowerOfChaos, PowerOfOrder, PowerOfLight, PowerOfDark, PowerOfWeather, PowerOfAlpha, PowerOfLuck }
     public enum MiniActionEnum { FinisherMini };
 
@@ -90,7 +90,9 @@ namespace BG.Core
                 new Action() { Name = "Sprint", Index = 5, SpeedTime = 0.4f, EnergyCost = 1 },
                 new Action() { Name = "Prepare", Index = 6, SpeedTime = 0.1f, EnergyCost = 1 },
                 new Action() { Name = "Finisher", Index = 7, SpeedTime = 2.0f, EnergyCost = 1 },
-                new Action() { Name = "GambleHit", Index = 8, SpeedTime = 0.2f, EnergyCost = 5 }
+                new Action() { Name = "GambleHit", Index = 8, SpeedTime = 0.2f, EnergyCost = 5 },
+                new Action() { Name = "Fortitude", Index = 9, SpeedTime = 0.2f, EnergyCost = 1 },
+                new Action() { Name = "Execute", Index = 10, SpeedTime = 0.2f, EnergyCost = 1 }
             };
 
             // Initialise Actions learnt

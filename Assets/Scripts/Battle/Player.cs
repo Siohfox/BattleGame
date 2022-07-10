@@ -82,11 +82,12 @@ public class Player : Entity
     public void UpdateHealth(int currentHPChangeValue, int maxHPChangeValue)
     {
         // Update player hp:
-        if(entityCurrentHealth <= entityMaxHealth)
-        {
-            entityCurrentHealth += currentHPChangeValue;
-        }
+        entityCurrentHealth += currentHPChangeValue;
         entityMaxHealth += maxHPChangeValue;
+
+        // Update gamestate hp
+        GameState.Instance.ModifyHP(currentHPChangeValue);
+        GameState.Instance.ModifyMaxHP(maxHPChangeValue);
 
         // Update health bar:
         healthBar.maxValue = entityMaxHealth;

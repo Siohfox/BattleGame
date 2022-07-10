@@ -75,6 +75,18 @@ public class Enemy : Entity
         }
     }
 
+    // Getter for current enemy health
+    public int GetCurrentHealth()
+    {
+        return entityCurrentHealth;
+    }
+
+    // Getter for max enemy health
+    public int GetMaxHealth()
+    {
+        return entityMaxHealth;
+    }
+
     // Update both entity HP and health bar to match
     public void UpdateHealth(int currentHPChangeValue, int maxHPChangeValue)
     {

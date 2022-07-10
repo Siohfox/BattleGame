@@ -32,7 +32,7 @@ public class ShopEventManager : MonoBehaviour
 
 
         // Set variables
-        maxHpIncreasePrice = Random.Range(20, 26);
+        maxHpIncreasePrice = Random.Range(50, 80);
         maxHpIncreaseAmount = 5;
         actionPrice = Random.Range(25, 36);
         hpRegenPrice = Random.Range(8,11);
