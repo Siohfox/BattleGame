@@ -28,6 +28,12 @@ public class RestEventManager : MonoBehaviour
         CreateOptionButtons();
     }
 
+    public void Rest(int _hpRegenAmount)
+    {
+        GameState.Instance.ModifyHP(_hpRegenAmount);
+    }
+
+
     public void CreateOptionButtons()
     {
         // Before creating any new buttons, remove any null buttons (e.g buttons that have been destroyed)

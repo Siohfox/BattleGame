@@ -1118,9 +1118,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1338348635}
-        m_TargetAssemblyTypeName: BG.Core.GameState, Assembly-CSharp
-        m_MethodName: ModifyHP
+      - m_Target: {fileID: 795761646}
+        m_TargetAssemblyTypeName: RestEventManager, Assembly-CSharp
+        m_MethodName: Rest
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1371,17 +1371,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6421f15ec574444fa206674d43d1f11, type: 3}
---- !u!114 &1338348635 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7775407952879478077, guid: f6421f15ec574444fa206674d43d1f11, type: 3}
-  m_PrefabInstance: {fileID: 1338348634}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4123f17b343d61a4f8f0e129c5ee81c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1549635161
 PrefabInstance:
   m_ObjectHideFlags: 0
