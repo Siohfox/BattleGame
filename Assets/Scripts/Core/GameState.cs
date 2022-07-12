@@ -225,7 +225,16 @@ namespace BG.Core
         /// <param name="_HPAmount"></param>
         public void ModifyHP(int _HPAmount)
         {
-            playerCurrentHP += _HPAmount;
+            if(playerCurrentHP + _HPAmount > playerMaxHP)
+            {
+                int dif = playerCurrentHP + _HPAmount - playerMaxHP;
+                playerCurrentHP += _HPAmount - dif;
+            }
+            else
+            {
+                playerCurrentHP += _HPAmount;
+            }
+            
 
             GameObject.Find("UIUpdater").GetComponent<UIUpdater>().UpdateUIElements();
         }

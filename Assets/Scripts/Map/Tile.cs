@@ -38,7 +38,7 @@ public class Tile : MonoBehaviour
         weights[(int)TileType.ChooseActionEvent] = 3;
         weights[(int)TileType.ChoosePowerEvent] = 3;
         weights[(int)TileType.Shop] = 2;
-        weights[(int)TileType.Rest] = 20;
+        weights[(int)TileType.Rest] = 3;
 
         // Set the total weight value so it knows how much weight there is
         weightTotal = 0;

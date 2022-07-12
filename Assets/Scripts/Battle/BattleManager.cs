@@ -278,13 +278,11 @@ namespace BG.Battle
                     break;
 
                 case (int)ActionEnum.Scratch:
-                    Debug.Log("Scratching 1");
                     if (player.playerCurrentEnergy >= gameState.actionList[(int)ActionEnum.Scratch].EnergyCost)
                     {
-                        Debug.Log("Scratching 2");
                         if (enemyObjects.Count > 0)
                         {
-                            Debug.Log("Scratching");
+                            //Debug.Log("Scratching");
                             player.UpdateEnergy(-gameState.actionList[(int)ActionEnum.Scratch].EnergyCost, 0);
                             player.Attack();
                             CalculatePlayerDamage(Random.Range(4, 16));

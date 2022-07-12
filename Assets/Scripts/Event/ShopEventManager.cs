@@ -63,15 +63,7 @@ public class ShopEventManager : MonoBehaviour
             {
                 gameState.AddBones(-hpRegenPrice);
 
-                if(gameState.playerCurrentHP + hpRegenAmount > gameState.playerMaxHP)
-                {
-                    int dif = gameState.playerCurrentHP + hpRegenAmount - gameState.playerMaxHP;
-                    gameState.ModifyHP(hpRegenAmount - dif);
-                }
-                else
-                {
-                    gameState.ModifyHP(hpRegenAmount);
-                }
+                gameState.ModifyHP(hpRegenAmount);
             }
         }
     }
