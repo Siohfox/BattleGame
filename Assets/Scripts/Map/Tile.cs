@@ -51,7 +51,7 @@ public class Tile : MonoBehaviour
         TileType randomType = (TileType)RandomWeighted();
         currentType = randomType;
 
-        Debug.Log("My type is: " + currentType.ToString());
+        //Debug.Log("My type is: " + currentType.ToString());
 
         currentState = TileState.Unused;
     }
@@ -85,6 +85,7 @@ public class Tile : MonoBehaviour
         {
             image.color = isOffset ? offsetColour : baseColour;
             savedColor = image.color;
+            image.sprite = Resources.Load<Sprite>("Textures/QuestionMarkTile");
         }
     }
 
@@ -98,6 +99,36 @@ public class Tile : MonoBehaviour
     public TileType GetTileType()
     {
         return currentType;
+    }
+
+    public Sprite GetTileTypeSprite()
+    {
+        if(currentType == TileType.Normal)
+        {
+            return Resources.Load<Sprite>("Textures/BattleTile");
+        }
+        if (currentType == TileType.ChooseActionEvent)
+        {
+            return Resources.Load<Sprite>("Textures/ActionEventTile");
+        }
+        if (currentType == TileType.ChoosePowerEvent)
+        {
+            return Resources.Load<Sprite>("Textures/PowerEventTile");
+        }
+        if (currentType == TileType.Shop)
+        {
+            return Resources.Load<Sprite>("Textures/ShopTile");
+        }
+        if (currentType == TileType.Rest)
+        {
+            return Resources.Load<Sprite>("Textures/RestTile");
+        }
+        if (currentType == TileType.Boss)
+        {
+            return Resources.Load<Sprite>("Textures/BossTile");
+        }
+
+        return Resources.Load<Sprite>("Textures/LeCircle");
     }
 
     /// <summary>
@@ -132,7 +163,8 @@ public class Tile : MonoBehaviour
         {
             currentState = TileState.Active;
             GetComponent<Button>().onClick.RemoveAllListeners();
-            image.color = activeColour;
+            //image.color = activeColour;
+            image.sprite = Resources.Load<Sprite>("Textures/CurrentTile");
         }
         if(currentState == TileState.Selectable)
         {
@@ -172,19 +204,18 @@ public class Tile : MonoBehaviour
     {
         if (MapManager.Instance.mapUsable == true)
         {
-            // Scuffed solution -- for some reason first tile won't be set to used
-            //MapManager.Instance.GetTileAtPosition(new Vector2(0, 0)).SetTileState(TileState.Used);
-
             // Remove any active tiles
             foreach (var dictionaryTile in MapManager.Instance._tiles)
             {
                 if (dictionaryTile.Value.GetTileState() == TileState.Active)
                 {
+                    // Set previous tile to used
                     dictionaryTile.Value.SetTileState(TileState.Used);
+
+                    // Set previous tile to show what type of event it was
+                    dictionaryTile.Value.image.sprite = dictionaryTile.Value.GetTileTypeSprite();
                 }
             }
-
-            
 
             // Reset any selectable tiles before making new ones
             foreach (var dictionaryTile in MapManager.Instance._tiles)
@@ -223,9 +254,10 @@ public class Tile : MonoBehaviour
             {
                 LoadScene(6);
             }
-
-            // Calculate new selectable tiles around new active tile
-            //MapManager.Instance.CalculateSelectableTiles();        
+            else
+            {
+                Debug.LogError("Couldn't find what scene to load. No TileType found.");
+            }      
         } 
     }
 
