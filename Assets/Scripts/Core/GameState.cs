@@ -151,7 +151,15 @@ namespace BG.Core
             {
                 //Debug.Log("Unlocking new ability: " + actionList[_actionIndex].Name);
                 actionsLearnt.Add(actionList[_actionIndex]);
-                SfxPlayer.Instance.PlaySound(actionLearnClip, 1.0f);
+                if(SfxPlayer.Instance == null)
+                {
+                    Debug.LogWarning("SFX player is missing!");
+                }
+                else
+                {
+                    SfxPlayer.Instance.PlaySound(actionLearnClip, 1.0f);
+                }
+                
             }
         }
 
@@ -170,7 +178,14 @@ namespace BG.Core
                     abilityAlreadyLearnt = true;
                     Debug.Log("Forgetting ability: " + actionList[_actionIndex].Name);
                     actionsLearnt.Remove(actionList[_actionIndex]);
-                    SfxPlayer.Instance.PlaySound(actionLearnClip, 1.0f);
+                    if (SfxPlayer.Instance == null)
+                    {
+                        Debug.LogWarning("SFX player is missing!");
+                    }
+                    else
+                    {
+                        SfxPlayer.Instance.PlaySound(actionLearnClip, 1.0f);
+                    }                  
                 }
             }
 
@@ -200,7 +215,14 @@ namespace BG.Core
             if(!powerAlreadyKnown)
             {              
                 powersKnown.Add(powerList[_powerIndex]);
-                SfxPlayer.Instance.PlaySound(actionLearnClip, 1.0f);
+                if (SfxPlayer.Instance == null)
+                {
+                    Debug.LogWarning("SFX player is missing!");
+                }
+                else
+                {
+                    SfxPlayer.Instance.PlaySound(actionLearnClip, 1.0f);
+                }
             }
 
             foreach (var power in powersKnown)

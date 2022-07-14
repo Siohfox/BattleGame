@@ -99,13 +99,27 @@ public class MapManager : MonoBehaviour
         if(mapObject.activeSelf == false)
         {
             mapObject.SetActive(true);
-            SfxPlayer.Instance.PlaySound(mapCrumpleClip, 1.0f);
+            if (SfxPlayer.Instance == null)
+            {
+                Debug.LogWarning("SFX player is missing!");
+            }
+            else
+            {
+                SfxPlayer.Instance.PlaySound(mapCrumpleClip, 1.0f);
+            }
             mapClosable = _mapClosable;
         }
         else if (mapObject.activeSelf == true)
         {
             mapObject.SetActive(false);
-            SfxPlayer.Instance.PlaySound(mapCrumpleClip, 1.0f);
+            if (SfxPlayer.Instance == null)
+            {
+                Debug.LogWarning("SFX player is missing!");
+            }
+            else
+            {
+                SfxPlayer.Instance.PlaySound(mapCrumpleClip, 1.0f);
+            }
         }
     }
 
