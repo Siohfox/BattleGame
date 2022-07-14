@@ -155,6 +155,27 @@ namespace BG.Battle
             button.GetComponentInChildren<TMP_Text>().text = gameState.actionsLearnt[randomAction].Name;
             button.name = $"Button-{gameState.actionsLearnt[randomAction].Name}";
             button.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = gameState.actionsLearnt[randomAction].EnergyCost.ToString();
+            if(gameState.actionsLearnt[randomAction].Rarity == Rarity.Common)
+            {
+                button.image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            }
+            else if (gameState.actionsLearnt[randomAction].Rarity == Rarity.Uncommon)
+            {
+                button.image.color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
+            }
+            else if (gameState.actionsLearnt[randomAction].Rarity == Rarity.Rare)
+            {
+                button.image.color = new Color(0.0f, 0.2f, 1.0f, 1.0f);
+            }
+            else if (gameState.actionsLearnt[randomAction].Rarity == Rarity.SuperRare)
+            {
+                button.image.color = new Color(0.0f, 1.0f, 1.0f, 1.0f);
+            }
+            else if (gameState.actionsLearnt[randomAction].Rarity == Rarity.Legendary)
+            {
+                button.image.color = new Color(1.0f, 0.5f, 0.0f, 1.0f);
+            }
+
 
             // Add button to a list of buttons so they can be removed and replaced later
             atkButtons.Add(button);

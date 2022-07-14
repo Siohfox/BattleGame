@@ -251,5 +251,6 @@ public class MapManager : MonoBehaviour
         GetTileAtPosition(new Vector2(1, 0)).SetTileType(Tile.TileType.Normal);
 
         GetTileAtPosition(new Vector2(width-1, height-1)).SetTileType(Tile.TileType.Boss);
+        //GetTileAtPosition(new Vector2(width - 1, height - 1)).GetComponent<Image>().sprite = GetTileAtPosition(new Vector2(width - 1, height - 1)).GetTileTypeSprite();
     }
 }

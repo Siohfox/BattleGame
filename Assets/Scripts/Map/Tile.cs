@@ -146,8 +146,9 @@ public class Tile : MonoBehaviour
         if (currentType == TileType.Boss)
         {
             currentType = TileType.Boss;
-            image.color = bossColour;
+            image.color = Color.white;
             savedColor = image.color;
+            image.sprite = GetTileTypeSprite();
         }
     }
 
