@@ -1,2 +1,2 @@
 # BattleGame
-A turn based fighting game
+A turn based fighting game made in Unity
